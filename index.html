@@ -1,136 +1,1587 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="UTF-8">
-<title>Chimera System</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chimera System</title>
+  <meta name="description" content="Chimera — modular Discord automation and analytics project by impresent aka aglvet." />
 
-<style>
+  <style>
+    :root{
+      --bg:#0b0d12;
+      --bg-soft:#121621;
+      --card:#151b27;
+      --card-2:#101520;
+      --text:#e8ecf3;
+      --muted:#9ba7bb;
+      --line:rgba(255,255,255,0.08);
+      --accent:#8b5cf6;
+      --accent-2:#4cc9f0;
+      --glow:rgba(139,92,246,0.22);
+      --success:#7dd3fc;
+      --warning:#c4b5fd;
+      --shadow:0 10px 35px rgba(0,0,0,0.35);
+      --radius:18px;
+      --radius-sm:12px;
+      --max:1180px;
+    }
 
-body{
-    background-color:#0f0f0f;
-    color:#e6e6e6;
-    font-family:Arial, sans-serif;
-    margin:0;
-    padding:0;
-}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(76,201,240,0.08), transparent 28%),
+        radial-gradient(circle at top right, rgba(139,92,246,0.10), transparent 35%),
+        linear-gradient(180deg, #090b10 0%, #0b0d12 100%);
+      color:var(--text);
+      line-height:1.6;
+      overflow-x:hidden;
+    }
 
-.container{
-    max-width:900px;
-    margin:auto;
-    padding:60px 20px;
-}
+    a{
+      color:var(--success);
+      text-decoration:none;
+    }
 
-h1{
-    font-size:48px;
-    margin-bottom:5px;
-}
+    a:hover{
+      text-decoration:underline;
+    }
 
-.status{
-    color:#9aa0a6;
-    font-size:14px;
-    margin-bottom:25px;
-}
+    .container{
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
+    }
 
-h2{
-    margin-top:40px;
-}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      backdrop-filter:blur(14px);
+      background:rgba(11,13,18,0.72);
+      border-bottom:1px solid var(--line);
+    }
 
-.lang{
-    position:absolute;
-    top:20px;
-    right:30px;
-}
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
+    }
 
-button{
-    background:#1f1f1f;
-    color:white;
-    border:none;
-    padding:8px 14px;
-    margin-left:6px;
-    cursor:pointer;
-}
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
 
-button:hover{
-    background:#333;
-}
+    .brand-mark{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      background:
+        linear-gradient(135deg, rgba(139,92,246,0.9), rgba(76,201,240,0.9));
+      box-shadow:0 0 0 1px rgba(255,255,255,0.06), 0 0 25px var(--glow);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      color:white;
+      letter-spacing:0.04em;
+    }
 
-</style>
+    .brand-text{
+      min-width:0;
+    }
 
-<script>
+    .brand-text strong{
+      display:block;
+      font-size:16px;
+      letter-spacing:0.03em;
+    }
 
-function setLang(lang){
+    .brand-text span{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
 
-document.getElementById("en").style.display = "none";
-document.getElementById("ru").style.display = "none";
+    .lang-switch{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap:8px;
+    }
 
-document.getElementById(lang).style.display = "block";
+    .lang-btn{
+      background:rgba(255,255,255,0.04);
+      color:var(--text);
+      border:1px solid rgba(255,255,255,0.08);
+      padding:9px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:13px;
+      transition:0.22s ease;
+    }
 
-}
+    .lang-btn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(255,255,255,0.16);
+      background:rgba(255,255,255,0.07);
+    }
 
-</script>
+    .lang-btn.active{
+      background:linear-gradient(135deg, rgba(139,92,246,0.24), rgba(76,201,240,0.20));
+      border-color:rgba(139,92,246,0.45);
+      box-shadow:0 0 0 1px rgba(255,255,255,0.03) inset, 0 0 18px rgba(139,92,246,0.18);
+    }
 
+    .hero{
+      padding:72px 0 42px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.2fr 0.8fr;
+      gap:28px;
+      align-items:stretch;
+    }
+
+    .hero-card,
+    .image-card,
+    .section-card,
+    .module-card,
+    .roadmap-card,
+    .contact-card,
+    .arch-card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-card{
+      padding:34px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:auto -80px -100px auto;
+      width:240px;
+      height:240px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(139,92,246,0.25), transparent 68%);
+      filter:blur(10px);
+      pointer-events:none;
+    }
+
+    .status-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:18px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      color:#dfe8ff;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--accent-2);
+      box-shadow:0 0 12px rgba(76,201,240,0.65);
+      flex:0 0 auto;
+    }
+
+    h1{
+      margin:0 0 14px;
+      font-size:clamp(40px, 7vw, 68px);
+      line-height:0.95;
+      letter-spacing:-0.04em;
+    }
+
+    .hero-lead{
+      font-size:18px;
+      color:#d8deea;
+      margin:0 0 18px;
+      max-width:720px;
+    }
+
+    .hero-sub{
+      color:var(--muted);
+      font-size:15px;
+      max-width:720px;
+      margin:0 0 26px;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:8px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-height:46px;
+      padding:0 18px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.1);
+      color:var(--text);
+      text-decoration:none;
+      transition:0.22s ease;
+      cursor:pointer;
+      background:rgba(255,255,255,0.04);
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+      text-decoration:none;
+      border-color:rgba(255,255,255,0.18);
+      background:rgba(255,255,255,0.08);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, rgba(139,92,246,0.28), rgba(76,201,240,0.24));
+      border-color:rgba(139,92,246,0.35);
+      box-shadow:0 0 24px rgba(139,92,246,0.18);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,0.03);
+    }
+
+    .image-card{
+      position:relative;
+      overflow:hidden;
+      min-height:370px;
+      display:flex;
+      align-items:stretch;
+      justify-content:stretch;
+    }
+
+    .cover-image{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      opacity:0.92;
+    }
+
+    .image-fallback{
+      width:100%;
+      min-height:370px;
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(76,201,240,0.18), transparent 28%),
+        radial-gradient(circle at 80% 10%, rgba(139,92,246,0.22), transparent 32%),
+        linear-gradient(145deg, #111827 0%, #0f172a 52%, #111827 100%);
+      position:relative;
+    }
+
+    .image-fallback::before{
+      content:"";
+      position:absolute;
+      inset:16px;
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:18px;
+      pointer-events:none;
+    }
+
+    .image-fallback h3{
+      margin:0 0 10px;
+      font-size:28px;
+    }
+
+    .image-fallback p{
+      margin:0;
+      color:#c6d0df;
+      max-width:420px;
+    }
+
+    .section{
+      padding:18px 0;
+    }
+
+    .section-title{
+      margin:0 0 18px;
+      font-size:28px;
+      letter-spacing:-0.03em;
+    }
+
+    .section-card{
+      padding:26px;
+    }
+
+    .muted{
+      color:var(--muted);
+    }
+
+    .two-col{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
+    }
+
+    .author-box{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .author-names{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .name-pill{
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      font-size:13px;
+      color:#dbe6fb;
+    }
+
+    .cards-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
+    }
+
+    .arch-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
+    }
+
+    .arch-card,
+    .module-card,
+    .roadmap-card,
+    .contact-card{
+      padding:22px;
+      transition:0.22s ease;
+    }
+
+    .arch-card:hover,
+    .module-card:hover,
+    .roadmap-card:hover,
+    .contact-card:hover{
+      transform:translateY(-3px);
+      border-color:rgba(255,255,255,0.14);
+      box-shadow:0 14px 36px rgba(0,0,0,0.36);
+    }
+
+    .card-kicker{
+      font-size:12px;
+      color:#b8c7dd;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      margin-bottom:8px;
+    }
+
+    .card-title{
+      margin:0 0 10px;
+      font-size:20px;
+    }
+
+    .card-text{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .roadmap-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
+    }
+
+    .timeline-list{
+      margin:14px 0 0;
+      padding-left:18px;
+      color:#dbe4f4;
+    }
+
+    .timeline-list li{
+      margin-bottom:8px;
+    }
+
+    .contact-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .contact-list{
+      margin:0;
+      padding-left:18px;
+    }
+
+    .contact-list li{
+      margin-bottom:8px;
+      color:#dbe4f4;
+    }
+
+    footer{
+      padding:40px 0 60px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .footer-line{
+      border-top:1px solid var(--line);
+      padding-top:22px;
+    }
+
+    .hidden-lang{
+      display:none;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(18px);
+      transition:opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    @media (max-width: 1040px){
+      .hero-grid,
+      .two-col,
+      .cards-grid,
+      .arch-grid,
+      .roadmap-grid,
+      .contact-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px){
+      .topbar-inner{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .lang-switch{
+        justify-content:flex-start;
+      }
+
+      .hero{
+        padding-top:36px;
+      }
+
+      .hero-grid,
+      .two-col,
+      .cards-grid,
+      .arch-grid,
+      .roadmap-grid,
+      .contact-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-card,
+      .section-card,
+      .arch-card,
+      .module-card,
+      .roadmap-card,
+      .contact-card{
+        padding:20px;
+      }
+
+      h1{
+        font-size:44px;
+      }
+
+      .hero-lead{
+        font-size:17px;
+      }
+    }
+  </style>
 </head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <div class="brand-text">
+          <strong>Chimera</strong>
+          <span id="topbarSubtitle">Experimental project • Active development</span>
+        </div>
+      </div>
 
-<body onload="setLang('en')">
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="ru">Русский</button>
+        <button class="lang-btn" data-lang="de">Deutsch</button>
+        <button class="lang-btn" data-lang="uk">Українська</button>
+        <button class="lang-btn" data-lang="es">Español</button>
+      </div>
+    </div>
+  </header>
 
-<div class="lang">
-<button onclick="setLang('en')">English</button>
-<button onclick="setLang('ru')">Русский</button>
-</div>
+  <main id="app">
 
-<div class="container">
+    <!-- EN -->
+    <div class="lang-content" id="lang-en">
+      <section class="hero container">
+        <div class="hero-grid">
+          <div class="hero-card reveal">
+            <div class="status-row">
+              <span class="badge"><span class="dot"></span> Experimental project</span>
+              <span class="badge">Active development</span>
+              <span class="badge">Multi-language</span>
+              <span class="badge">Modular architecture</span>
+            </div>
 
-<div id="en">
+            <h1>Chimera</h1>
 
-<h1>Chimera</h1>
-<div class="status">Experimental project • Active development</div>
+            <p class="hero-lead">
+              A modular Discord automation and analytics project designed as a long-term personal ecosystem for structured event collection, activity analysis and workflow automation.
+            </p>
 
-<p>
-A modular automation and analytics ecosystem for Discord.
-</p>
+            <p class="hero-sub">
+              Conceived by <strong>impresent</strong>, also known as <strong>aglvet</strong>, Chimera is currently in active development and continues to evolve through new modules, architecture refinements and expanded analytical capabilities.
+            </p>
 
-<h2>Overview</h2>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#overview-en">Explore project</a>
+              <a class="btn btn-secondary" href="#contact-en">Contact</a>
+            </div>
+          </div>
 
-<p>
-Chimera is a personal system designed to observe activity,
-analyze communication patterns and automate repetitive actions
-across Discord environments.
-</p>
+          <div class="image-card reveal">
+            <!-- 
+              Если хочешь свою картинку:
+              1) создай папку assets
+              2) загрузи туда файл, например chimera-cover.jpg
+              3) раскомментируй строку img ниже
+              4) можешь удалить div.image-fallback
+            -->
 
-<p>
-The system combines multiple bots, data collectors and analysis
-modules into a unified architecture running on a single VPS.
-</p>
+            <!-- <img class="cover-image" src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
 
-</div>
+            <div class="image-fallback">
+              <h3>System Overview</h3>
+              <p>
+                Core coordination, modular workers, analytics, storage and structured monitoring combined in one evolving project environment.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<div id="ru">
+      <section class="section container reveal" id="overview-en">
+        <div class="section-card">
+          <h2 class="section-title">Overview</h2>
+          <div class="two-col">
+            <div>
+              <p>
+                Chimera is a personal project focused on transforming Discord activity into a more structured environment for monitoring, organization, analytics and selective automation.
+              </p>
+              <p class="muted">
+                The project is presented as a modular system that can grow over time without requiring the entire architecture to be rebuilt from scratch.
+              </p>
+            </div>
+            <div>
+              <p>
+                Its current concept combines a core control layer, auxiliary worker modules, event collection, analytical processing and centralized storage.
+              </p>
+              <p class="muted">
+                The result is a foundation for a scalable ecosystem rather than a single-purpose bot.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<h1>Chimera</h1>
-<div class="status">Экспериментальный проект • Активная разработка</div>
+      <section class="section container reveal">
+        <div class="section-card">
+          <h2 class="section-title">Author</h2>
+          <div class="author-box">
+            <p>
+              Chimera was created by <strong>impresent</strong>, also known as <strong>aglvet</strong>, as a long-term personal system design project centered around Discord automation, analytics and modular infrastructure thinking.
+            </p>
+            <div class="author-names">
+              <span class="name-pill">Primary alias: impresent</span>
+              <span class="name-pill">Secondary alias: aglvet</span>
+              <span class="name-pill">Project status: Active development</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<p>
-Модульная система автоматизации и аналитики для Discord.
-</p>
+      <section class="section container reveal">
+        <h2 class="section-title">Architecture</h2>
+        <div class="arch-grid">
+          <div class="arch-card">
+            <div class="card-kicker">Layer 01</div>
+            <h3 class="card-title">Core Control</h3>
+            <p class="card-text">
+              Central coordination layer responsible for project logic, system flow and module orchestration.
+            </p>
+          </div>
 
-<h2>Обзор</h2>
+          <div class="arch-card">
+            <div class="card-kicker">Layer 02</div>
+            <h3 class="card-title">Monitoring Layer</h3>
+            <p class="card-text">
+              Structured event observation and contextual information intake for further processing and analysis.
+            </p>
+          </div>
 
-<p>
-Chimera — это персональная система, созданная для наблюдения
-за активностью, анализа коммуникации и автоматизации действий
-в Discord-среде.
-</p>
+          <div class="arch-card">
+            <div class="card-kicker">Layer 03</div>
+            <h3 class="card-title">Worker Modules</h3>
+            <p class="card-text">
+              Specialized execution components designed for notifications, automation routines and task-specific processing.
+            </p>
+          </div>
 
-<p>
-Система объединяет несколько ботов, модули сбора данных
-и аналитические компоненты в единую архитектуру,
-работающую на одном VPS.
-</p>
+          <div class="arch-card">
+            <div class="card-kicker">Layer 04</div>
+            <h3 class="card-title">Collector</h3>
+            <p class="card-text">
+              Event intake and normalization pipeline used to structure incoming activity and prepare it for storage.
+            </p>
+          </div>
 
-</div>
+          <div class="arch-card">
+            <div class="card-kicker">Layer 05</div>
+            <h3 class="card-title">Analyzer</h3>
+            <p class="card-text">
+              Analytical component intended for identifying patterns, thematic trends and activity statistics.
+            </p>
+          </div>
 
-</div>
+          <div class="arch-card">
+            <div class="card-kicker">Layer 06</div>
+            <h3 class="card-title">Storage</h3>
+            <p class="card-text">
+              Centralized storage model combining structured records, logs and archived contextual information.
+            </p>
+          </div>
+        </div>
+      </section>
 
+      <section class="section container reveal">
+        <h2 class="section-title">Core Modules</h2>
+        <div class="cards-grid">
+          <div class="module-card">
+            <h3 class="card-title">Chat Analytics</h3>
+            <p class="card-text">Pattern tracking, activity summaries and communication structure analysis.</p>
+          </div>
+
+          <div class="module-card">
+            <h3 class="card-title">Voice Analytics</h3>
+            <p class="card-text">Session observation, activity timing and broader voice participation context.</p>
+          </div>
+
+          <div class="module-card">
+            <h3 class="card-title">Notifications</h3>
+            <p class="card-text">Reminder logic, event alerts and configurable status updates.</p>
+          </div>
+
+          <div class="module-card">
+            <h3 class="card-title">Automation</h3>
+            <p class="card-text">Reusable workflows for repeated tasks and structured routine handling.</p>
+          </div>
+
+          <div class="module-card">
+            <h3 class="card-title">Logging</h3>
+            <p class="card-text">Long-term activity capture for retrospective analysis and system visibility.</p>
+          </div>
+
+          <div class="module-card">
+            <h3 class="card-title">AI Analysis</h3>
+            <p class="card-text">Experimental interpretation layer for categorization, summaries and pattern insight.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Roadmap</h2>
+        <div class="roadmap-grid">
+          <div class="roadmap-card">
+            <div class="card-kicker">Phase 1</div>
+            <h3 class="card-title">Foundation</h3>
+            <ul class="timeline-list">
+              <li>Project concept and identity</li>
+              <li>Landing page and multilingual presentation</li>
+              <li>Core architecture planning</li>
+            </ul>
+          </div>
+
+          <div class="roadmap-card">
+            <div class="card-kicker">Phase 2</div>
+            <h3 class="card-title">Systems</h3>
+            <ul class="timeline-list">
+              <li>Collector expansion</li>
+              <li>Modular workers</li>
+              <li>Analytics and reporting logic</li>
+            </ul>
+          </div>
+
+          <div class="roadmap-card">
+            <div class="card-kicker">Phase 3</div>
+            <h3 class="card-title">Growth</h3>
+            <ul class="timeline-list">
+              <li>Deeper modular specialization</li>
+              <li>Improved visual reporting</li>
+              <li>Broader ecosystem refinement</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal" id="contact-en">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3 class="card-title">Author Identity</h3>
+            <ul class="contact-list">
+              <li><strong>Primary alias:</strong> impresent</li>
+              <li><strong>Secondary alias:</strong> aglvet</li>
+              <li><strong>Project:</strong> Chimera</li>
+              <li><strong>Status:</strong> Active development</li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3 class="card-title">Optional Links</h3>
+            <ul class="contact-list">
+              <li>Discord: <span class="muted">add your handle here</span></li>
+              <li>GitHub: <span class="muted">add your profile link here</span></li>
+              <li>Email: <span class="muted">add your email here if needed</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- RU -->
+    <div class="lang-content hidden-lang" id="lang-ru">
+      <section class="hero container">
+        <div class="hero-grid">
+          <div class="hero-card reveal">
+            <div class="status-row">
+              <span class="badge"><span class="dot"></span> Экспериментальный проект</span>
+              <span class="badge">Активная разработка</span>
+              <span class="badge">Несколько языков</span>
+              <span class="badge">Модульная архитектура</span>
+            </div>
+
+            <h1>Chimera</h1>
+
+            <p class="hero-lead">
+              Модульный проект автоматизации и аналитики для Discord, задуманный как долгосрочная персональная экосистема для структурированного сбора событий, анализа активности и автоматизации процессов.
+            </p>
+
+            <p class="hero-sub">
+              Проект был задуман <strong>impresent</strong>, также известным как <strong>aglvet</strong>. В настоящее время Chimera находится в стадии активной разработки и продолжает развиваться за счёт новых модулей, архитектурных доработок и расширения аналитических возможностей.
+            </p>
+
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#overview-ru">Открыть проект</a>
+              <a class="btn btn-secondary" href="#contact-ru">Контакты</a>
+            </div>
+          </div>
+
+          <div class="image-card reveal">
+            <!-- <img class="cover-image" src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
+            <div class="image-fallback">
+              <h3>Общий обзор системы</h3>
+              <p>
+                Центральная координация, модульные исполнители, аналитика, хранилище и структурированный мониторинг в одном развивающемся проекте.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal" id="overview-ru">
+        <div class="section-card">
+          <h2 class="section-title">Обзор</h2>
+          <div class="two-col">
+            <div>
+              <p>
+                Chimera — это персональный проект, направленный на превращение активности в Discord в более структурированную среду для мониторинга, организации, аналитики и выборочной автоматизации.
+              </p>
+              <p class="muted">
+                Проект представлен как модульная система, которая может расти со временем без необходимости полностью перестраивать всю архитектуру.
+              </p>
+            </div>
+            <div>
+              <p>
+                Текущая концепция объединяет центральный управляющий слой, вспомогательные рабочие модули, сбор событий, аналитическую обработку и централизованное хранилище.
+              </p>
+              <p class="muted">
+                В результате получается основа для масштабируемой экосистемы, а не просто один бот с одной функцией.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <div class="section-card">
+          <h2 class="section-title">Автор</h2>
+          <div class="author-box">
+            <p>
+              Проект Chimera был создан <strong>impresent</strong>, также известным как <strong>aglvet</strong>, как долгосрочный персональный проект, сосредоточенный на автоматизации Discord, аналитике и идее модульной инфраструктуры.
+            </p>
+            <div class="author-names">
+              <span class="name-pill">Основной ник: impresent</span>
+              <span class="name-pill">Второй ник: aglvet</span>
+              <span class="name-pill">Статус проекта: активная разработка</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Архитектура</h2>
+        <div class="arch-grid">
+          <div class="arch-card">
+            <div class="card-kicker">Уровень 01</div>
+            <h3 class="card-title">Core Control</h3>
+            <p class="card-text">
+              Центральный координационный слой, отвечающий за логику проекта, поток системы и оркестрацию модулей.
+            </p>
+          </div>
+
+          <div class="arch-card">
+            <div class="card-kicker">Уровень 02</div>
+            <h3 class="card-title">Monitoring Layer</h3>
+            <p class="card-text">
+              Структурированное наблюдение за событиями и приём контекстной информации для дальнейшей обработки и анализа.
+            </p>
+          </div>
+
+          <div class="arch-card">
+            <div class="card-kicker">Уровень 03</div>
+            <h3 class="card-title">Worker Modules</h3>
+            <p class="card-text">
+              Специализированные исполнительные компоненты для уведомлений, автоматизации и обработки конкретных задач.
+            </p>
+          </div>
+
+          <div class="arch-card">
+            <div class="card-kicker">Уровень 04</div>
+            <h3 class="card-title">Collector</h3>
+            <p class="card-text">
+              Конвейер приёма и нормализации событий, который структурирует входящую активность и подготавливает её к хранению.
+            </p>
+          </div>
+
+          <div class="arch-card">
+            <div class="card-kicker">Уровень 05</div>
+            <h3 class="card-title">Analyzer</h3>
+            <p class="card-text">
+              Аналитический компонент для выявления паттернов, тематических направлений и статистики активности.
+            </p>
+          </div>
+
+          <div class="arch-card">
+            <div class="card-kicker">Уровень 06</div>
+            <h3 class="card-title">Storage</h3>
+            <p class="card-text">
+              Централизованная модель хранения, объединяющая структурированные записи, логи и архивные контекстные данные.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Основные модули</h2>
+        <div class="cards-grid">
+          <div class="module-card">
+            <h3 class="card-title">Chat Analytics</h3>
+            <p class="card-text">Отслеживание паттернов, сводки активности и анализ структуры общения.</p>
+          </div>
+
+          <div class="module-card">
+            <h3 class="card-title">Voice Analytics</h3>
+            <p class="card-text">Наблюдение за сессиями, временными показателями и общим контекстом голосовой активности.</p>
+          </div>
+
+          <div class="module-card">
+            <h3 class="card-title">Notifications</h3>
+            <p class="card-text">Логика напоминаний, уведомления о событиях и настраиваемые обновления статуса.</p>
+          </div>
+
+          <div class="module-card">
+            <h3 class="card-title">Automation</h3>
+            <p class="card-text">Повторно используемые процессы для рутинных задач и структурированной автоматизации.</p>
+          </div>
+
+          <div class="module-card">
+            <h3 class="card-title">Logging</h3>
+            <p class="card-text">Долгосрочная фиксация активности для ретроспективного анализа и прозрачности системы.</p>
+          </div>
+
+          <div class="module-card">
+            <h3 class="card-title">AI Analysis</h3>
+            <p class="card-text">Экспериментальный слой интерпретации для категоризации, сводок и выявления закономерностей.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Roadmap</h2>
+        <div class="roadmap-grid">
+          <div class="roadmap-card">
+            <div class="card-kicker">Фаза 1</div>
+            <h3 class="card-title">Основа</h3>
+            <ul class="timeline-list">
+              <li>Концепция и идентичность проекта</li>
+              <li>Лендинг и многоязычное представление</li>
+              <li>Планирование ядра архитектуры</li>
+            </ul>
+          </div>
+
+          <div class="roadmap-card">
+            <div class="card-kicker">Фаза 2</div>
+            <h3 class="card-title">Системы</h3>
+            <ul class="timeline-list">
+              <li>Расширение collector-логики</li>
+              <li>Модульные исполнители</li>
+              <li>Аналитика и логика отчётности</li>
+            </ul>
+          </div>
+
+          <div class="roadmap-card">
+            <div class="card-kicker">Фаза 3</div>
+            <h3 class="card-title">Рост</h3>
+            <ul class="timeline-list">
+              <li>Более глубокая специализация модулей</li>
+              <li>Улучшенная визуальная отчётность</li>
+              <li>Дальнейшая доработка экосистемы</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal" id="contact-ru">
+        <h2 class="section-title">Контакты</h2>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3 class="card-title">Информация об авторе</h3>
+            <ul class="contact-list">
+              <li><strong>Основной ник:</strong> impresent</li>
+              <li><strong>Второй ник:</strong> aglvet</li>
+              <li><strong>Проект:</strong> Chimera</li>
+              <li><strong>Статус:</strong> активная разработка</li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3 class="card-title">Дополнительные ссылки</h3>
+            <ul class="contact-list">
+              <li>Discord: <span class="muted">добавь сюда свой ник</span></li>
+              <li>GitHub: <span class="muted">добавь сюда ссылку на профиль</span></li>
+              <li>Email: <span class="muted">добавь сюда почту, если нужно</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- DE -->
+    <div class="lang-content hidden-lang" id="lang-de">
+      <section class="hero container">
+        <div class="hero-grid">
+          <div class="hero-card reveal">
+            <div class="status-row">
+              <span class="badge"><span class="dot"></span> Experimentelles Projekt</span>
+              <span class="badge">Aktive Entwicklung</span>
+              <span class="badge">Mehrsprachig</span>
+              <span class="badge">Modulare Architektur</span>
+            </div>
+
+            <h1>Chimera</h1>
+
+            <p class="hero-lead">
+              Ein modulares Discord-Automatisierungs- und Analyseprojekt, konzipiert als langfristiges persönliches Ökosystem für strukturierte Ereigniserfassung, Aktivitätsanalyse und Workflow-Automatisierung.
+            </p>
+
+            <p class="hero-sub">
+              Chimera wurde von <strong>impresent</strong>, auch bekannt als <strong>aglvet</strong>, entwickelt. Das Projekt befindet sich aktuell in aktiver Entwicklung und wächst durch neue Module, Architekturverbesserungen und erweiterte Analysefunktionen.
+            </p>
+
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#overview-de">Projekt ansehen</a>
+              <a class="btn btn-secondary" href="#contact-de">Kontakt</a>
+            </div>
+          </div>
+
+          <div class="image-card reveal">
+            <!-- <img class="cover-image" src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
+            <div class="image-fallback">
+              <h3>Systemübersicht</h3>
+              <p>
+                Zentrale Koordination, modulare Worker, Analyse, Speicherung und strukturiertes Monitoring in einer sich entwickelnden Projektumgebung.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal" id="overview-de">
+        <div class="section-card">
+          <h2 class="section-title">Überblick</h2>
+          <div class="two-col">
+            <div>
+              <p>
+                Chimera ist ein persönliches Projekt mit dem Ziel, Discord-Aktivität in eine strukturiertere Umgebung für Monitoring, Organisation, Analyse und selektive Automatisierung zu überführen.
+              </p>
+              <p class="muted">
+                Das Projekt ist als modulares System gedacht, das mit der Zeit wachsen kann, ohne dass die gesamte Architektur neu aufgebaut werden muss.
+              </p>
+            </div>
+            <div>
+              <p>
+                Das aktuelle Konzept verbindet eine zentrale Steuerungsebene, ergänzende Arbeitsmodule, Ereigniserfassung, analytische Verarbeitung und zentrale Speicherung.
+              </p>
+              <p class="muted">
+                Das Ergebnis ist die Grundlage für ein skalierbares Ökosystem und nicht nur für einen einzelnen Bot.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <div class="section-card">
+          <h2 class="section-title">Autor</h2>
+          <div class="author-box">
+            <p>
+              Chimera wurde von <strong>impresent</strong>, auch bekannt als <strong>aglvet</strong>, als langfristiges persönliches Projekt im Bereich Discord-Automatisierung, Analyse und modularer Infrastruktur konzipiert.
+            </p>
+            <div class="author-names">
+              <span class="name-pill">Primärer Alias: impresent</span>
+              <span class="name-pill">Zweiter Alias: aglvet</span>
+              <span class="name-pill">Projektstatus: aktive Entwicklung</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Architektur</h2>
+        <div class="arch-grid">
+          <div class="arch-card">
+            <div class="card-kicker">Ebene 01</div>
+            <h3 class="card-title">Core Control</h3>
+            <p class="card-text">Zentrale Koordinationsebene für Projektlogik, Systemfluss und Orchestrierung der Module.</p>
+          </div>
+          <div class="arch-card">
+            <div class="card-kicker">Ebene 02</div>
+            <h3 class="card-title">Monitoring Layer</h3>
+            <p class="card-text">Strukturierte Beobachtung von Ereignissen und Aufnahme kontextbezogener Informationen zur weiteren Analyse.</p>
+          </div>
+          <div class="arch-card">
+            <div class="card-kicker">Ebene 03</div>
+            <h3 class="card-title">Worker Modules</h3>
+            <p class="card-text">Spezialisierte Ausführungskomponenten für Benachrichtigungen, Automatisierung und aufgabenbezogene Prozesse.</p>
+          </div>
+          <div class="arch-card">
+            <div class="card-kicker">Ebene 04</div>
+            <h3 class="card-title">Collector</h3>
+            <p class="card-text">Pipeline zur Ereignisaufnahme und Normalisierung, um eingehende Aktivität zu strukturieren.</p>
+          </div>
+          <div class="arch-card">
+            <div class="card-kicker">Ebene 05</div>
+            <h3 class="card-title">Analyzer</h3>
+            <p class="card-text">Analytische Komponente zur Erkennung von Mustern, Themen und Aktivitätsstatistiken.</p>
+          </div>
+          <div class="arch-card">
+            <div class="card-kicker">Ebene 06</div>
+            <h3 class="card-title">Storage</h3>
+            <p class="card-text">Zentrales Speichermodell für strukturierte Einträge, Logs und archivierte Kontextdaten.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Module</h2>
+        <div class="cards-grid">
+          <div class="module-card"><h3 class="card-title">Chat Analytics</h3><p class="card-text">Mustererkennung, Aktivitätsübersichten und Analyse der Kommunikationsstruktur.</p></div>
+          <div class="module-card"><h3 class="card-title">Voice Analytics</h3><p class="card-text">Beobachtung von Sitzungen, Zeitmustern und Kontext sprachbasierter Aktivität.</p></div>
+          <div class="module-card"><h3 class="card-title">Notifications</h3><p class="card-text">Erinnerungslogik, Ereigniswarnungen und konfigurierbare Statusmeldungen.</p></div>
+          <div class="module-card"><h3 class="card-title">Automation</h3><p class="card-text">Wiederverwendbare Workflows für Routinen und strukturierte Aufgabenabläufe.</p></div>
+          <div class="module-card"><h3 class="card-title">Logging</h3><p class="card-text">Langfristige Erfassung von Aktivität für spätere Auswertung und Transparenz.</p></div>
+          <div class="module-card"><h3 class="card-title">AI Analysis</h3><p class="card-text">Experimentelle Interpretationsebene für Kategorisierung, Zusammenfassungen und Mustererkennung.</p></div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Roadmap</h2>
+        <div class="roadmap-grid">
+          <div class="roadmap-card">
+            <div class="card-kicker">Phase 1</div>
+            <h3 class="card-title">Grundlage</h3>
+            <ul class="timeline-list">
+              <li>Projektkonzept und Identität</li>
+              <li>Landingpage und Mehrsprachigkeit</li>
+              <li>Planung der Kernarchitektur</li>
+            </ul>
+          </div>
+          <div class="roadmap-card">
+            <div class="card-kicker">Phase 2</div>
+            <h3 class="card-title">Systeme</h3>
+            <ul class="timeline-list">
+              <li>Erweiterung der Collector-Logik</li>
+              <li>Modulare Worker</li>
+              <li>Analyse- und Reportinglogik</li>
+            </ul>
+          </div>
+          <div class="roadmap-card">
+            <div class="card-kicker">Phase 3</div>
+            <h3 class="card-title">Wachstum</h3>
+            <ul class="timeline-list">
+              <li>Tiefere Modulspezialisierung</li>
+              <li>Bessere visuelle Berichte</li>
+              <li>Weitere Verfeinerung des Ökosystems</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal" id="contact-de">
+        <h2 class="section-title">Kontakt</h2>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3 class="card-title">Autorenprofil</h3>
+            <ul class="contact-list">
+              <li><strong>Primärer Alias:</strong> impresent</li>
+              <li><strong>Zweiter Alias:</strong> aglvet</li>
+              <li><strong>Projekt:</strong> Chimera</li>
+              <li><strong>Status:</strong> aktive Entwicklung</li>
+            </ul>
+          </div>
+          <div class="contact-card">
+            <h3 class="card-title">Optionale Links</h3>
+            <ul class="contact-list">
+              <li>Discord: <span class="muted">füge hier deinen Namen ein</span></li>
+              <li>GitHub: <span class="muted">füge hier dein Profil ein</span></li>
+              <li>E-Mail: <span class="muted">füge hier deine E-Mail ein</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- UK -->
+    <div class="lang-content hidden-lang" id="lang-uk">
+      <section class="hero container">
+        <div class="hero-grid">
+          <div class="hero-card reveal">
+            <div class="status-row">
+              <span class="badge"><span class="dot"></span> Експериментальний проєкт</span>
+              <span class="badge">Активна розробка</span>
+              <span class="badge">Кілька мов</span>
+              <span class="badge">Модульна архітектура</span>
+            </div>
+
+            <h1>Chimera</h1>
+
+            <p class="hero-lead">
+              Модульний проєкт автоматизації та аналітики для Discord, задуманий як довгострокова персональна екосистема для структурованого збору подій, аналізу активності та автоматизації процесів.
+            </p>
+
+            <p class="hero-sub">
+              Проєкт був задуманий <strong>impresent</strong>, також відомим як <strong>aglvet</strong>. Зараз Chimera перебуває у фазі активної розробки та продовжує розвиватися завдяки новим модулям, архітектурним покращенням і розширеним аналітичним можливостям.
+            </p>
+
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#overview-uk">Огляд проєкту</a>
+              <a class="btn btn-secondary" href="#contact-uk">Контакти</a>
+            </div>
+          </div>
+
+          <div class="image-card reveal">
+            <!-- <img class="cover-image" src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
+            <div class="image-fallback">
+              <h3>Огляд системи</h3>
+              <p>
+                Центральна координація, модульні виконавці, аналітика, сховище та структурований моніторинг в одному проєктному середовищі.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal" id="overview-uk">
+        <div class="section-card">
+          <h2 class="section-title">Огляд</h2>
+          <div class="two-col">
+            <div>
+              <p>
+                Chimera — це персональний проєкт, спрямований на перетворення активності в Discord на більш структуроване середовище для моніторингу, організації, аналітики та вибіркової автоматизації.
+              </p>
+              <p class="muted">
+                Проєкт подано як модульну систему, яка може зростати з часом без повної перебудови всієї архітектури.
+              </p>
+            </div>
+            <div>
+              <p>
+                Поточна концепція поєднує центральний керуючий шар, допоміжні робочі модулі, збір подій, аналітичну обробку та централізоване сховище.
+              </p>
+              <p class="muted">
+                У результаті формується основа для масштабованої екосистеми, а не просто для одного бота.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <div class="section-card">
+          <h2 class="section-title">Автор</h2>
+          <div class="author-box">
+            <p>
+              Проєкт Chimera був створений <strong>impresent</strong>, також відомим як <strong>aglvet</strong>, як довгостроковий персональний проєкт, зосереджений на автоматизації Discord, аналітиці та ідеї модульної інфраструктури.
+            </p>
+            <div class="author-names">
+              <span class="name-pill">Основний нік: impresent</span>
+              <span class="name-pill">Другий нік: aglvet</span>
+              <span class="name-pill">Статус проєкту: активна розробка</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Архітектура</h2>
+        <div class="arch-grid">
+          <div class="arch-card"><div class="card-kicker">Рівень 01</div><h3 class="card-title">Core Control</h3><p class="card-text">Центральний координаційний шар, що відповідає за логіку проєкту, потік системи та оркестрацію модулів.</p></div>
+          <div class="arch-card"><div class="card-kicker">Рівень 02</div><h3 class="card-title">Monitoring Layer</h3><p class="card-text">Структуроване спостереження за подіями та приймання контекстної інформації для подальшої обробки.</p></div>
+          <div class="arch-card"><div class="card-kicker">Рівень 03</div><h3 class="card-title">Worker Modules</h3><p class="card-text">Спеціалізовані виконавчі компоненти для сповіщень, автоматизації та обробки конкретних завдань.</p></div>
+          <div class="arch-card"><div class="card-kicker">Рівень 04</div><h3 class="card-title">Collector</h3><p class="card-text">Конвеєр приймання та нормалізації подій для структурування вхідної активності.</p></div>
+          <div class="arch-card"><div class="card-kicker">Рівень 05</div><h3 class="card-title">Analyzer</h3><p class="card-text">Аналітичний компонент для виявлення патернів, тематичних напрямів і статистики активності.</p></div>
+          <div class="arch-card"><div class="card-kicker">Рівень 06</div><h3 class="card-title">Storage</h3><p class="card-text">Централізована модель зберігання структурованих записів, логів і архівних контекстних даних.</p></div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Основні модулі</h2>
+        <div class="cards-grid">
+          <div class="module-card"><h3 class="card-title">Chat Analytics</h3><p class="card-text">Відстеження патернів, зведення активності та аналіз структури спілкування.</p></div>
+          <div class="module-card"><h3 class="card-title">Voice Analytics</h3><p class="card-text">Спостереження за сесіями, часовими показниками та загальним контекстом голосової активності.</p></div>
+          <div class="module-card"><h3 class="card-title">Notifications</h3><p class="card-text">Логіка нагадувань, сповіщення про події та налаштовувані оновлення статусу.</p></div>
+          <div class="module-card"><h3 class="card-title">Automation</h3><p class="card-text">Повторно використовувані процеси для рутинних завдань і структурованої автоматизації.</p></div>
+          <div class="module-card"><h3 class="card-title">Logging</h3><p class="card-text">Довгострокова фіксація активності для ретроспективного аналізу й прозорості системи.</p></div>
+          <div class="module-card"><h3 class="card-title">AI Analysis</h3><p class="card-text">Експериментальний шар інтерпретації для категоризації, зведень і виявлення закономірностей.</p></div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Roadmap</h2>
+        <div class="roadmap-grid">
+          <div class="roadmap-card">
+            <div class="card-kicker">Фаза 1</div>
+            <h3 class="card-title">Основа</h3>
+            <ul class="timeline-list">
+              <li>Концепція та ідентичність проєкту</li>
+              <li>Лендінг і багатомовне представлення</li>
+              <li>Планування ядра архітектури</li>
+            </ul>
+          </div>
+          <div class="roadmap-card">
+            <div class="card-kicker">Фаза 2</div>
+            <h3 class="card-title">Системи</h3>
+            <ul class="timeline-list">
+              <li>Розширення collector-логіки</li>
+              <li>Модульні виконавці</li>
+              <li>Аналітика та логіка звітності</li>
+            </ul>
+          </div>
+          <div class="roadmap-card">
+            <div class="card-kicker">Фаза 3</div>
+            <h3 class="card-title">Розвиток</h3>
+            <ul class="timeline-list">
+              <li>Глибша спеціалізація модулів</li>
+              <li>Краща візуальна звітність</li>
+              <li>Подальше вдосконалення екосистеми</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal" id="contact-uk">
+        <h2 class="section-title">Контакти</h2>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3 class="card-title">Інформація про автора</h3>
+            <ul class="contact-list">
+              <li><strong>Основний нік:</strong> impresent</li>
+              <li><strong>Другий нік:</strong> aglvet</li>
+              <li><strong>Проєкт:</strong> Chimera</li>
+              <li><strong>Статус:</strong> активна розробка</li>
+            </ul>
+          </div>
+          <div class="contact-card">
+            <h3 class="card-title">Додаткові посилання</h3>
+            <ul class="contact-list">
+              <li>Discord: <span class="muted">додай сюди свій нік</span></li>
+              <li>GitHub: <span class="muted">додай сюди свій профіль</span></li>
+              <li>Email: <span class="muted">додай сюди пошту, якщо потрібно</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ES -->
+    <div class="lang-content hidden-lang" id="lang-es">
+      <section class="hero container">
+        <div class="hero-grid">
+          <div class="hero-card reveal">
+            <div class="status-row">
+              <span class="badge"><span class="dot"></span> Proyecto experimental</span>
+              <span class="badge">Desarrollo activo</span>
+              <span class="badge">Multilenguaje</span>
+              <span class="badge">Arquitectura modular</span>
+            </div>
+
+            <h1>Chimera</h1>
+
+            <p class="hero-lead">
+              Un proyecto modular de automatización y analítica para Discord, concebido como un ecosistema personal a largo plazo para la recopilación estructurada de eventos, el análisis de actividad y la automatización de flujos.
+            </p>
+
+            <p class="hero-sub">
+              Chimera fue concebido por <strong>impresent</strong>, también conocido como <strong>aglvet</strong>. Actualmente el proyecto se encuentra en desarrollo activo y sigue evolucionando mediante nuevos módulos, mejoras de arquitectura y capacidades analíticas ampliadas.
+            </p>
+
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#overview-es">Explorar proyecto</a>
+              <a class="btn btn-secondary" href="#contact-es">Contacto</a>
+            </div>
+          </div>
+
+          <div class="image-card reveal">
+            <!-- <img class="cover-image" src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
+            <div class="image-fallback">
+              <h3>Visión general del sistema</h3>
+              <p>
+                Coordinación central, módulos ejecutores, analítica, almacenamiento y monitoreo estructurado dentro de un mismo entorno de proyecto.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal" id="overview-es">
+        <div class="section-card">
+          <h2 class="section-title">Resumen</h2>
+          <div class="two-col">
+            <div>
+              <p>
+                Chimera es un proyecto personal orientado a transformar la actividad de Discord en un entorno más estructurado para monitoreo, organización, análisis y automatización selectiva.
+              </p>
+              <p class="muted">
+                El proyecto se presenta como un sistema modular que puede crecer con el tiempo sin reconstruir por completo toda la arquitectura.
+              </p>
+            </div>
+            <div>
+              <p>
+                Su concepto actual combina una capa central de control, módulos auxiliares de trabajo, recopilación de eventos, procesamiento analítico y almacenamiento centralizado.
+              </p>
+              <p class="muted">
+                El resultado es una base para un ecosistema escalable y no solamente para un bot de propósito único.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <div class="section-card">
+          <h2 class="section-title">Autor</h2>
+          <div class="author-box">
+            <p>
+              Chimera fue creado por <strong>impresent</strong>, también conocido como <strong>aglvet</strong>, como un proyecto personal de largo plazo centrado en automatización de Discord, analítica e infraestructura modular.
+            </p>
+            <div class="author-names">
+              <span class="name-pill">Alias principal: impresent</span>
+              <span class="name-pill">Segundo alias: aglvet</span>
+              <span class="name-pill">Estado del proyecto: desarrollo activo</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Arquitectura</h2>
+        <div class="arch-grid">
+          <div class="arch-card"><div class="card-kicker">Capa 01</div><h3 class="card-title">Core Control</h3><p class="card-text">Capa central de coordinación para la lógica del proyecto, el flujo del sistema y la orquestación de módulos.</p></div>
+          <div class="arch-card"><div class="card-kicker">Capa 02</div><h3 class="card-title">Monitoring Layer</h3><p class="card-text">Observación estructurada de eventos y recepción de información contextual para su posterior análisis.</p></div>
+          <div class="arch-card"><div class="card-kicker">Capa 03</div><h3 class="card-title">Worker Modules</h3><p class="card-text">Componentes especializados para notificaciones, automatización y procesamiento de tareas específicas.</p></div>
+          <div class="arch-card"><div class="card-kicker">Capa 04</div><h3 class="card-title">Collector</h3><p class="card-text">Canal de recepción y normalización de eventos para estructurar la actividad entrante.</p></div>
+          <div class="arch-card"><div class="card-kicker">Capa 05</div><h3 class="card-title">Analyzer</h3><p class="card-text">Componente analítico para identificar patrones, tendencias temáticas y estadísticas de actividad.</p></div>
+          <div class="arch-card"><div class="card-kicker">Capa 06</div><h3 class="card-title">Storage</h3><p class="card-text">Modelo de almacenamiento centralizado con registros estructurados, logs e información contextual archivada.</p></div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Módulos</h2>
+        <div class="cards-grid">
+          <div class="module-card"><h3 class="card-title">Chat Analytics</h3><p class="card-text">Seguimiento de patrones, resúmenes de actividad y análisis de la estructura comunicativa.</p></div>
+          <div class="module-card"><h3 class="card-title">Voice Analytics</h3><p class="card-text">Observación de sesiones, tiempos de actividad y contexto general de participación por voz.</p></div>
+          <div class="module-card"><h3 class="card-title">Notifications</h3><p class="card-text">Lógica de recordatorios, alertas de eventos y actualizaciones de estado configurables.</p></div>
+          <div class="module-card"><h3 class="card-title">Automation</h3><p class="card-text">Flujos reutilizables para tareas repetitivas y automatización estructurada.</p></div>
+          <div class="module-card"><h3 class="card-title">Logging</h3><p class="card-text">Captura a largo plazo de actividad para análisis retrospectivo y visibilidad del sistema.</p></div>
+          <div class="module-card"><h3 class="card-title">AI Analysis</h3><p class="card-text">Capa experimental de interpretación para categorización, resúmenes y detección de patrones.</p></div>
+        </div>
+      </section>
+
+      <section class="section container reveal">
+        <h2 class="section-title">Roadmap</h2>
+        <div class="roadmap-grid">
+          <div class="roadmap-card">
+            <div class="card-kicker">Fase 1</div>
+            <h3 class="card-title">Base</h3>
+            <ul class="timeline-list">
+              <li>Concepto e identidad del proyecto</li>
+              <li>Landing page y presentación multilingüe</li>
+              <li>Planificación de la arquitectura central</li>
+            </ul>
+          </div>
+          <div class="roadmap-card">
+            <div class="card-kicker">Fase 2</div>
+            <h3 class="card-title">Sistemas</h3>
+            <ul class="timeline-list">
+              <li>Expansión de la lógica collector</li>
+              <li>Workers modulares</li>
+              <li>Lógica de analítica y reportes</li>
+            </ul>
+          </div>
+          <div class="roadmap-card">
+            <div class="card-kicker">Fase 3</div>
+            <h3 class="card-title">Crecimiento</h3>
+            <ul class="timeline-list">
+              <li>Especialización modular más profunda</li>
+              <li>Mejoras en reportes visuales</li>
+              <li>Refinamiento ampliado del ecosistema</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container reveal" id="contact-es">
+        <h2 class="section-title">Contacto</h2>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3 class="card-title">Identidad del autor</h3>
+            <ul class="contact-list">
+              <li><strong>Alias principal:</strong> impresent</li>
+              <li><strong>Segundo alias:</strong> aglvet</li>
+              <li><strong>Proyecto:</strong> Chimera</li>
+              <li><strong>Estado:</strong> desarrollo activo</li>
+            </ul>
+          </div>
+          <div class="contact-card">
+            <h3 class="card-title">Enlaces opcionales</h3>
+            <ul class="contact-list">
+              <li>Discord: <span class="muted">añade aquí tu usuario</span></li>
+              <li>GitHub: <span class="muted">añade aquí tu perfil</span></li>
+              <li>Email: <span class="muted">añade aquí tu correo si quieres</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="container">
+    <div class="footer-line">
+      Chimera • created by <strong>impresent</strong> aka <strong>aglvet</strong> • experimental project in active development
+    </div>
+  </footer>
+
+  <script>
+    const subtitles = {
+      en: "Experimental project • Active development",
+      ru: "Экспериментальный проект • Активная разработка",
+      de: "Experimentelles Projekt • Aktive Entwicklung",
+      uk: "Експериментальний проєкт • Активна розробка",
+      es: "Proyecto experimental • Desarrollo activo"
+    };
+
+    const buttons = document.querySelectorAll(".lang-btn");
+    const sections = document.querySelectorAll(".lang-content");
+    const subtitle = document.getElementById("topbarSubtitle");
+
+    function setLanguage(lang){
+      sections.forEach(section => {
+        section.classList.add("hidden-lang");
+      });
+
+      const active = document.getElementById(`lang-${lang}`);
+      if(active){
+        active.classList.remove("hidden-lang");
+      }
+
+      buttons.forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+
+      subtitle.textContent = subtitles[lang] || subtitles.en;
+      localStorage.setItem("chimera-lang", lang);
+
+      setTimeout(initReveal, 50);
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+    });
+
+    function initReveal(){
+      const reveals = document.querySelectorAll(".lang-content:not(.hidden-lang) .reveal");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            entry.target.classList.add("visible");
+          }
+        });
+      }, { threshold: 0.12 });
+
+      reveals.forEach(el => observer.observe(el));
+    }
+
+    const savedLang = localStorage.getItem("chimera-lang") || "en";
+    setLanguage(savedLang);
+  </script>
 </body>
 </html>

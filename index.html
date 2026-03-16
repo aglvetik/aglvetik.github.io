@@ -1,1 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+<meta charset="UTF-8">
+<title>Chimera System</title>
+
+<style>
+
+body{
+    background-color:#0f0f0f;
+    color:#e6e6e6;
+    font-family:Arial, sans-serif;
+    margin:0;
+    padding:0;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:60px 20px;
+}
+
+h1{
+    font-size:48px;
+    margin-bottom:10px;
+}
+
+h2{
+    margin-top:40px;
+}
+
+.lang{
+    position:absolute;
+    top:20px;
+    right:30px;
+}
+
+button{
+    background:#1f1f1f;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    margin-left:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#333;
+}
+
+</style>
+
+<script>
+
+function setLang(lang){
+
+document.getElementById("en").style.display = "none";
+document.getElementById("ru").style.display = "none";
+
+document.getElementById(lang).style.display = "block";
+
+}
+
+</script>
+
+</head>
+
+<body onload="setLang('en')">
+
+<div class="lang">
+<button onclick="setLang('en')">English</button>
+<button onclick="setLang('ru')">Русский</button>
+</div>
+
+<div class="container">
+
+<div id="en">
+
+<h1>Chimera</h1>
+
+<p>
+A modular automation and analytics ecosystem for Discord.
+</p>
+
+<h2>Overview</h2>
+
+<p>
+Chimera is a personal system designed to observe activity,
+analyze communication patterns and automate repetitive actions
+across Discord environments.
+</p>
+
+<p>
+The system combines multiple bots, data collectors and analysis
+modules into a unified architecture running on a single VPS.
+</p>
+
+</div>
+
+<div id="ru">
+
+<h1>Chimera</h1>
+
+<p>
+Модульная система автоматизации и аналитики для Discord.
+</p>
+
+<h2>Обзор</h2>
+
+<p>
+Chimera — это персональная система, созданная для наблюдения
+за активностью, анализа коммуникации и автоматизации действий
+в Discord-среде.
+</p>
+
+<p>
+Система объединяет несколько ботов, модули сбора данных
+и аналитические компоненты в единую архитектуру,
+работающую на одном VPS.
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>

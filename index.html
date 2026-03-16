@@ -8,20 +8,39 @@
 
   <style>
     :root{
-      --bg:#0a0d14;
-      --bg2:#0f1420;
-      --card:#121927;
-      --card2:#161f31;
+      --bg:#0b0f17;
+      --bg-2:#0f1420;
       --text:#ecf1f8;
-      --muted:#9aa8bf;
+      --muted:#98a5bb;
       --line:rgba(255,255,255,0.08);
-      --accent:#8b5cf6;
-      --accent2:#4cc9f0;
-      --glow:rgba(139,92,246,0.22);
-      --shadow:0 12px 36px rgba(0,0,0,0.35);
+      --shadow:0 14px 38px rgba(0,0,0,0.34);
       --radius:22px;
-      --radius-sm:14px;
+      --radius-sm:16px;
       --max:1140px;
+
+      --hero-a:rgba(91,140,255,0.10);
+      --hero-b:rgba(151,98,255,0.12);
+      --hero-c:rgba(73,203,189,0.08);
+
+      --overview-a:rgba(81,149,255,0.14);
+      --overview-b:rgba(58,119,184,0.10);
+
+      --arch-a:rgba(144,104,255,0.16);
+      --arch-b:rgba(96,75,180,0.10);
+
+      --func-a:rgba(63,184,163,0.15);
+      --func-b:rgba(28,120,121,0.10);
+
+      --capsule-a:rgba(99,153,255,0.12);
+      --capsule-b:rgba(141,104,255,0.14);
+      --capsule-c:rgba(71,187,172,0.10);
+
+      --pill-a:rgba(255,255,255,0.05);
+      --pill-b:rgba(255,255,255,0.04);
+
+      --accent-blue:#7db4ff;
+      --accent-violet:#b89cff;
+      --accent-teal:#7de1d3;
     }
 
     *{
@@ -37,9 +56,10 @@
       font-family:Inter, Arial, Helvetica, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at top left, rgba(76,201,240,0.08), transparent 26%),
-        radial-gradient(circle at top right, rgba(139,92,246,0.12), transparent 32%),
-        linear-gradient(180deg, #090b12 0%, #0a0d14 100%);
+        radial-gradient(circle at top left, rgba(91,140,255,0.08), transparent 25%),
+        radial-gradient(circle at top right, rgba(144,104,255,0.10), transparent 30%),
+        radial-gradient(circle at 50% 0%, rgba(63,184,163,0.05), transparent 26%),
+        linear-gradient(180deg, #090c13 0%, #0b0f17 100%);
       line-height:1.6;
       overflow-x:hidden;
     }
@@ -59,7 +79,7 @@
       top:0;
       z-index:1000;
       backdrop-filter:blur(14px);
-      background:rgba(10,13,20,0.75);
+      background:rgba(11,15,23,0.76);
       border-bottom:1px solid var(--line);
     }
 
@@ -87,8 +107,11 @@
       justify-content:center;
       color:#fff;
       font-weight:800;
-      background:linear-gradient(135deg, rgba(139,92,246,0.95), rgba(76,201,240,0.92));
-      box-shadow:0 0 0 1px rgba(255,255,255,0.05), 0 0 24px var(--glow);
+      background:
+        linear-gradient(135deg, rgba(125,180,255,0.95), rgba(184,156,255,0.92) 58%, rgba(125,225,211,0.88));
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.05),
+        0 0 24px rgba(140,124,255,0.16);
       flex:0 0 auto;
     }
 
@@ -118,7 +141,7 @@
       border-radius:999px;
       cursor:pointer;
       font-size:13px;
-      transition:0.2s ease;
+      transition:0.22s ease;
     }
 
     .lang-btn:hover{
@@ -127,9 +150,10 @@
     }
 
     .lang-btn.active{
-      background:linear-gradient(135deg, rgba(139,92,246,0.24), rgba(76,201,240,0.18));
-      border-color:rgba(139,92,246,0.35);
-      box-shadow:0 0 20px rgba(139,92,246,0.14);
+      background:
+        linear-gradient(135deg, rgba(125,180,255,0.15), rgba(184,156,255,0.15), rgba(125,225,211,0.12));
+      border-color:rgba(184,156,255,0.30);
+      box-shadow:0 0 20px rgba(140,124,255,0.12);
     }
 
     .hero{
@@ -146,9 +170,9 @@
     .hero-main,
     .hero-side,
     .nav-card,
-    .detail-panel{
+    .detail-panel,
+    .mini-kpi{
       border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
       border-radius:var(--radius);
       box-shadow:var(--shadow);
     }
@@ -157,6 +181,10 @@
       padding:34px;
       position:relative;
       overflow:hidden;
+      background:
+        radial-gradient(circle at 100% 100%, rgba(184,156,255,0.12), transparent 28%),
+        radial-gradient(circle at 0% 0%, rgba(125,180,255,0.10), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.018));
     }
 
     .hero-main::after{
@@ -164,11 +192,11 @@
       position:absolute;
       right:-70px;
       bottom:-90px;
-      width:220px;
-      height:220px;
+      width:240px;
+      height:240px;
       border-radius:50%;
-      background:radial-gradient(circle, rgba(139,92,246,0.23), transparent 68%);
-      filter:blur(8px);
+      background:radial-gradient(circle, rgba(184,156,255,0.16), transparent 68%);
+      filter:blur(10px);
       pointer-events:none;
     }
 
@@ -187,7 +215,7 @@
       border-radius:999px;
       font-size:12px;
       color:#dbe6fb;
-      background:rgba(255,255,255,0.04);
+      background:rgba(255,255,255,0.045);
       border:1px solid rgba(255,255,255,0.08);
     }
 
@@ -195,8 +223,8 @@
       width:8px;
       height:8px;
       border-radius:50%;
-      background:var(--accent2);
-      box-shadow:0 0 12px rgba(76,201,240,0.7);
+      background:var(--accent-teal);
+      box-shadow:0 0 12px rgba(125,225,211,0.42);
       flex:0 0 auto;
     }
 
@@ -223,22 +251,23 @@
 
     .author-inline{
       margin-top:18px;
-      padding:16px 18px;
+      padding:18px 18px 16px;
       border:1px solid rgba(255,255,255,0.06);
-      border-radius:16px;
-      background:rgba(255,255,255,0.025);
+      border-radius:18px;
+      background:
+        linear-gradient(135deg, rgba(125,180,255,0.05), rgba(184,156,255,0.05), rgba(125,225,211,0.04));
     }
 
     .author-inline h3{
       margin:0 0 10px;
-      font-size:15px;
+      font-size:14px;
       color:#dfe8f7;
-      letter-spacing:0.04em;
+      letter-spacing:0.08em;
       text-transform:uppercase;
     }
 
     .author-inline p{
-      margin:0 0 12px;
+      margin:0 0 14px;
       color:#d9e2f0;
       font-size:14px;
     }
@@ -246,15 +275,15 @@
     .author-tags{
       display:flex;
       flex-wrap:wrap;
-      gap:8px;
+      gap:10px;
     }
 
     .tag{
-      padding:8px 12px;
+      padding:9px 13px;
       border-radius:999px;
       font-size:12px;
       color:#dbe6fb;
-      background:rgba(255,255,255,0.04);
+      background:rgba(255,255,255,0.045);
       border:1px solid rgba(255,255,255,0.08);
     }
 
@@ -263,7 +292,12 @@
       min-height:340px;
       position:relative;
       display:flex;
-      align-items:flex-end;
+      align-items:stretch;
+      background:
+        radial-gradient(circle at 18% 18%, var(--capsule-a), transparent 26%),
+        radial-gradient(circle at 82% 10%, var(--capsule-b), transparent 32%),
+        radial-gradient(circle at 50% 100%, var(--capsule-c), transparent 24%),
+        linear-gradient(145deg, #111827 0%, #101828 52%, #111827 100%);
     }
 
     .hero-side img{
@@ -274,22 +308,17 @@
       opacity:0.95;
     }
 
-    .hero-fallback{
+    .capsule{
       width:100%;
-      height:100%;
       min-height:340px;
-      padding:26px;
+      padding:24px;
       display:flex;
       flex-direction:column;
-      justify-content:flex-end;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(76,201,240,0.16), transparent 28%),
-        radial-gradient(circle at 80% 10%, rgba(139,92,246,0.24), transparent 34%),
-        linear-gradient(145deg, #101726 0%, #0f172a 52%, #111827 100%);
+      gap:16px;
       position:relative;
     }
 
-    .hero-fallback::before{
+    .capsule::before{
       content:"";
       position:absolute;
       inset:16px;
@@ -298,17 +327,115 @@
       pointer-events:none;
     }
 
-    .hero-fallback h3{
-      margin:0 0 10px;
-      font-size:28px;
+    .capsule-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      position:relative;
       z-index:1;
     }
 
-    .hero-fallback p{
+    .capsule-kicker{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+      color:#b8c7dd;
+      margin-bottom:8px;
+    }
+
+    .capsule h3{
       margin:0;
-      max-width:380px;
+      font-size:28px;
+      line-height:1.05;
+    }
+
+    .capsule-pill{
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      color:#dce8fb;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.10);
+      white-space:nowrap;
+    }
+
+    .capsule-text{
+      margin:0;
       color:#cad5e6;
+      max-width:460px;
+      position:relative;
       z-index:1;
+    }
+
+    .kpi-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      position:relative;
+      z-index:1;
+    }
+
+    .mini-kpi{
+      padding:14px;
+      border-radius:16px;
+      background:rgba(255,255,255,0.035);
+    }
+
+    .mini-kpi.blue{
+      background:
+        linear-gradient(180deg, rgba(81,149,255,0.10), rgba(81,149,255,0.04));
+      border-color:rgba(125,180,255,0.16);
+    }
+
+    .mini-kpi.violet{
+      background:
+        linear-gradient(180deg, rgba(144,104,255,0.11), rgba(144,104,255,0.04));
+      border-color:rgba(184,156,255,0.16);
+    }
+
+    .mini-kpi.teal{
+      background:
+        linear-gradient(180deg, rgba(63,184,163,0.11), rgba(63,184,163,0.04));
+      border-color:rgba(125,225,211,0.16);
+    }
+
+    .mini-kpi.mixed{
+      background:
+        linear-gradient(180deg, rgba(125,180,255,0.08), rgba(184,156,255,0.08), rgba(63,184,163,0.05));
+      border-color:rgba(255,255,255,0.10);
+    }
+
+    .mini-kpi .kpi-label{
+      font-size:11px;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:#b8c7dd;
+      margin-bottom:8px;
+    }
+
+    .mini-kpi .kpi-value{
+      font-size:15px;
+      color:#eef4ff;
+      line-height:1.35;
+    }
+
+    .capsule-bottom{
+      margin-top:auto;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+      position:relative;
+      z-index:1;
+    }
+
+    .capsule-line{
+      padding:12px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.045);
+      border:1px solid rgba(255,255,255,0.08);
+      color:#dbe5f4;
+      font-size:14px;
     }
 
     .quick-nav{
@@ -340,11 +467,41 @@
       position:absolute;
       right:-30px;
       bottom:-40px;
-      width:120px;
-      height:120px;
+      width:130px;
+      height:130px;
       border-radius:50%;
-      background:radial-gradient(circle, rgba(139,92,246,0.18), transparent 70%);
       pointer-events:none;
+      opacity:0.9;
+    }
+
+    .nav-card.overview{
+      background:
+        radial-gradient(circle at 100% 0%, var(--overview-a), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.018));
+    }
+
+    .nav-card.overview::after{
+      background:radial-gradient(circle, rgba(125,180,255,0.18), transparent 70%);
+    }
+
+    .nav-card.architecture{
+      background:
+        radial-gradient(circle at 100% 0%, var(--arch-a), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.018));
+    }
+
+    .nav-card.architecture::after{
+      background:radial-gradient(circle, rgba(184,156,255,0.18), transparent 70%);
+    }
+
+    .nav-card.functionality{
+      background:
+        radial-gradient(circle at 100% 0%, var(--func-a), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.018));
+    }
+
+    .nav-card.functionality::after{
+      background:radial-gradient(circle, rgba(125,225,211,0.18), transparent 70%);
     }
 
     .nav-kicker{
@@ -380,6 +537,27 @@
 
     .detail-panel.active{
       display:block;
+    }
+
+    .detail-panel.overview{
+      background:
+        radial-gradient(circle at top right, rgba(81,149,255,0.13), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(58,119,184,0.08), transparent 22%),
+        linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.018));
+    }
+
+    .detail-panel.architecture{
+      background:
+        radial-gradient(circle at top right, rgba(144,104,255,0.14), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(96,75,180,0.08), transparent 22%),
+        linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.018));
+    }
+
+    .detail-panel.functionality{
+      background:
+        radial-gradient(circle at top right, rgba(63,184,163,0.14), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(28,120,121,0.08), transparent 22%),
+        linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.018));
     }
 
     .detail-head{
@@ -430,7 +608,7 @@
     }
 
     .mini-card{
-      background:rgba(255,255,255,0.025);
+      background:rgba(255,255,255,0.03);
       border:1px solid rgba(255,255,255,0.07);
       border-radius:18px;
       padding:20px;
@@ -440,6 +618,24 @@
     .mini-card:hover{
       transform:translateY(-3px);
       border-color:rgba(255,255,255,0.14);
+    }
+
+    .mini-card.blue{
+      background:
+        linear-gradient(180deg, rgba(81,149,255,0.08), rgba(81,149,255,0.025));
+      border-color:rgba(125,180,255,0.12);
+    }
+
+    .mini-card.violet{
+      background:
+        linear-gradient(180deg, rgba(144,104,255,0.09), rgba(144,104,255,0.025));
+      border-color:rgba(184,156,255,0.12);
+    }
+
+    .mini-card.teal{
+      background:
+        linear-gradient(180deg, rgba(63,184,163,0.09), rgba(63,184,163,0.025));
+      border-color:rgba(125,225,211,0.12);
     }
 
     .mini-card h3{
@@ -474,9 +670,29 @@
       font-size:14px;
     }
 
-    .footer-line{
+    .footer-box{
       border-top:1px solid var(--line);
       padding-top:18px;
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      gap:14px;
+      align-items:flex-start;
+    }
+
+    .footer-main{
+      max-width:760px;
+      color:#cfd9ea;
+    }
+
+    .footer-main strong{
+      color:#eef4ff;
+      font-weight:700;
+    }
+
+    .footer-side{
+      color:var(--muted);
+      white-space:nowrap;
     }
 
     @keyframes fadeUp{
@@ -498,6 +714,10 @@
       .func-grid{
         grid-template-columns:1fr 1fr;
       }
+
+      .kpi-grid{
+        grid-template-columns:1fr 1fr;
+      }
     }
 
     @media (max-width: 760px){
@@ -514,7 +734,8 @@
       .nav-grid,
       .two-col,
       .arch-grid,
-      .func-grid{
+      .func-grid,
+      .kpi-grid{
         grid-template-columns:1fr;
       }
 
@@ -530,6 +751,18 @@
 
       .hero-lead{
         font-size:17px;
+      }
+
+      .capsule-top{
+        flex-direction:column;
+      }
+
+      .footer-box{
+        flex-direction:column;
+      }
+
+      .footer-side{
+        white-space:normal;
       }
     }
   </style>
@@ -583,29 +816,55 @@
                 Проект Chimera был создан <strong>impresent</strong>, также известным как <strong>aglvet</strong>, как долгосрочный персональный проект, сосредоточенный на автоматизации Discord, аналитике и идее модульной инфраструктуры.
               </p>
               <div class="author-tags">
-                <span class="tag">Основной ник: impresent</span>
-                <span class="tag">Второй ник: aglvet</span>
-                <span class="tag">Статус проекта: активная разработка</span>
+                <span class="tag">Creator identity • impresent</span>
+                <span class="tag">Alias line • aglvet</span>
+                <span class="tag">Development phase • active</span>
               </div>
             </div>
           </div>
 
           <div class="hero-side reveal">
-            <!-- 
-              Если хочешь вставить картинку:
-              1) создай папку assets
-              2) загрузи туда файл, например chimera-cover.jpg
-              3) раскомментируй строку ниже
-              4) можешь удалить блок .hero-fallback
-            -->
-
             <!-- <img src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
 
-            <div class="hero-fallback">
-              <h3>Project Overview</h3>
-              <p>
-                Единая система, объединяющая координацию, аналитику, модули обработки и дальнейшее развитие архитектуры.
+            <div class="capsule">
+              <div class="capsule-top">
+                <div>
+                  <div class="capsule-kicker">System capsule</div>
+                  <h3>Chimera Snapshot</h3>
+                </div>
+                <div class="capsule-pill">Experimental build</div>
+              </div>
+
+              <p class="capsule-text">
+                Компактное представление проекта: текущий фокус, ключевые опоры системы и направление дальнейшего роста.
               </p>
+
+              <div class="kpi-grid">
+                <div class="mini-kpi blue">
+                  <div class="kpi-label">Current state</div>
+                  <div class="kpi-value">Концепция и структура проекта активно формируются</div>
+                </div>
+
+                <div class="mini-kpi violet">
+                  <div class="kpi-label">Core focus</div>
+                  <div class="kpi-value">Discord automation, analytics and modular ecosystem design</div>
+                </div>
+
+                <div class="mini-kpi teal">
+                  <div class="kpi-label">Design model</div>
+                  <div class="kpi-value">Layered architecture with scalable module expansion</div>
+                </div>
+
+                <div class="mini-kpi mixed">
+                  <div class="kpi-label">Author identity</div>
+                  <div class="kpi-value">impresent · aglvet</div>
+                </div>
+              </div>
+
+              <div class="capsule-bottom">
+                <div class="capsule-line">Core idea → превратить Discord-активность в более структурированную аналитическую среду</div>
+                <div class="capsule-line">Project direction → долгосрочное развитие системы, а не одного отдельного инструмента</div>
+              </div>
             </div>
           </div>
         </div>
@@ -613,7 +872,7 @@
 
       <section class="quick-nav container reveal">
         <div class="nav-grid">
-          <a class="nav-card" href="#panel-overview" data-panel="panel-overview">
+          <a class="nav-card overview" href="#panel-overview" data-panel="panel-overview">
             <div class="nav-kicker">Раздел 01</div>
             <h2 class="nav-title">Общее описание</h2>
             <p class="nav-text">
@@ -621,7 +880,7 @@
             </p>
           </a>
 
-          <a class="nav-card" href="#panel-architecture" data-panel="panel-architecture">
+          <a class="nav-card architecture" href="#panel-architecture" data-panel="panel-architecture">
             <div class="nav-kicker">Раздел 02</div>
             <h2 class="nav-title">Архитектура</h2>
             <p class="nav-text">
@@ -629,7 +888,7 @@
             </p>
           </a>
 
-          <a class="nav-card" href="#panel-functions" data-panel="panel-functions">
+          <a class="nav-card functionality" href="#panel-functions" data-panel="panel-functions">
             <div class="nav-kicker">Раздел 03</div>
             <h2 class="nav-title">Функционал</h2>
             <p class="nav-text">
@@ -640,7 +899,7 @@
       </section>
 
       <section class="details container">
-        <div class="detail-panel" id="panel-overview">
+        <div class="detail-panel overview" id="panel-overview">
           <div class="detail-head">
             <h2>Общее описание</h2>
             <button class="close-btn" data-close>Закрыть</button>
@@ -666,7 +925,7 @@
           </div>
         </div>
 
-        <div class="detail-panel" id="panel-architecture">
+        <div class="detail-panel architecture" id="panel-architecture">
           <div class="detail-head">
             <h2>Архитектура</h2>
             <button class="close-btn" data-close>Закрыть</button>
@@ -677,39 +936,39 @@
           </p>
 
           <div class="arch-grid">
-            <div class="mini-card">
+            <div class="mini-card violet">
               <h3>Core Control</h3>
               <p>Центральный управляющий слой, отвечающий за координацию, общую логику и развитие структуры проекта.</p>
             </div>
 
-            <div class="mini-card">
+            <div class="mini-card violet">
               <h3>Monitoring Layer</h3>
               <p>Уровень наблюдения за событиями и приёма контекстной информации для дальнейшей обработки.</p>
             </div>
 
-            <div class="mini-card">
+            <div class="mini-card violet">
               <h3>Worker Modules</h3>
               <p>Отдельные исполнительные модули для конкретных задач, автоматизации и вспомогательных процессов.</p>
             </div>
 
-            <div class="mini-card">
+            <div class="mini-card violet">
               <h3>Collector</h3>
               <p>Модуль приёма и структурирования событий, подготавливающий данные к последующей фиксации и анализу.</p>
             </div>
 
-            <div class="mini-card">
+            <div class="mini-card violet">
               <h3>Analyzer</h3>
               <p>Аналитический слой для выявления паттернов, статистики активности и тематических направлений.</p>
             </div>
 
-            <div class="mini-card">
+            <div class="mini-card violet">
               <h3>Storage</h3>
               <p>Централизованное хранилище для структурированных записей, логов и архивной информации проекта.</p>
             </div>
           </div>
         </div>
 
-        <div class="detail-panel" id="panel-functions">
+        <div class="detail-panel functionality" id="panel-functions">
           <div class="detail-head">
             <h2>Функционал</h2>
             <button class="close-btn" data-close>Закрыть</button>
@@ -720,32 +979,32 @@
           </p>
 
           <div class="func-grid">
-            <div class="mini-card">
+            <div class="mini-card teal">
               <h3>Chat Analytics</h3>
               <p>Анализ структуры общения, активности, повторяющихся паттернов и общей динамики коммуникации.</p>
             </div>
 
-            <div class="mini-card">
+            <div class="mini-card teal">
               <h3>Voice Analytics</h3>
               <p>Наблюдение за голосовой активностью, сессиями, временными отрезками и поведенческим контекстом.</p>
             </div>
 
-            <div class="mini-card">
+            <div class="mini-card teal">
               <h3>Notifications</h3>
               <p>Система напоминаний, внутренних уведомлений и вспомогательных сигналов по заданным сценариям.</p>
             </div>
 
-            <div class="mini-card">
+            <div class="mini-card teal">
               <h3>Automation</h3>
               <p>Автоматизация повторяющихся действий и перенос рутинных процессов в модульную систему.</p>
             </div>
 
-            <div class="mini-card">
+            <div class="mini-card teal">
               <h3>Logging</h3>
               <p>Фиксация активности и долгосрочное хранение событий для ретроспективного просмотра и аналитики.</p>
             </div>
 
-            <div class="mini-card">
+            <div class="mini-card teal">
               <h3>AI Analysis</h3>
               <p>Экспериментальное аналитическое направление для классификации, сводок и выявления закономерностей.</p>
             </div>
@@ -781,20 +1040,55 @@
                 Chimera was created by <strong>impresent</strong>, also known as <strong>aglvet</strong>, as a long-term personal project focused on Discord automation, analytics and modular infrastructure design.
               </p>
               <div class="author-tags">
-                <span class="tag">Primary alias: impresent</span>
-                <span class="tag">Secondary alias: aglvet</span>
-                <span class="tag">Project status: active development</span>
+                <span class="tag">Creator identity • impresent</span>
+                <span class="tag">Alias line • aglvet</span>
+                <span class="tag">Development phase • active</span>
               </div>
             </div>
           </div>
 
           <div class="hero-side reveal">
             <!-- <img src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
-            <div class="hero-fallback">
-              <h3>Project Overview</h3>
-              <p>
-                A unified system combining coordination, analytics, processing modules and a growing project architecture.
+
+            <div class="capsule">
+              <div class="capsule-top">
+                <div>
+                  <div class="capsule-kicker">System capsule</div>
+                  <h3>Chimera Snapshot</h3>
+                </div>
+                <div class="capsule-pill">Experimental build</div>
+              </div>
+
+              <p class="capsule-text">
+                A compact visual summary of the project: current focus, core pillars and the direction of future growth.
               </p>
+
+              <div class="kpi-grid">
+                <div class="mini-kpi blue">
+                  <div class="kpi-label">Current state</div>
+                  <div class="kpi-value">Project structure and concept are actively taking shape</div>
+                </div>
+
+                <div class="mini-kpi violet">
+                  <div class="kpi-label">Core focus</div>
+                  <div class="kpi-value">Discord automation, analytics and modular ecosystem design</div>
+                </div>
+
+                <div class="mini-kpi teal">
+                  <div class="kpi-label">Design model</div>
+                  <div class="kpi-value">Layered architecture with scalable module expansion</div>
+                </div>
+
+                <div class="mini-kpi mixed">
+                  <div class="kpi-label">Author identity</div>
+                  <div class="kpi-value">impresent · aglvet</div>
+                </div>
+              </div>
+
+              <div class="capsule-bottom">
+                <div class="capsule-line">Core idea → turn Discord activity into a more structured analytical environment</div>
+                <div class="capsule-line">Project direction → long-term system evolution instead of a single isolated tool</div>
+              </div>
             </div>
           </div>
         </div>
@@ -802,19 +1096,19 @@
 
       <section class="quick-nav container reveal">
         <div class="nav-grid">
-          <a class="nav-card" href="#panel-overview" data-panel="panel-overview">
+          <a class="nav-card overview" href="#panel-overview" data-panel="panel-overview">
             <div class="nav-kicker">Section 01</div>
             <h2 class="nav-title">Overview</h2>
             <p class="nav-text">What Chimera is, why it exists and how the project idea is structured.</p>
           </a>
 
-          <a class="nav-card" href="#panel-architecture" data-panel="panel-architecture">
+          <a class="nav-card architecture" href="#panel-architecture" data-panel="panel-architecture">
             <div class="nav-kicker">Section 02</div>
             <h2 class="nav-title">Architecture</h2>
             <p class="nav-text">Core system layers, structural logic and interaction between major components.</p>
           </a>
 
-          <a class="nav-card" href="#panel-functions" data-panel="panel-functions">
+          <a class="nav-card functionality" href="#panel-functions" data-panel="panel-functions">
             <div class="nav-kicker">Section 03</div>
             <h2 class="nav-title">Functionality</h2>
             <p class="nav-text">Main project directions: analytics, automation, logging and modular expansion.</p>
@@ -823,7 +1117,7 @@
       </section>
 
       <section class="details container">
-        <div class="detail-panel" id="panel-overview">
+        <div class="detail-panel overview" id="panel-overview">
           <div class="detail-head">
             <h2>Overview</h2>
             <button class="close-btn" data-close>Close</button>
@@ -849,7 +1143,7 @@
           </div>
         </div>
 
-        <div class="detail-panel" id="panel-architecture">
+        <div class="detail-panel architecture" id="panel-architecture">
           <div class="detail-head">
             <h2>Architecture</h2>
             <button class="close-btn" data-close>Close</button>
@@ -860,16 +1154,16 @@
           </p>
 
           <div class="arch-grid">
-            <div class="mini-card"><h3>Core Control</h3><p>Central management layer responsible for coordination, high-level logic and project structure.</p></div>
-            <div class="mini-card"><h3>Monitoring Layer</h3><p>Observation layer for incoming events and contextual information intended for later processing.</p></div>
-            <div class="mini-card"><h3>Worker Modules</h3><p>Separate execution modules for task-specific behavior, automation and auxiliary logic.</p></div>
-            <div class="mini-card"><h3>Collector</h3><p>Event intake and structuring layer preparing information for storage and analysis.</p></div>
-            <div class="mini-card"><h3>Analyzer</h3><p>Analytical layer for activity patterns, statistics and broader thematic interpretation.</p></div>
-            <div class="mini-card"><h3>Storage</h3><p>Centralized storage for structured records, logs and archived project information.</p></div>
+            <div class="mini-card violet"><h3>Core Control</h3><p>Central management layer responsible for coordination, high-level logic and project structure.</p></div>
+            <div class="mini-card violet"><h3>Monitoring Layer</h3><p>Observation layer for incoming events and contextual information intended for later processing.</p></div>
+            <div class="mini-card violet"><h3>Worker Modules</h3><p>Separate execution modules for task-specific behavior, automation and auxiliary logic.</p></div>
+            <div class="mini-card violet"><h3>Collector</h3><p>Event intake and structuring layer preparing information for storage and analysis.</p></div>
+            <div class="mini-card violet"><h3>Analyzer</h3><p>Analytical layer for activity patterns, statistics and broader thematic interpretation.</p></div>
+            <div class="mini-card violet"><h3>Storage</h3><p>Centralized storage for structured records, logs and archived project information.</p></div>
           </div>
         </div>
 
-        <div class="detail-panel" id="panel-functions">
+        <div class="detail-panel functionality" id="panel-functions">
           <div class="detail-head">
             <h2>Functionality</h2>
             <button class="close-btn" data-close>Close</button>
@@ -880,12 +1174,12 @@
           </p>
 
           <div class="func-grid">
-            <div class="mini-card"><h3>Chat Analytics</h3><p>Analysis of communication structure, activity patterns and broader interaction dynamics.</p></div>
-            <div class="mini-card"><h3>Voice Analytics</h3><p>Observation of voice activity, sessions, time segments and contextual participation patterns.</p></div>
-            <div class="mini-card"><h3>Notifications</h3><p>Reminder logic, internal alerts and supportive signaling based on defined scenarios.</p></div>
-            <div class="mini-card"><h3>Automation</h3><p>Transfer of repeated actions and routine workflows into a modular automated environment.</p></div>
-            <div class="mini-card"><h3>Logging</h3><p>Long-term event capture for retrospective review and analytical visibility.</p></div>
-            <div class="mini-card"><h3>AI Analysis</h3><p>Experimental analytical direction for summaries, classification and pattern interpretation.</p></div>
+            <div class="mini-card teal"><h3>Chat Analytics</h3><p>Analysis of communication structure, activity patterns and broader interaction dynamics.</p></div>
+            <div class="mini-card teal"><h3>Voice Analytics</h3><p>Observation of voice activity, sessions, time segments and contextual participation patterns.</p></div>
+            <div class="mini-card teal"><h3>Notifications</h3><p>Reminder logic, internal alerts and supportive signaling based on defined scenarios.</p></div>
+            <div class="mini-card teal"><h3>Automation</h3><p>Transfer of repeated actions and routine workflows into a modular automated environment.</p></div>
+            <div class="mini-card teal"><h3>Logging</h3><p>Long-term event capture for retrospective review and analytical visibility.</p></div>
+            <div class="mini-card teal"><h3>AI Analysis</h3><p>Experimental analytical direction for summaries, classification and pattern interpretation.</p></div>
           </div>
         </div>
       </section>
@@ -918,20 +1212,55 @@
                 Chimera wurde von <strong>impresent</strong>, auch bekannt als <strong>aglvet</strong>, als langfristiges persönliches Projekt im Bereich Discord-Automatisierung, Analyse und modularer Infrastruktur entwickelt.
               </p>
               <div class="author-tags">
-                <span class="tag">Primärer Alias: impresent</span>
-                <span class="tag">Zweiter Alias: aglvet</span>
-                <span class="tag">Projektstatus: aktive Entwicklung</span>
+                <span class="tag">Creator identity • impresent</span>
+                <span class="tag">Alias line • aglvet</span>
+                <span class="tag">Development phase • active</span>
               </div>
             </div>
           </div>
 
           <div class="hero-side reveal">
             <!-- <img src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
-            <div class="hero-fallback">
-              <h3>Projektüberblick</h3>
-              <p>
-                Ein einheitliches System aus Koordination, Analyse, Verarbeitungsmodulen und wachsender Projektarchitektur.
+
+            <div class="capsule">
+              <div class="capsule-top">
+                <div>
+                  <div class="capsule-kicker">System capsule</div>
+                  <h3>Chimera Snapshot</h3>
+                </div>
+                <div class="capsule-pill">Experimental build</div>
+              </div>
+
+              <p class="capsule-text">
+                Eine kompakte visuelle Zusammenfassung des Projekts: aktueller Fokus, zentrale Pfeiler und Richtung des weiteren Ausbaus.
               </p>
+
+              <div class="kpi-grid">
+                <div class="mini-kpi blue">
+                  <div class="kpi-label">Current state</div>
+                  <div class="kpi-value">Projektstruktur und Konzept werden aktiv weiterentwickelt</div>
+                </div>
+
+                <div class="mini-kpi violet">
+                  <div class="kpi-label">Core focus</div>
+                  <div class="kpi-value">Discord automation, analytics and modular ecosystem design</div>
+                </div>
+
+                <div class="mini-kpi teal">
+                  <div class="kpi-label">Design model</div>
+                  <div class="kpi-value">Layered architecture with scalable module expansion</div>
+                </div>
+
+                <div class="mini-kpi mixed">
+                  <div class="kpi-label">Author identity</div>
+                  <div class="kpi-value">impresent · aglvet</div>
+                </div>
+              </div>
+
+              <div class="capsule-bottom">
+                <div class="capsule-line">Core idea → Discord-Aktivität in eine strukturiertere Analyseumgebung überführen</div>
+                <div class="capsule-line">Project direction → langfristige Systementwicklung statt eines einzelnen isolierten Tools</div>
+              </div>
             </div>
           </div>
         </div>
@@ -939,19 +1268,19 @@
 
       <section class="quick-nav container reveal">
         <div class="nav-grid">
-          <a class="nav-card" href="#panel-overview" data-panel="panel-overview">
+          <a class="nav-card overview" href="#panel-overview" data-panel="panel-overview">
             <div class="nav-kicker">Bereich 01</div>
             <h2 class="nav-title">Überblick</h2>
             <p class="nav-text">Was Chimera ist, warum das Projekt existiert und wie die Grundidee aufgebaut ist.</p>
           </a>
 
-          <a class="nav-card" href="#panel-architecture" data-panel="panel-architecture">
+          <a class="nav-card architecture" href="#panel-architecture" data-panel="panel-architecture">
             <div class="nav-kicker">Bereich 02</div>
             <h2 class="nav-title">Architektur</h2>
             <p class="nav-text">Kernschichten des Systems, strukturelle Logik und Zusammenspiel der Hauptkomponenten.</p>
           </a>
 
-          <a class="nav-card" href="#panel-functions" data-panel="panel-functions">
+          <a class="nav-card functionality" href="#panel-functions" data-panel="panel-functions">
             <div class="nav-kicker">Bereich 03</div>
             <h2 class="nav-title">Funktionalität</h2>
             <p class="nav-text">Zentrale Projektbereiche: Analyse, Automatisierung, Logging und modulare Erweiterung.</p>
@@ -960,7 +1289,7 @@
       </section>
 
       <section class="details container">
-        <div class="detail-panel" id="panel-overview">
+        <div class="detail-panel overview" id="panel-overview">
           <div class="detail-head">
             <h2>Überblick</h2>
             <button class="close-btn" data-close>Schließen</button>
@@ -986,7 +1315,7 @@
           </div>
         </div>
 
-        <div class="detail-panel" id="panel-architecture">
+        <div class="detail-panel architecture" id="panel-architecture">
           <div class="detail-head">
             <h2>Architektur</h2>
             <button class="close-btn" data-close>Schließen</button>
@@ -997,16 +1326,16 @@
           </p>
 
           <div class="arch-grid">
-            <div class="mini-card"><h3>Core Control</h3><p>Zentrale Steuerungsebene für Koordination, übergreifende Logik und Projektstruktur.</p></div>
-            <div class="mini-card"><h3>Monitoring Layer</h3><p>Beobachtungsebene für eingehende Ereignisse und kontextbezogene Informationen.</p></div>
-            <div class="mini-card"><h3>Worker Modules</h3><p>Getrennte Ausführungsmodule für aufgabenspezifisches Verhalten, Automatisierung und Hilfslogik.</p></div>
-            <div class="mini-card"><h3>Collector</h3><p>Ereignisaufnahme und Strukturierung als Vorbereitung für Speicherung und Analyse.</p></div>
-            <div class="mini-card"><h3>Analyzer</h3><p>Analyseschicht für Aktivitätsmuster, Statistiken und thematische Auswertung.</p></div>
-            <div class="mini-card"><h3>Storage</h3><p>Zentrale Speicherung strukturierter Einträge, Logs und archivierter Projektinformationen.</p></div>
+            <div class="mini-card violet"><h3>Core Control</h3><p>Zentrale Steuerungsebene für Koordination, übergreifende Logik und Projektstruktur.</p></div>
+            <div class="mini-card violet"><h3>Monitoring Layer</h3><p>Beobachtungsebene für eingehende Ereignisse und kontextbezogene Informationen.</p></div>
+            <div class="mini-card violet"><h3>Worker Modules</h3><p>Getrennte Ausführungsmodule für aufgabenspezifisches Verhalten, Automatisierung und Hilfslogik.</p></div>
+            <div class="mini-card violet"><h3>Collector</h3><p>Ereignisaufnahme und Strukturierung als Vorbereitung für Speicherung und Analyse.</p></div>
+            <div class="mini-card violet"><h3>Analyzer</h3><p>Analyseschicht für Aktivitätsmuster, Statistiken und thematische Auswertung.</p></div>
+            <div class="mini-card violet"><h3>Storage</h3><p>Zentrale Speicherung strukturierter Einträge, Logs und archivierter Projektinformationen.</p></div>
           </div>
         </div>
 
-        <div class="detail-panel" id="panel-functions">
+        <div class="detail-panel functionality" id="panel-functions">
           <div class="detail-head">
             <h2>Funktionalität</h2>
             <button class="close-btn" data-close>Schließen</button>
@@ -1017,12 +1346,12 @@
           </p>
 
           <div class="func-grid">
-            <div class="mini-card"><h3>Chat Analytics</h3><p>Analyse von Kommunikationsstruktur, Aktivitätsmustern und Interaktionsdynamik.</p></div>
-            <div class="mini-card"><h3>Voice Analytics</h3><p>Beobachtung von Sprachaktivität, Sitzungen, Zeitabschnitten und Teilnahmeverhalten.</p></div>
-            <div class="mini-card"><h3>Notifications</h3><p>Erinnerungslogik, interne Hinweise und unterstützende Signale nach definierten Szenarien.</p></div>
-            <div class="mini-card"><h3>Automation</h3><p>Übertragung wiederkehrender Handlungen und Routinen in ein modulares automatisiertes Umfeld.</p></div>
-            <div class="mini-card"><h3>Logging</h3><p>Langfristige Erfassung von Ereignissen für spätere Sichtbarkeit und Analyse.</p></div>
-            <div class="mini-card"><h3>AI Analysis</h3><p>Experimentelle Analyseschicht für Zusammenfassungen, Klassifikation und Musterinterpretation.</p></div>
+            <div class="mini-card teal"><h3>Chat Analytics</h3><p>Analyse von Kommunikationsstruktur, Aktivitätsmustern und Interaktionsdynamik.</p></div>
+            <div class="mini-card teal"><h3>Voice Analytics</h3><p>Beobachtung von Sprachaktivität, Sitzungen, Zeitabschnitten und Teilnahmeverhalten.</p></div>
+            <div class="mini-card teal"><h3>Notifications</h3><p>Erinnerungslogik, interne Hinweise und unterstützende Signale nach definierten Szenarien.</p></div>
+            <div class="mini-card teal"><h3>Automation</h3><p>Übertragung wiederkehrender Handlungen und Routinen in ein modulares automatisiertes Umfeld.</p></div>
+            <div class="mini-card teal"><h3>Logging</h3><p>Langfristige Erfassung von Ereignissen für spätere Sichtbarkeit und Analyse.</p></div>
+            <div class="mini-card teal"><h3>AI Analysis</h3><p>Experimentelle Analyseschicht für Zusammenfassungen, Klassifikation und Musterinterpretation.</p></div>
           </div>
         </div>
       </section>
@@ -1055,20 +1384,55 @@
                 Проєкт Chimera був створений <strong>impresent</strong>, також відомим як <strong>aglvet</strong>, як довгостроковий персональний проєкт, зосереджений на автоматизації Discord, аналітиці та ідеї модульної інфраструктури.
               </p>
               <div class="author-tags">
-                <span class="tag">Основний нік: impresent</span>
-                <span class="tag">Другий нік: aglvet</span>
-                <span class="tag">Статус проєкту: активна розробка</span>
+                <span class="tag">Creator identity • impresent</span>
+                <span class="tag">Alias line • aglvet</span>
+                <span class="tag">Development phase • active</span>
               </div>
             </div>
           </div>
 
           <div class="hero-side reveal">
             <!-- <img src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
-            <div class="hero-fallback">
-              <h3>Огляд проєкту</h3>
-              <p>
-                Єдина система, що поєднує координацію, аналітику, модулі обробки та зростаючу архітектуру проєкту.
+
+            <div class="capsule">
+              <div class="capsule-top">
+                <div>
+                  <div class="capsule-kicker">System capsule</div>
+                  <h3>Chimera Snapshot</h3>
+                </div>
+                <div class="capsule-pill">Experimental build</div>
+              </div>
+
+              <p class="capsule-text">
+                Компактне візуальне представлення проєкту: поточний фокус, ключові опори системи та напрям подальшого розвитку.
               </p>
+
+              <div class="kpi-grid">
+                <div class="mini-kpi blue">
+                  <div class="kpi-label">Current state</div>
+                  <div class="kpi-value">Структура та концепція проєкту активно формуються</div>
+                </div>
+
+                <div class="mini-kpi violet">
+                  <div class="kpi-label">Core focus</div>
+                  <div class="kpi-value">Discord automation, analytics and modular ecosystem design</div>
+                </div>
+
+                <div class="mini-kpi teal">
+                  <div class="kpi-label">Design model</div>
+                  <div class="kpi-value">Layered architecture with scalable module expansion</div>
+                </div>
+
+                <div class="mini-kpi mixed">
+                  <div class="kpi-label">Author identity</div>
+                  <div class="kpi-value">impresent · aglvet</div>
+                </div>
+              </div>
+
+              <div class="capsule-bottom">
+                <div class="capsule-line">Core idea → перетворити Discord-активність на більш структуроване аналітичне середовище</div>
+                <div class="capsule-line">Project direction → довгостроковий розвиток системи, а не одного окремого інструмента</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1076,19 +1440,19 @@
 
       <section class="quick-nav container reveal">
         <div class="nav-grid">
-          <a class="nav-card" href="#panel-overview" data-panel="panel-overview">
+          <a class="nav-card overview" href="#panel-overview" data-panel="panel-overview">
             <div class="nav-kicker">Розділ 01</div>
             <h2 class="nav-title">Загальний опис</h2>
             <p class="nav-text">Що таке Chimera, навіщо вона створюється та як побудована основна ідея проєкту.</p>
           </a>
 
-          <a class="nav-card" href="#panel-architecture" data-panel="panel-architecture">
+          <a class="nav-card architecture" href="#panel-architecture" data-panel="panel-architecture">
             <div class="nav-kicker">Розділ 02</div>
             <h2 class="nav-title">Архітектура</h2>
             <p class="nav-text">Основні рівні системи, логіка побудови та взаємодія ключових компонентів.</p>
           </a>
 
-          <a class="nav-card" href="#panel-functions" data-panel="panel-functions">
+          <a class="nav-card functionality" href="#panel-functions" data-panel="panel-functions">
             <div class="nav-kicker">Розділ 03</div>
             <h2 class="nav-title">Функціональність</h2>
             <p class="nav-text">Головні напрями проєкту: аналітика, автоматизація, логування та розвиток модулів.</p>
@@ -1097,7 +1461,7 @@
       </section>
 
       <section class="details container">
-        <div class="detail-panel" id="panel-overview">
+        <div class="detail-panel overview" id="panel-overview">
           <div class="detail-head">
             <h2>Загальний опис</h2>
             <button class="close-btn" data-close>Закрити</button>
@@ -1123,7 +1487,7 @@
           </div>
         </div>
 
-        <div class="detail-panel" id="panel-architecture">
+        <div class="detail-panel architecture" id="panel-architecture">
           <div class="detail-head">
             <h2>Архітектура</h2>
             <button class="close-btn" data-close>Закрити</button>
@@ -1134,16 +1498,16 @@
           </p>
 
           <div class="arch-grid">
-            <div class="mini-card"><h3>Core Control</h3><p>Центральний керуючий шар, що відповідає за координацію, загальну логіку та розвиток структури проєкту.</p></div>
-            <div class="mini-card"><h3>Monitoring Layer</h3><p>Рівень спостереження за подіями та приймання контекстної інформації для подальшої обробки.</p></div>
-            <div class="mini-card"><h3>Worker Modules</h3><p>Окремі виконавчі модулі для конкретних завдань, автоматизації та допоміжних процесів.</p></div>
-            <div class="mini-card"><h3>Collector</h3><p>Модуль приймання і структурування подій, який готує дані до фіксації та аналізу.</p></div>
-            <div class="mini-card"><h3>Analyzer</h3><p>Аналітичний шар для виявлення патернів, статистики активності та тематичних напрямів.</p></div>
-            <div class="mini-card"><h3>Storage</h3><p>Централізоване сховище для структурованих записів, логів і архівної інформації проєкту.</p></div>
+            <div class="mini-card violet"><h3>Core Control</h3><p>Центральний керуючий шар, що відповідає за координацію, загальну логіку та розвиток структури проєкту.</p></div>
+            <div class="mini-card violet"><h3>Monitoring Layer</h3><p>Рівень спостереження за подіями та приймання контекстної інформації для подальшої обробки.</p></div>
+            <div class="mini-card violet"><h3>Worker Modules</h3><p>Окремі виконавчі модулі для конкретних завдань, автоматизації та допоміжних процесів.</p></div>
+            <div class="mini-card violet"><h3>Collector</h3><p>Модуль приймання і структурування подій, який готує дані до фіксації та аналізу.</p></div>
+            <div class="mini-card violet"><h3>Analyzer</h3><p>Аналітичний шар для виявлення патернів, статистики активності та тематичних напрямів.</p></div>
+            <div class="mini-card violet"><h3>Storage</h3><p>Централізоване сховище для структурованих записів, логів і архівної інформації проєкту.</p></div>
           </div>
         </div>
 
-        <div class="detail-panel" id="panel-functions">
+        <div class="detail-panel functionality" id="panel-functions">
           <div class="detail-head">
             <h2>Функціональність</h2>
             <button class="close-btn" data-close>Закрити</button>
@@ -1154,12 +1518,12 @@
           </p>
 
           <div class="func-grid">
-            <div class="mini-card"><h3>Chat Analytics</h3><p>Аналіз структури спілкування, активності, повторюваних патернів і загальної динаміки комунікації.</p></div>
-            <div class="mini-card"><h3>Voice Analytics</h3><p>Спостереження за голосовою активністю, сесіями, часовими відрізками та поведінковим контекстом.</p></div>
-            <div class="mini-card"><h3>Notifications</h3><p>Система нагадувань, внутрішніх сповіщень та допоміжних сигналів за заданими сценаріями.</p></div>
-            <div class="mini-card"><h3>Automation</h3><p>Автоматизація повторюваних дій і перенесення рутинних процесів у модульне середовище.</p></div>
-            <div class="mini-card"><h3>Logging</h3><p>Фіксація активності та довгострокове зберігання подій для ретроспективного перегляду й аналітики.</p></div>
-            <div class="mini-card"><h3>AI Analysis</h3><p>Експериментальний аналітичний напрям для класифікації, зведень і виявлення закономірностей.</p></div>
+            <div class="mini-card teal"><h3>Chat Analytics</h3><p>Аналіз структури спілкування, активності, повторюваних патернів і загальної динаміки комунікації.</p></div>
+            <div class="mini-card teal"><h3>Voice Analytics</h3><p>Спостереження за голосовою активністю, сесіями, часовими відрізками та поведінковим контекстом.</p></div>
+            <div class="mini-card teal"><h3>Notifications</h3><p>Система нагадувань, внутрішніх сповіщень та допоміжних сигналів за заданими сценаріями.</p></div>
+            <div class="mini-card teal"><h3>Automation</h3><p>Автоматизація повторюваних дій і перенесення рутинних процесів у модульне середовище.</p></div>
+            <div class="mini-card teal"><h3>Logging</h3><p>Фіксація активності та довгострокове зберігання подій для ретроспективного перегляду й аналітики.</p></div>
+            <div class="mini-card teal"><h3>AI Analysis</h3><p>Експериментальний аналітичний напрям для класифікації, зведень і виявлення закономірностей.</p></div>
           </div>
         </div>
       </section>
@@ -1192,20 +1556,55 @@
                 Chimera fue creado por <strong>impresent</strong>, también conocido como <strong>aglvet</strong>, como un proyecto personal a largo plazo centrado en automatización de Discord, analítica e infraestructura modular.
               </p>
               <div class="author-tags">
-                <span class="tag">Alias principal: impresent</span>
-                <span class="tag">Segundo alias: aglvet</span>
-                <span class="tag">Estado del proyecto: desarrollo activo</span>
+                <span class="tag">Creator identity • impresent</span>
+                <span class="tag">Alias line • aglvet</span>
+                <span class="tag">Development phase • active</span>
               </div>
             </div>
           </div>
 
           <div class="hero-side reveal">
             <!-- <img src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
-            <div class="hero-fallback">
-              <h3>Resumen del proyecto</h3>
-              <p>
-                Un sistema unificado que combina coordinación, analítica, módulos de procesamiento y una arquitectura en crecimiento.
+
+            <div class="capsule">
+              <div class="capsule-top">
+                <div>
+                  <div class="capsule-kicker">System capsule</div>
+                  <h3>Chimera Snapshot</h3>
+                </div>
+                <div class="capsule-pill">Experimental build</div>
+              </div>
+
+              <p class="capsule-text">
+                Un resumen visual compacto del proyecto: enfoque actual, pilares principales y dirección de crecimiento.
               </p>
+
+              <div class="kpi-grid">
+                <div class="mini-kpi blue">
+                  <div class="kpi-label">Current state</div>
+                  <div class="kpi-value">La estructura y el concepto del proyecto siguen tomando forma</div>
+                </div>
+
+                <div class="mini-kpi violet">
+                  <div class="kpi-label">Core focus</div>
+                  <div class="kpi-value">Discord automation, analytics and modular ecosystem design</div>
+                </div>
+
+                <div class="mini-kpi teal">
+                  <div class="kpi-label">Design model</div>
+                  <div class="kpi-value">Layered architecture with scalable module expansion</div>
+                </div>
+
+                <div class="mini-kpi mixed">
+                  <div class="kpi-label">Author identity</div>
+                  <div class="kpi-value">impresent · aglvet</div>
+                </div>
+              </div>
+
+              <div class="capsule-bottom">
+                <div class="capsule-line">Core idea → convertir la actividad de Discord en un entorno analítico más estructurado</div>
+                <div class="capsule-line">Project direction → evolución a largo plazo del sistema en lugar de una sola herramienta aislada</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1213,19 +1612,19 @@
 
       <section class="quick-nav container reveal">
         <div class="nav-grid">
-          <a class="nav-card" href="#panel-overview" data-panel="panel-overview">
+          <a class="nav-card overview" href="#panel-overview" data-panel="panel-overview">
             <div class="nav-kicker">Sección 01</div>
             <h2 class="nav-title">Descripción general</h2>
             <p class="nav-text">Qué es Chimera, por qué existe y cómo está construida la idea principal del proyecto.</p>
           </a>
 
-          <a class="nav-card" href="#panel-architecture" data-panel="panel-architecture">
+          <a class="nav-card architecture" href="#panel-architecture" data-panel="panel-architecture">
             <div class="nav-kicker">Sección 02</div>
             <h2 class="nav-title">Arquitectura</h2>
             <p class="nav-text">Capas principales del sistema, lógica estructural e interacción entre los componentes.</p>
           </a>
 
-          <a class="nav-card" href="#panel-functions" data-panel="panel-functions">
+          <a class="nav-card functionality" href="#panel-functions" data-panel="panel-functions">
             <div class="nav-kicker">Sección 03</div>
             <h2 class="nav-title">Funcionalidad</h2>
             <p class="nav-text">Direcciones principales del proyecto: analítica, automatización, logging y expansión modular.</p>
@@ -1234,7 +1633,7 @@
       </section>
 
       <section class="details container">
-        <div class="detail-panel" id="panel-overview">
+        <div class="detail-panel overview" id="panel-overview">
           <div class="detail-head">
             <h2>Descripción general</h2>
             <button class="close-btn" data-close>Cerrar</button>
@@ -1260,7 +1659,7 @@
           </div>
         </div>
 
-        <div class="detail-panel" id="panel-architecture">
+        <div class="detail-panel architecture" id="panel-architecture">
           <div class="detail-head">
             <h2>Arquitectura</h2>
             <button class="close-btn" data-close>Cerrar</button>
@@ -1271,16 +1670,16 @@
           </p>
 
           <div class="arch-grid">
-            <div class="mini-card"><h3>Core Control</h3><p>Capa central responsable de la coordinación, la lógica general y la estructura del proyecto.</p></div>
-            <div class="mini-card"><h3>Monitoring Layer</h3><p>Capa de observación de eventos e información contextual para su procesamiento posterior.</p></div>
-            <div class="mini-card"><h3>Worker Modules</h3><p>Módulos de ejecución separados para tareas específicas, automatización y lógica auxiliar.</p></div>
-            <div class="mini-card"><h3>Collector</h3><p>Módulo de recepción y estructuración de eventos para preparar los datos para almacenamiento y análisis.</p></div>
-            <div class="mini-card"><h3>Analyzer</h3><p>Capa analítica para detectar patrones, estadísticas de actividad e interpretación temática.</p></div>
-            <div class="mini-card"><h3>Storage</h3><p>Almacenamiento centralizado para registros estructurados, logs e información archivada del proyecto.</p></div>
+            <div class="mini-card violet"><h3>Core Control</h3><p>Capa central responsable de la coordinación, la lógica general y la estructura del proyecto.</p></div>
+            <div class="mini-card violet"><h3>Monitoring Layer</h3><p>Capa de observación de eventos e información contextual para su procesamiento posterior.</p></div>
+            <div class="mini-card violet"><h3>Worker Modules</h3><p>Módulos de ejecución separados para tareas específicas, automatización y lógica auxiliar.</p></div>
+            <div class="mini-card violet"><h3>Collector</h3><p>Módulo de recepción y estructuración de eventos para preparar los datos para almacenamiento y análisis.</p></div>
+            <div class="mini-card violet"><h3>Analyzer</h3><p>Capa analítica para detectar patrones, estadísticas de actividad e interpretación temática.</p></div>
+            <div class="mini-card violet"><h3>Storage</h3><p>Almacenamiento centralizado para registros estructurados, logs e información archivada del proyecto.</p></div>
           </div>
         </div>
 
-        <div class="detail-panel" id="panel-functions">
+        <div class="detail-panel functionality" id="panel-functions">
           <div class="detail-head">
             <h2>Funcionalidad</h2>
             <button class="close-btn" data-close>Cerrar</button>
@@ -1291,12 +1690,12 @@
           </p>
 
           <div class="func-grid">
-            <div class="mini-card"><h3>Chat Analytics</h3><p>Análisis de la estructura de comunicación, patrones de actividad y dinámica de interacción.</p></div>
-            <div class="mini-card"><h3>Voice Analytics</h3><p>Observación de actividad de voz, sesiones, segmentos temporales y contexto de participación.</p></div>
-            <div class="mini-card"><h3>Notifications</h3><p>Lógica de recordatorios, alertas internas y señales auxiliares según escenarios definidos.</p></div>
-            <div class="mini-card"><h3>Automation</h3><p>Automatización de acciones repetitivas y traslado de rutinas a un entorno modular.</p></div>
-            <div class="mini-card"><h3>Logging</h3><p>Captura de actividad y almacenamiento a largo plazo para revisión retrospectiva y análisis.</p></div>
-            <div class="mini-card"><h3>AI Analysis</h3><p>Dirección analítica experimental para clasificación, resúmenes e interpretación de patrones.</p></div>
+            <div class="mini-card teal"><h3>Chat Analytics</h3><p>Análisis de la estructura de comunicación, patrones de actividad y dinámica de interacción.</p></div>
+            <div class="mini-card teal"><h3>Voice Analytics</h3><p>Observación de actividad de voz, sesiones, segmentos temporales y contexto de participación.</p></div>
+            <div class="mini-card teal"><h3>Notifications</h3><p>Lógica de recordatorios, alertas internas y señales auxiliares según escenarios definidos.</p></div>
+            <div class="mini-card teal"><h3>Automation</h3><p>Automatización de acciones repetitivas y traslado de rutinas a un entorno modular.</p></div>
+            <div class="mini-card teal"><h3>Logging</h3><p>Captura de actividad y almacenamiento a largo plazo para revisión retrospectiva y análisis.</p></div>
+            <div class="mini-card teal"><h3>AI Analysis</h3><p>Dirección analítica experimental para clasificación, resúmenes e interpretación de patrones.</p></div>
           </div>
         </div>
       </section>
@@ -1304,8 +1703,13 @@
   </main>
 
   <footer class="container">
-    <div class="footer-line">
-      Chimera • impresent aka aglvet
+    <div class="footer-box">
+      <div class="footer-main">
+        <strong>Chimera</strong> is an experimental modular project conceived by <strong>impresent</strong>, also known as <strong>aglvet</strong>. It is currently evolving as a long-term Discord automation and analytics ecosystem.
+      </div>
+      <div class="footer-side">
+        Active development • Modular system design
+      </div>
     </div>
   </footer>
 

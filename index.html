@@ -10,27 +10,22 @@
     :root{
       --bg:#0a0f17;
       --bg-soft:#101826;
-      --card:#121c2d;
-      --card-2:#162236;
       --text:#edf2fb;
       --muted:#9fb0c8;
-      --line:rgba(255,255,255,0.09);
-      --line-strong:rgba(255,255,255,0.14);
+      --line:rgba(255,255,255,0.10);
+      --line-strong:rgba(255,255,255,0.16);
       --shadow:0 14px 40px rgba(0,0,0,0.34);
+      --shadow-strong:0 18px 46px rgba(0,0,0,0.42);
       --radius:24px;
       --radius-sm:18px;
       --max:1160px;
 
-      --blue:rgba(112,170,255,0.22);
-      --violet:rgba(177,137,255,0.22);
-      --teal:rgba(98,214,194,0.20);
-      --rose:rgba(255,146,196,0.14);
+      --blue:rgba(112,170,255,0.24);
+      --violet:rgba(177,137,255,0.24);
+      --teal:rgba(98,214,194,0.22);
 
       --green:#6be2a5;
       --green-glow:rgba(107,226,165,0.32);
-
-      --accent:#dce8ff;
-      --white-soft:rgba(255,255,255,0.05);
     }
 
     *{box-sizing:border-box}
@@ -144,22 +139,21 @@
     }
 
     .hero{
-      padding:70px 0 28px;
+      padding:70px 0 26px;
     }
 
     .hero-grid{
       display:grid;
-      grid-template-columns:1.1fr 0.9fr;
+      grid-template-columns:1.08fr 0.92fr;
       gap:24px;
       align-items:stretch;
     }
 
     .hero-main,
     .hero-side,
-    .section-card,
-    .feature-card,
-    .principle-card,
-    .value-card{
+    .nav-card,
+    .detail-panel,
+    .mini-card{
       border:1px solid var(--line);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
@@ -348,61 +342,218 @@
       font-size:14px;
     }
 
-    .section{
-      padding:18px 0;
+    .quick-nav{
+      padding:18px 0 18px;
     }
 
-    .section-card{
+    .nav-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
+    }
+
+    .nav-card{
+      display:block;
+      padding:24px;
+      transition:0.28s ease;
       position:relative;
       overflow:hidden;
-      padding:28px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.018));
+      border-color:var(--line-strong);
+      cursor:pointer;
     }
 
-    .section-card::after{
+    .nav-card:hover{
+      transform:translateY(-5px);
+      box-shadow:var(--shadow-strong);
+      filter:saturate(1.08);
+    }
+
+    .nav-card::before{
       content:"";
       position:absolute;
       inset:-30%;
-      opacity:0.65;
+      opacity:0;
+      transition:opacity 0.35s ease;
       pointer-events:none;
-      animation:flowSlow 16s linear infinite;
+      animation:panelGlow 7s linear infinite;
     }
 
-    .section-card.blue::after{
-      background:linear-gradient(120deg, transparent 0%, rgba(128,182,255,0.05) 40%, transparent 78%);
+    .nav-card:hover::before{
+      opacity:1;
     }
 
-    .section-card.violet::after{
-      background:linear-gradient(120deg, transparent 0%, rgba(193,161,255,0.05) 40%, transparent 78%);
+    .nav-card::after{
+      content:"";
+      position:absolute;
+      right:-30px;
+      bottom:-40px;
+      width:130px;
+      height:130px;
+      border-radius:50%;
+      pointer-events:none;
+      opacity:0.95;
     }
 
-    .section-card.teal::after{
-      background:linear-gradient(120deg, transparent 0%, rgba(111,228,210,0.05) 40%, transparent 78%);
+    .nav-card.blue{
+      background:
+        radial-gradient(circle at 100% 0%, rgba(112,170,255,0.26), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
     }
 
-    .section-card > *{
+    .nav-card.blue::before{
+      background:linear-gradient(120deg, transparent 0%, rgba(128,182,255,0.08) 24%, transparent 48%, rgba(112,170,255,0.10) 72%, transparent 100%);
+    }
+
+    .nav-card.blue::after{
+      background:radial-gradient(circle, rgba(128,182,255,0.26), transparent 70%);
+    }
+
+    .nav-card.violet{
+      background:
+        radial-gradient(circle at 100% 0%, rgba(177,137,255,0.30), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
+    }
+
+    .nav-card.violet::before{
+      background:linear-gradient(120deg, transparent 0%, rgba(193,161,255,0.08) 24%, transparent 48%, rgba(177,137,255,0.10) 72%, transparent 100%);
+    }
+
+    .nav-card.violet::after{
+      background:radial-gradient(circle, rgba(193,161,255,0.28), transparent 70%);
+    }
+
+    .nav-card.teal{
+      background:
+        radial-gradient(circle at 100% 0%, rgba(98,214,194,0.30), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
+    }
+
+    .nav-card.teal::before{
+      background:linear-gradient(120deg, transparent 0%, rgba(111,228,210,0.07) 24%, transparent 48%, rgba(98,214,194,0.10) 72%, transparent 100%);
+    }
+
+    .nav-card.teal::after{
+      background:radial-gradient(circle, rgba(111,228,210,0.26), transparent 70%);
+    }
+
+    .nav-kicker{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      color:#b9c6da;
+      margin-bottom:10px;
       position:relative;
       z-index:1;
     }
 
-    .section-head{
+    .nav-title{
+      margin:0 0 10px;
+      font-size:24px;
+      letter-spacing:-0.03em;
+      position:relative;
+      z-index:1;
+    }
+
+    .nav-text{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+      position:relative;
+      z-index:1;
+    }
+
+    .details{
+      padding:10px 0 44px;
+    }
+
+    .detail-panel{
+      display:none;
+      padding:28px;
+      margin-bottom:18px;
+      animation:fadeUp 0.35s ease;
+      border-color:var(--line-strong);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .detail-panel.active{
+      display:block;
+    }
+
+    .detail-panel::before{
+      content:"";
+      position:absolute;
+      inset:-25%;
+      pointer-events:none;
+      opacity:0.75;
+      animation:panelGlow 10s linear infinite;
+    }
+
+    .detail-panel.blue{
+      background:
+        radial-gradient(circle at top right, rgba(112,170,255,0.24), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(70,120,220,0.15), transparent 22%),
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
+    }
+
+    .detail-panel.blue::before{
+      background:linear-gradient(120deg, transparent 0%, rgba(128,182,255,0.06) 30%, transparent 55%, rgba(112,170,255,0.08) 78%, transparent 100%);
+    }
+
+    .detail-panel.violet{
+      background:
+        radial-gradient(circle at top right, rgba(177,137,255,0.26), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(120,84,220,0.15), transparent 22%),
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
+    }
+
+    .detail-panel.violet::before{
+      background:linear-gradient(120deg, transparent 0%, rgba(193,161,255,0.06) 30%, transparent 55%, rgba(177,137,255,0.08) 78%, transparent 100%);
+    }
+
+    .detail-panel.teal{
+      background:
+        radial-gradient(circle at top right, rgba(98,214,194,0.26), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(40,150,130,0.15), transparent 22%),
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
+    }
+
+    .detail-panel.teal::before{
+      background:linear-gradient(120deg, transparent 0%, rgba(111,228,210,0.06) 30%, transparent 55%, rgba(98,214,194,0.08) 78%, transparent 100%);
+    }
+
+    .detail-panel > *{
+      position:relative;
+      z-index:1;
+    }
+
+    .detail-head{
       display:flex;
       flex-wrap:wrap;
-      align-items:end;
       justify-content:space-between;
+      align-items:center;
       gap:12px;
       margin-bottom:18px;
     }
 
-    .section-title{
+    .detail-head h2{
       margin:0;
       font-size:30px;
       letter-spacing:-0.03em;
     }
 
-    .section-note{
-      color:var(--muted);
-      font-size:14px;
+    .close-btn{
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.05);
+      color:var(--text);
+      border-radius:12px;
+      padding:10px 14px;
+      cursor:pointer;
+      transition:0.2s ease;
+    }
+
+    .close-btn:hover{
+      background:rgba(255,255,255,0.10);
     }
 
     .two-col{
@@ -411,68 +562,32 @@
       gap:22px;
     }
 
-    .grid-3{
+    .mini-grid{
       display:grid;
       grid-template-columns:repeat(3, 1fr);
       gap:16px;
+      margin-top:18px;
     }
 
-    .feature-card,
-    .principle-card,
-    .value-card{
-      padding:20px;
-      background:rgba(255,255,255,0.04);
+    .mini-card{
+      background:rgba(255,255,255,0.05);
+      border-color:rgba(255,255,255,0.12);
+      padding:18px;
       transition:0.24s ease;
     }
 
-    .feature-card:hover,
-    .principle-card:hover,
-    .value-card:hover{
-      transform:translateY(-4px);
+    .mini-card:hover{
+      transform:translateY(-3px);
       border-color:rgba(255,255,255,0.18);
-      box-shadow:0 18px 42px rgba(0,0,0,0.38);
     }
 
-    .feature-card.blue,
-    .value-card.blue{
-      background:linear-gradient(180deg, rgba(128,182,255,0.14), rgba(128,182,255,0.04));
-      border-color:rgba(128,182,255,0.18);
-    }
-
-    .feature-card.violet,
-    .principle-card.violet{
-      background:linear-gradient(180deg, rgba(193,161,255,0.15), rgba(193,161,255,0.04));
-      border-color:rgba(193,161,255,0.18);
-    }
-
-    .feature-card.teal,
-    .principle-card.teal,
-    .value-card.teal{
-      background:linear-gradient(180deg, rgba(111,228,210,0.14), rgba(111,228,210,0.04));
-      border-color:rgba(111,228,210,0.18);
-    }
-
-    .feature-card.rose,
-    .value-card.rose{
-      background:linear-gradient(180deg, rgba(255,146,196,0.11), rgba(255,146,196,0.03));
-      border-color:rgba(255,146,196,0.16);
-    }
-
-    .card-label{
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:0.12em;
-      color:#bfd0e8;
-      margin-bottom:10px;
-    }
-
-    .card-title{
+    .mini-card h3{
       margin:0 0 10px;
-      font-size:20px;
+      font-size:19px;
       line-height:1.2;
     }
 
-    .card-text{
+    .mini-card p{
       margin:0;
       color:var(--muted);
       font-size:15px;
@@ -530,16 +645,22 @@
       100%{transform:translateX(18%) rotate(0deg)}
     }
 
-    @keyframes flowSlow{
-      0%{transform:translateX(-8%)}
-      50%{transform:translateX(8%)}
-      100%{transform:translateX(16%)}
+    @keyframes panelGlow{
+      0%{transform:translateX(-10%) rotate(0deg)}
+      50%{transform:translateX(10%) rotate(2deg)}
+      100%{transform:translateX(20%) rotate(0deg)}
+    }
+
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(14px)}
+      to{opacity:1;transform:translateY(0)}
     }
 
     @media (max-width:980px){
       .hero-grid,
+      .nav-grid,
       .two-col,
-      .grid-3{
+      .mini-grid{
         grid-template-columns:1fr 1fr;
       }
     }
@@ -561,14 +682,16 @@
       }
 
       .hero-grid,
+      .nav-grid,
       .two-col,
-      .grid-3{
+      .mini-grid{
         grid-template-columns:1fr;
       }
 
       .hero-main,
       .hero-side,
-      .section-card{
+      .nav-card,
+      .detail-panel{
         padding:20px;
       }
 
@@ -630,11 +753,11 @@
             </p>
 
             <p class="hero-sub">
-              Это не “один бот для одной задачи”. И не просто набор разрозненных скриптов. Идея Chimera в том, чтобы объединить разные механики, инструменты и логики в одну целостную архитектуру, которую можно развивать долго и последовательно.
+              Это не просто один инструмент и не набор случайных решений. Идея Chimera — объединить разные механики и внутреннюю логику в одну цельную архитектуру, которую можно развивать долго и последовательно.
             </p>
 
             <div class="author-line">
-              <strong>Создатели:</strong> impresent, aglvet. Проект развивается как долгосрочная личная система с упором на гибкость, масштабируемость и удобную архитектурную основу для дальнейшего роста.
+              <strong>Создатели:</strong> impresent, aglvet. Проект развивается как долгосрочная личная система с упором на гибкость, масштабируемость и сильную архитектурную основу.
             </div>
           </div>
 
@@ -643,145 +766,106 @@
               <div class="eyebrow">System overview</div>
               <h2 class="side-title">Одна система вместо хаотичного набора решений</h2>
               <p class="side-text">
-                Chimera нужна для того, чтобы собирать разные рабочие идеи, сервисные механики, автоматизации и внутренние модули в одну понятную платформу, а не распылять их по отдельным кускам.
+                Chimera нужна для того, чтобы собирать разные рабочие идеи, внутренние механики и сервисные блоки в одну платформу, а не распылять их по отдельным кускам.
               </p>
 
               <div class="side-points">
-                <div class="side-point">Единая архитектурная основа для роста и усложнения системы</div>
-                <div class="side-point">Гибкая платформа, которую можно дополнять без полного переписывания</div>
-                <div class="side-point">Понятная логика: от базовых сценариев до более сложных внутренних механизмов</div>
+                <div class="side-point">Единая основа для роста и усложнения системы</div>
+                <div class="side-point">Гибкая платформа без хаотичных надстроек</div>
+                <div class="side-point">Понятная логика от базовых сценариев до сложных процессов</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section container reveal">
-        <div class="section-card blue">
-          <div class="section-head">
-            <h2 class="section-title">Зачем вообще нужна Chimera</h2>
-            <div class="section-note">Core purpose</div>
+      <section class="quick-nav container reveal">
+        <div class="nav-grid">
+          <a class="nav-card blue" href="#panel-purpose" data-panel="panel-purpose">
+            <div class="nav-kicker">Раздел 01</div>
+            <h2 class="nav-title">Зачем нужна Chimera</h2>
+            <p class="nav-text">Коротко о том, какую проблему решает система и почему она вообще имеет смысл.</p>
+          </a>
+
+          <a class="nav-card violet" href="#panel-value" data-panel="panel-value">
+            <div class="nav-kicker">Раздел 02</div>
+            <h2 class="nav-title">Чем она полезна</h2>
+            <p class="nav-text">Что даёт такая платформа на практике и почему она удобнее разрозненных решений.</p>
+          </a>
+
+          <a class="nav-card teal" href="#panel-structure" data-panel="panel-structure">
+            <div class="nav-kicker">Раздел 03</div>
+            <h2 class="nav-title">Как она устроена</h2>
+            <p class="nav-text">О внутреннем принципе системы: модульность, расширяемость и цельная архитектура.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="details container">
+        <div class="detail-panel blue" id="panel-purpose">
+          <div class="detail-head">
+            <h2>Зачем нужна Chimera</h2>
+            <button class="close-btn" data-close>Закрыть</button>
           </div>
 
           <div class="two-col">
             <div>
               <p>
-                Со временем у любой сложной системы появляется множество повторяющихся действий, сервисных задач, внутренних процессов и вспомогательных инструментов. Если всё это существует отдельно, система становится неудобной, фрагментированной и тяжёлой в развитии.
+                Со временем любая серьёзная система начинает обрастать повторяющимися действиями, внутренними задачами, вспомогательными блоками и служебной логикой. Когда всё это существует отдельно, структура становится неудобной, раздробленной и тяжёлой для развития.
               </p>
             </div>
             <div>
               <p>
-                Chimera нужна как единая платформа, которая позволяет связывать такие элементы в одну среду: удобно организовывать внутреннюю логику, расширять набор возможностей и постепенно превращать хаотичный набор решений в цельную систему.
+                Chimera нужна как единая платформа, которая позволяет собрать такие элементы в одну среду: связать их общей логикой, выстроить между ними порядок и превратить хаотичный набор решений в цельную систему.
               </p>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="section container reveal">
-        <div class="section-card violet">
-          <div class="section-head">
-            <h2 class="section-title">Что делает её полезной</h2>
-            <div class="section-note">Practical value</div>
+        <div class="detail-panel violet" id="panel-value">
+          <div class="detail-head">
+            <h2>Чем она полезна</h2>
+            <button class="close-btn" data-close>Закрыть</button>
           </div>
 
-          <div class="grid-3">
-            <div class="value-card blue">
-              <div class="card-label">Value 01</div>
-              <h3 class="card-title">Собирает всё в одну систему</h3>
-              <p class="card-text">Вместо разрозненных решений Chimera даёт одну основу, в которой разные механики могут жить вместе и дополнять друг друга.</p>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <h3>Собирает всё в одну основу</h3>
+              <p>Вместо множества разрозненных решений появляется одна база, в которой разные механики могут существовать вместе и усиливать друг друга.</p>
             </div>
 
-            <div class="value-card violet">
-              <div class="card-label">Value 02</div>
-              <h3 class="card-title">Позволяет расти без хаоса</h3>
-              <p class="card-text">Новые идеи и новые блоки можно встраивать постепенно, не превращая проект в бесконтрольный набор случайных надстроек.</p>
+            <div class="mini-card">
+              <h3>Позволяет расти без хаоса</h3>
+              <p>Новые идеи можно встраивать постепенно, не превращая проект в случайную коллекцию надстроек и костылей.</p>
             </div>
 
-            <div class="value-card teal">
-              <div class="card-label">Value 03</div>
-              <h3 class="card-title">Делает систему гибкой</h3>
-              <p class="card-text">Chimera подходит не для одной фиксированной задачи, а для постоянного расширения, адаптации и изменения внутренней логики.</p>
+            <div class="mini-card">
+              <h3>Оставляет систему гибкой</h3>
+              <p>Chimera не привязана к одной узкой задаче — она строится как платформа, способная меняться и расширяться со временем.</p>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="section container reveal">
-        <div class="section-card teal">
-          <div class="section-head">
-            <h2 class="section-title">Ключевые принципы Chimera</h2>
-            <div class="section-note">Design principles</div>
+        <div class="detail-panel teal" id="panel-structure">
+          <div class="detail-head">
+            <h2>Как она устроена</h2>
+            <button class="close-btn" data-close>Закрыть</button>
           </div>
 
-          <div class="grid-3">
-            <div class="principle-card violet">
-              <div class="card-label">Principle 01</div>
-              <h3 class="card-title">Модульность</h3>
-              <p class="card-text">Каждое направление может оформляться как отдельный блок, не разрушая всю систему целиком.</p>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <h3>Базовая платформа</h3>
+              <p>Центральная основа задаёт общую структуру, направление развития и архитектурную устойчивость всей системы.</p>
             </div>
 
-            <div class="principle-card teal">
-              <div class="card-label">Principle 02</div>
-              <h3 class="card-title">Расширяемость</h3>
-              <p class="card-text">Платформа изначально строится так, чтобы новые механики добавлялись постепенно и естественно.</p>
+            <div class="mini-card">
+              <h3>Внутренние модули</h3>
+              <p>Отдельные блоки логики отвечают за конкретные направления и могут развиваться независимо, не ломая весь проект целиком.</p>
             </div>
 
-            <div class="principle-card violet">
-              <div class="card-label">Principle 03</div>
-              <h3 class="card-title">Связность</h3>
-              <p class="card-text">Разные части системы не должны существовать изолированно — они должны дополнять друг друга и работать как единое целое.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section container reveal">
-        <div class="section-card blue">
-          <div class="section-head">
-            <h2 class="section-title">Как устроена система</h2>
-            <div class="section-note">Structure</div>
-          </div>
-
-          <div class="grid-3">
-            <div class="feature-card blue">
-              <div class="card-label">Layer 01</div>
-              <h3 class="card-title">Базовая платформа</h3>
-              <p class="card-text">Центральная основа, которая задаёт общую структуру, направление развития и архитектурную устойчивость.</p>
-            </div>
-
-            <div class="feature-card violet">
-              <div class="card-label">Layer 02</div>
-              <h3 class="card-title">Внутренние модули</h3>
-              <p class="card-text">Отдельные блоки логики, которые отвечают за конкретные направления и могут развиваться независимо друг от друга.</p>
-            </div>
-
-            <div class="feature-card teal">
-              <div class="card-label">Layer 03</div>
-              <h3 class="card-title">Сервисные сценарии</h3>
-              <p class="card-text">Поведение системы складывается не только из функций, но и из связей между ними — внутренних цепочек, реакций и процессов.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section container reveal">
-        <div class="section-card violet">
-          <div class="section-head">
-            <h2 class="section-title">Общее направление проекта</h2>
-            <div class="section-note">Long-term vision</div>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <p>
-                Chimera развивается как долгосрочная платформа. Её смысл не в том, чтобы решить одну узкую задачу, а в том, чтобы со временем стать более широкой, зрелой и насыщенной системой с большим внутренним потенциалом.
-              </p>
-            </div>
-            <div>
-              <p>
-                Поэтому акцент делается не на случайный набор возможностей, а на красивую архитектурную основу: такую систему проще дополнять, усложнять, переосмысливать и переводить на следующий уровень.
-              </p>
+            <div class="mini-card">
+              <h3>Связанные процессы</h3>
+              <p>Система строится не только из функций, но и из того, как они соединяются между собой в общую внутреннюю логику.</p>
             </div>
           </div>
         </div>
@@ -806,11 +890,11 @@
             </p>
 
             <p class="hero-sub">
-              It is not “one bot for one task.” And not just a loose collection of scripts. The idea behind Chimera is to bring different mechanics, tools and internal logic into one coherent architecture that can evolve over time.
+              It is not just one tool and not a random set of separate solutions. The idea behind Chimera is to bring different mechanics and internal logic into one coherent architecture that can evolve over time.
             </p>
 
             <div class="author-line">
-              <strong>Creators:</strong> impresent, aglvet. The project is being developed as a long-term personal system with a focus on flexibility, scalability and a strong architectural foundation for future growth.
+              <strong>Creators:</strong> impresent, aglvet. The project is being developed as a long-term personal system with a focus on flexibility, scalability and a strong architectural foundation.
             </div>
           </div>
 
@@ -819,145 +903,106 @@
               <div class="eyebrow">System overview</div>
               <h2 class="side-title">One system instead of a chaotic set of solutions</h2>
               <p class="side-text">
-                Chimera exists to bring different working ideas, service mechanisms, automation flows and internal modules into one platform instead of scattering them across disconnected pieces.
+                Chimera exists to bring different working ideas, internal mechanics and service blocks into one platform instead of scattering them across disconnected pieces.
               </p>
 
               <div class="side-points">
-                <div class="side-point">One architectural foundation for growth and increasing system complexity</div>
-                <div class="side-point">A flexible platform that can be expanded without full rewrites</div>
-                <div class="side-point">A readable system logic: from basic behaviors to more advanced internal mechanisms</div>
+                <div class="side-point">One foundation for system growth and increasing complexity</div>
+                <div class="side-point">A flexible platform without chaotic layering</div>
+                <div class="side-point">Readable logic from basic scenarios to more advanced processes</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section container reveal">
-        <div class="section-card blue">
-          <div class="section-head">
-            <h2 class="section-title">Why Chimera exists</h2>
-            <div class="section-note">Core purpose</div>
+      <section class="quick-nav container reveal">
+        <div class="nav-grid">
+          <a class="nav-card blue" href="#panel-purpose" data-panel="panel-purpose">
+            <div class="nav-kicker">Section 01</div>
+            <h2 class="nav-title">Why Chimera exists</h2>
+            <p class="nav-text">A short explanation of what problem the system solves and why it makes sense.</p>
+          </a>
+
+          <a class="nav-card violet" href="#panel-value" data-panel="panel-value">
+            <div class="nav-kicker">Section 02</div>
+            <h2 class="nav-title">Why it is useful</h2>
+            <p class="nav-text">What such a platform provides in practice and why it is better than disconnected solutions.</p>
+          </a>
+
+          <a class="nav-card teal" href="#panel-structure" data-panel="panel-structure">
+            <div class="nav-kicker">Section 03</div>
+            <h2 class="nav-title">How it is structured</h2>
+            <p class="nav-text">About the internal principle of the system: modularity, expandability and coherent architecture.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="details container">
+        <div class="detail-panel blue" id="panel-purpose">
+          <div class="detail-head">
+            <h2>Why Chimera exists</h2>
+            <button class="close-btn" data-close>Close</button>
           </div>
 
           <div class="two-col">
             <div>
               <p>
-                Over time, any serious system accumulates repeated actions, service tasks, internal processes and support tools. If all of them exist separately, the result becomes fragmented, harder to manage and harder to grow.
+                Over time, any serious system accumulates repeated actions, internal tasks, support blocks and service logic. When all of this exists separately, the structure becomes fragmented, inconvenient and harder to grow.
               </p>
             </div>
             <div>
               <p>
-                Chimera exists as a unified platform that allows such elements to live inside one environment: easier to organize, easier to connect and easier to turn into a coherent long-term system.
+                Chimera exists as one platform that allows such elements to live inside the same environment: connected by shared logic, organized more clearly and turned from scattered solutions into one coherent system.
               </p>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="section container reveal">
-        <div class="section-card violet">
-          <div class="section-head">
-            <h2 class="section-title">What makes it useful</h2>
-            <div class="section-note">Practical value</div>
+        <div class="detail-panel violet" id="panel-value">
+          <div class="detail-head">
+            <h2>Why it is useful</h2>
+            <button class="close-btn" data-close>Close</button>
           </div>
 
-          <div class="grid-3">
-            <div class="value-card blue">
-              <div class="card-label">Value 01</div>
-              <h3 class="card-title">Brings everything into one system</h3>
-              <p class="card-text">Instead of disconnected solutions, Chimera offers one foundation where different mechanics can coexist and strengthen each other.</p>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <h3>Brings everything into one base</h3>
+              <p>Instead of many disconnected solutions, there is one foundation where different mechanics can coexist and strengthen each other.</p>
             </div>
 
-            <div class="value-card violet">
-              <div class="card-label">Value 02</div>
-              <h3 class="card-title">Allows growth without chaos</h3>
-              <p class="card-text">New ideas and new blocks can be added gradually without turning the project into a random pile of unrelated extensions.</p>
+            <div class="mini-card">
+              <h3>Allows growth without chaos</h3>
+              <p>New ideas can be added gradually without turning the project into a random pile of patches and extensions.</p>
             </div>
 
-            <div class="value-card teal">
-              <div class="card-label">Value 03</div>
-              <h3 class="card-title">Keeps the system flexible</h3>
-              <p class="card-text">Chimera is not tied to one frozen purpose. It is meant for continuous expansion, adaptation and internal evolution.</p>
+            <div class="mini-card">
+              <h3>Keeps the system flexible</h3>
+              <p>Chimera is not tied to one narrow role — it is built as a platform that can expand and change over time.</p>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="section container reveal">
-        <div class="section-card teal">
-          <div class="section-head">
-            <h2 class="section-title">Core Chimera principles</h2>
-            <div class="section-note">Design principles</div>
+        <div class="detail-panel teal" id="panel-structure">
+          <div class="detail-head">
+            <h2>How it is structured</h2>
+            <button class="close-btn" data-close>Close</button>
           </div>
 
-          <div class="grid-3">
-            <div class="principle-card violet">
-              <div class="card-label">Principle 01</div>
-              <h3 class="card-title">Modularity</h3>
-              <p class="card-text">Each direction can exist as its own block without forcing the whole system to be rebuilt.</p>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <h3>Base platform</h3>
+              <p>The central foundation defines overall structure, development direction and architectural stability for the whole system.</p>
             </div>
 
-            <div class="principle-card teal">
-              <div class="card-label">Principle 02</div>
-              <h3 class="card-title">Expandability</h3>
-              <p class="card-text">The platform is intentionally built to absorb new mechanics naturally over time.</p>
+            <div class="mini-card">
+              <h3>Internal modules</h3>
+              <p>Separate logic blocks are responsible for specific directions and can evolve independently without breaking the whole project.</p>
             </div>
 
-            <div class="principle-card violet">
-              <div class="card-label">Principle 03</div>
-              <h3 class="card-title">Coherence</h3>
-              <p class="card-text">Different parts of the system should not exist in isolation — they should support each other as one whole.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section container reveal">
-        <div class="section-card blue">
-          <div class="section-head">
-            <h2 class="section-title">How the system is structured</h2>
-            <div class="section-note">Structure</div>
-          </div>
-
-          <div class="grid-3">
-            <div class="feature-card blue">
-              <div class="card-label">Layer 01</div>
-              <h3 class="card-title">Base platform</h3>
-              <p class="card-text">The central foundation that defines overall structure, development direction and architectural stability.</p>
-            </div>
-
-            <div class="feature-card violet">
-              <div class="card-label">Layer 02</div>
-              <h3 class="card-title">Internal modules</h3>
-              <p class="card-text">Separate blocks of logic responsible for specific directions and capable of evolving independently.</p>
-            </div>
-
-            <div class="feature-card teal">
-              <div class="card-label">Layer 03</div>
-              <h3 class="card-title">Service flows</h3>
-              <p class="card-text">The system is shaped not only by functions, but by how those functions connect into internal chains, reactions and processes.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section container reveal">
-        <div class="section-card violet">
-          <div class="section-head">
-            <h2 class="section-title">Overall project direction</h2>
-            <div class="section-note">Long-term vision</div>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <p>
-                Chimera is being developed as a long-term platform. Its purpose is not to solve one narrow problem, but to gradually become a broader, stronger and more mature system with greater internal potential.
-              </p>
-            </div>
-            <div>
-              <p>
-                That is why the focus is placed not on random feature lists, but on a strong architectural base: such a system is easier to expand, reinterpret, refine and move to a higher level over time.
-              </p>
+            <div class="mini-card">
+              <h3>Connected processes</h3>
+              <p>The system is shaped not only by functions, but by how those functions connect into one internal logic.</p>
             </div>
           </div>
         </div>
@@ -982,158 +1027,119 @@
             </p>
 
             <p class="hero-sub">
-              Es ist nicht „ein Bot für eine Aufgabe“. Und auch nicht nur eine lose Sammlung von Skripten. Die Idee hinter Chimera ist es, verschiedene Mechaniken, Werkzeuge und interne Logiken in einer kohärenten Architektur zu vereinen, die sich über lange Zeit weiterentwickeln kann.
+              Es ist nicht nur ein einzelnes Werkzeug und kein zufälliger Satz getrennter Lösungen. Die Idee hinter Chimera ist es, verschiedene Mechaniken und interne Logiken in einer kohärenten Architektur zu vereinen, die sich im Laufe der Zeit weiterentwickeln kann.
             </p>
 
             <div class="author-line">
-              <strong>Erstellt von:</strong> impresent, aglvet. Das Projekt wird als langfristiges persönliches System entwickelt, mit Fokus auf Flexibilität, Skalierbarkeit und eine starke architektonische Grundlage für zukünftiges Wachstum.
+              <strong>Erstellt von:</strong> impresent, aglvet. Das Projekt wird als langfristiges persönliches System entwickelt, mit Fokus auf Flexibilität, Skalierbarkeit und eine starke architektonische Grundlage.
             </div>
           </div>
 
           <div class="hero-side reveal">
             <div class="hero-side-content">
               <div class="eyebrow">System overview</div>
-              <h2 class="side-title">Ein System statt eines chaotischen Bündels von Einzelteilen</h2>
+              <h2 class="side-title">Ein System statt eines chaotischen Bündels von Lösungen</h2>
               <p class="side-text">
-                Chimera soll verschiedene Arbeitsideen, Service-Mechaniken, Automatisierungsabläufe und interne Module in einer Plattform zusammenführen, statt sie auf voneinander getrennte Teile zu verteilen.
+                Chimera soll verschiedene Arbeitsideen, interne Mechaniken und Service-Blöcke in einer Plattform zusammenführen, statt sie auf getrennte Teile zu verteilen.
               </p>
 
               <div class="side-points">
-                <div class="side-point">Eine architektonische Grundlage für Wachstum und steigende Systemkomplexität</div>
-                <div class="side-point">Eine flexible Plattform, die ohne vollständige Neuaufbauten erweitert werden kann</div>
-                <div class="side-point">Eine lesbare Systemlogik: von einfachen Abläufen bis zu komplexeren internen Mechanismen</div>
+                <div class="side-point">Eine Grundlage für Systemwachstum und steigende Komplexität</div>
+                <div class="side-point">Eine flexible Plattform ohne chaotische Überbauten</div>
+                <div class="side-point">Lesbare Logik von einfachen Szenarien bis zu komplexeren Prozessen</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section container reveal">
-        <div class="section-card blue">
-          <div class="section-head">
-            <h2 class="section-title">Warum Chimera überhaupt gebraucht wird</h2>
-            <div class="section-note">Core purpose</div>
+      <section class="quick-nav container reveal">
+        <div class="nav-grid">
+          <a class="nav-card blue" href="#panel-purpose" data-panel="panel-purpose">
+            <div class="nav-kicker">Bereich 01</div>
+            <h2 class="nav-title">Warum Chimera existiert</h2>
+            <p class="nav-text">Kurz darüber, welches Problem das System löst und warum es überhaupt sinnvoll ist.</p>
+          </a>
+
+          <a class="nav-card violet" href="#panel-value" data-panel="panel-value">
+            <div class="nav-kicker">Bereich 02</div>
+            <h2 class="nav-title">Warum es nützlich ist</h2>
+            <p class="nav-text">Was eine solche Plattform praktisch bringt und warum sie besser ist als getrennte Einzelteile.</p>
+          </a>
+
+          <a class="nav-card teal" href="#panel-structure" data-panel="panel-structure">
+            <div class="nav-kicker">Bereich 03</div>
+            <h2 class="nav-title">Wie es aufgebaut ist</h2>
+            <p class="nav-text">Über das innere Prinzip des Systems: Modularität, Erweiterbarkeit und kohärente Architektur.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="details container">
+        <div class="detail-panel blue" id="panel-purpose">
+          <div class="detail-head">
+            <h2>Warum Chimera existiert</h2>
+            <button class="close-btn" data-close>Schließen</button>
           </div>
 
           <div class="two-col">
             <div>
               <p>
-                Mit der Zeit sammelt jedes ernsthafte System wiederkehrende Aktionen, Service-Aufgaben, interne Prozesse und Hilfswerkzeuge an. Wenn all das getrennt voneinander existiert, wird das Ergebnis fragmentiert, schwerer zu steuern und schwerer auszubauen.
+                Mit der Zeit sammelt jedes ernsthafte System wiederkehrende Aktionen, interne Aufgaben, Hilfsblöcke und Service-Logik an. Wenn all das getrennt existiert, wird die Struktur fragmentiert, unübersichtlich und schwerer auszubauen.
               </p>
             </div>
             <div>
               <p>
-                Chimera existiert als einheitliche Plattform, die solche Elemente in einer Umgebung zusammenführt: leichter zu organisieren, leichter zu verbinden und leichter in ein kohärentes Langzeitsystem zu verwandeln.
+                Chimera existiert als eine Plattform, in der solche Elemente in derselben Umgebung zusammengeführt werden können: verbunden durch gemeinsame Logik, klarer organisiert und aus verstreuten Lösungen zu einem kohärenten System geformt.
               </p>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="section container reveal">
-        <div class="section-card violet">
-          <div class="section-head">
-            <h2 class="section-title">Was das System nützlich macht</h2>
-            <div class="section-note">Practical value</div>
+        <div class="detail-panel violet" id="panel-value">
+          <div class="detail-head">
+            <h2>Warum es nützlich ist</h2>
+            <button class="close-btn" data-close>Schließen</button>
           </div>
 
-          <div class="grid-3">
-            <div class="value-card blue">
-              <div class="card-label">Value 01</div>
-              <h3 class="card-title">Führt alles in einem System zusammen</h3>
-              <p class="card-text">Statt einzelner, getrennter Lösungen bietet Chimera eine gemeinsame Grundlage, in der unterschiedliche Mechaniken zusammenwirken können.</p>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <h3>Bringt alles in eine gemeinsame Basis</h3>
+              <p>Statt vieler getrennter Lösungen entsteht eine Grundlage, in der verschiedene Mechaniken zusammen existieren und sich gegenseitig stärken können.</p>
             </div>
 
-            <div class="value-card violet">
-              <div class="card-label">Value 02</div>
-              <h3 class="card-title">Ermöglicht Wachstum ohne Chaos</h3>
-              <p class="card-text">Neue Ideen und neue Blöcke lassen sich schrittweise integrieren, ohne das Projekt in einen zufälligen Haufen von Erweiterungen zu verwandeln.</p>
+            <div class="mini-card">
+              <h3>Erlaubt Wachstum ohne Chaos</h3>
+              <p>Neue Ideen können schrittweise ergänzt werden, ohne das Projekt in einen zufälligen Haufen aus Erweiterungen und Provisorien zu verwandeln.</p>
             </div>
 
-            <div class="value-card teal">
-              <div class="card-label">Value 03</div>
-              <h3 class="card-title">Hält das System flexibel</h3>
-              <p class="card-text">Chimera ist nicht an einen starren Einzelzweck gebunden. Es ist für kontinuierliche Erweiterung, Anpassung und innere Weiterentwicklung gedacht.</p>
+            <div class="mini-card">
+              <h3>Hält das System flexibel</h3>
+              <p>Chimera ist nicht an eine enge Einzelrolle gebunden — es wird als Plattform aufgebaut, die sich mit der Zeit erweitern und verändern kann.</p>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="section container reveal">
-        <div class="section-card teal">
-          <div class="section-head">
-            <h2 class="section-title">Zentrale Chimera-Prinzipien</h2>
-            <div class="section-note">Design principles</div>
+        <div class="detail-panel teal" id="panel-structure">
+          <div class="detail-head">
+            <h2>Wie es aufgebaut ist</h2>
+            <button class="close-btn" data-close>Schließen</button>
           </div>
 
-          <div class="grid-3">
-            <div class="principle-card violet">
-              <div class="card-label">Principle 01</div>
-              <h3 class="card-title">Modularität</h3>
-              <p class="card-text">Jede Richtung kann als eigener Block existieren, ohne das Gesamtsystem neu aufzubauen.</p>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <h3>Basisplattform</h3>
+              <p>Die zentrale Grundlage definiert Gesamtstruktur, Entwicklungsrichtung und architektonische Stabilität des gesamten Systems.</p>
             </div>
 
-            <div class="principle-card teal">
-              <div class="card-label">Principle 02</div>
-              <h3 class="card-title">Erweiterbarkeit</h3>
-              <p class="card-text">Die Plattform ist bewusst so angelegt, dass neue Mechaniken im Laufe der Zeit natürlich aufgenommen werden können.</p>
+            <div class="mini-card">
+              <h3>Interne Module</h3>
+              <p>Getrennte Logikblöcke sind für bestimmte Richtungen verantwortlich und können sich unabhängig weiterentwickeln, ohne das Gesamtprojekt zu zerstören.</p>
             </div>
 
-            <div class="principle-card violet">
-              <div class="card-label">Principle 03</div>
-              <h3 class="card-title">Zusammenhang</h3>
-              <p class="card-text">Unterschiedliche Teile des Systems sollen nicht isoliert existieren, sondern sich gegenseitig als Ganzes stützen.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section container reveal">
-        <div class="section-card blue">
-          <div class="section-head">
-            <h2 class="section-title">Wie das System aufgebaut ist</h2>
-            <div class="section-note">Structure</div>
-          </div>
-
-          <div class="grid-3">
-            <div class="feature-card blue">
-              <div class="card-label">Layer 01</div>
-              <h3 class="card-title">Basisplattform</h3>
-              <p class="card-text">Das zentrale Fundament, das Gesamtstruktur, Entwicklungsrichtung und architektonische Stabilität definiert.</p>
-            </div>
-
-            <div class="feature-card violet">
-              <div class="card-label">Layer 02</div>
-              <h3 class="card-title">Interne Module</h3>
-              <p class="card-text">Getrennte Logikblöcke für bestimmte Richtungen, die sich unabhängig voneinander weiterentwickeln können.</p>
-            </div>
-
-            <div class="feature-card teal">
-              <div class="card-label">Layer 03</div>
-              <h3 class="card-title">Service-Abläufe</h3>
-              <p class="card-text">Das System wird nicht nur durch Funktionen geprägt, sondern auch dadurch, wie diese Funktionen in Ketten, Reaktionen und Prozesse eingebunden sind.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section container reveal">
-        <div class="section-card violet">
-          <div class="section-head">
-            <h2 class="section-title">Gesamtrichtung des Projekts</h2>
-            <div class="section-note">Long-term vision</div>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <p>
-                Chimera wird als langfristige Plattform entwickelt. Ihr Sinn besteht nicht darin, nur ein enges Problem zu lösen, sondern schrittweise zu einem breiteren, stärkeren und reiferen System mit größerem inneren Potenzial zu werden.
-              </p>
-            </div>
-            <div>
-              <p>
-                Deshalb liegt der Fokus nicht auf zufälligen Feature-Listen, sondern auf einer starken architektonischen Grundlage: Ein solches System lässt sich leichter erweitern, neu denken, verfeinern und mit der Zeit auf eine höhere Stufe bringen.
-              </p>
+            <div class="mini-card">
+              <h3>Verbundene Prozesse</h3>
+              <p>Das System wird nicht nur durch Funktionen bestimmt, sondern auch dadurch, wie diese Funktionen in eine gemeinsame interne Logik eingebunden sind.</p>
             </div>
           </div>
         </div>
@@ -1158,11 +1164,11 @@
             </p>
 
             <p class="hero-sub">
-              Це не “один бот для однієї задачі”. І не просто набір розрізнених скриптів. Ідея Chimera полягає в тому, щоб об’єднати різні механіки, інструменти та внутрішню логіку в одну цілісну архітектуру, яку можна розвивати довго й послідовно.
+              Це не просто один інструмент і не випадковий набір розділених рішень. Ідея Chimera полягає в тому, щоб об’єднати різні механіки та внутрішню логіку в цілісну архітектуру, яка може розвиватися з часом.
             </p>
 
             <div class="author-line">
-              <strong>Створено:</strong> impresent, aglvet. Проєкт розвивається як довгострокова особиста система з акцентом на гнучкість, масштабованість і сильну архітектурну основу для майбутнього зростання.
+              <strong>Створено:</strong> impresent, aglvet. Проєкт розвивається як довгострокова особиста система з акцентом на гнучкість, масштабованість і сильну архітектурну основу.
             </div>
           </div>
 
@@ -1171,145 +1177,106 @@
               <div class="eyebrow">System overview</div>
               <h2 class="side-title">Одна система замість хаотичного набору рішень</h2>
               <p class="side-text">
-                Chimera потрібна для того, щоб збирати різні робочі ідеї, сервісні механіки, automation-процеси та внутрішні модулі в одну платформу, а не розпорошувати їх на окремі частини.
+                Chimera потрібна для того, щоб об’єднувати різні робочі ідеї, внутрішні механіки та сервісні блоки в одну платформу, а не розносити їх по окремих частинах.
               </p>
 
               <div class="side-points">
-                <div class="side-point">Єдина архітектурна основа для росту та ускладнення системи</div>
-                <div class="side-point">Гнучка платформа, яку можна розширювати без повного переписування</div>
-                <div class="side-point">Зрозуміла системна логіка: від базових сценаріїв до складніших внутрішніх механізмів</div>
+                <div class="side-point">Єдина основа для росту системи та збільшення її складності</div>
+                <div class="side-point">Гнучка платформа без хаотичних надбудов</div>
+                <div class="side-point">Зрозуміла логіка від базових сценаріїв до складніших процесів</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section container reveal">
-        <div class="section-card blue">
-          <div class="section-head">
-            <h2 class="section-title">Навіщо взагалі потрібна Chimera</h2>
-            <div class="section-note">Core purpose</div>
+      <section class="quick-nav container reveal">
+        <div class="nav-grid">
+          <a class="nav-card blue" href="#panel-purpose" data-panel="panel-purpose">
+            <div class="nav-kicker">Розділ 01</div>
+            <h2 class="nav-title">Навіщо існує Chimera</h2>
+            <p class="nav-text">Коротко про те, яку проблему вирішує система і чому вона взагалі має сенс.</p>
+          </a>
+
+          <a class="nav-card violet" href="#panel-value" data-panel="panel-value">
+            <div class="nav-kicker">Розділ 02</div>
+            <h2 class="nav-title">Чому вона корисна</h2>
+            <p class="nav-text">Що така платформа дає на практиці і чому вона краща за розділені рішення.</p>
+          </a>
+
+          <a class="nav-card teal" href="#panel-structure" data-panel="panel-structure">
+            <div class="nav-kicker">Розділ 03</div>
+            <h2 class="nav-title">Як вона влаштована</h2>
+            <p class="nav-text">Про внутрішній принцип системи: модульність, розширюваність і цілісна архітектура.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="details container">
+        <div class="detail-panel blue" id="panel-purpose">
+          <div class="detail-head">
+            <h2>Навіщо існує Chimera</h2>
+            <button class="close-btn" data-close>Закрити</button>
           </div>
 
           <div class="two-col">
             <div>
               <p>
-                З часом будь-яка серйозна система накопичує повторювані дії, сервісні завдання, внутрішні процеси та допоміжні інструменти. Якщо все це існує окремо, результат стає фрагментованим, важчим в управлінні та важчим у розвитку.
+                З часом будь-яка серйозна система накопичує повторювані дії, внутрішні завдання, допоміжні блоки та сервісну логіку. Якщо все це існує окремо, структура стає фрагментованою, незручною та складнішою для розвитку.
               </p>
             </div>
             <div>
               <p>
-                Chimera потрібна як єдина платформа, яка дозволяє таким елементам жити в одному середовищі: їх легше організовувати, пов’язувати й перетворювати на цілісну довгострокову систему.
+                Chimera існує як одна платформа, у якій такі елементи можуть жити в одному середовищі: пов’язані спільною логікою, краще організовані та перетворені з розділених рішень на цілісну систему.
               </p>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="section container reveal">
-        <div class="section-card violet">
-          <div class="section-head">
-            <h2 class="section-title">Що робить її корисною</h2>
-            <div class="section-note">Practical value</div>
+        <div class="detail-panel violet" id="panel-value">
+          <div class="detail-head">
+            <h2>Чому вона корисна</h2>
+            <button class="close-btn" data-close>Закрити</button>
           </div>
 
-          <div class="grid-3">
-            <div class="value-card blue">
-              <div class="card-label">Value 01</div>
-              <h3 class="card-title">Збирає все в одну систему</h3>
-              <p class="card-text">Замість роз’єднаних рішень Chimera дає одну основу, у якій різні механіки можуть існувати разом і підсилювати одна одну.</p>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <h3>Збирає все в одну основу</h3>
+              <p>Замість багатьох розділених рішень з’являється одна база, у якій різні механіки можуть співіснувати та підсилювати одна одну.</p>
             </div>
 
-            <div class="value-card violet">
-              <div class="card-label">Value 02</div>
-              <h3 class="card-title">Дозволяє рости без хаосу</h3>
-              <p class="card-text">Нові ідеї та нові блоки можна вбудовувати поступово, не перетворюючи проєкт на випадкову купу надбудов.</p>
+            <div class="mini-card">
+              <h3>Дає ріст без хаосу</h3>
+              <p>Нові ідеї можна додавати поступово, не перетворюючи проєкт на випадкову купу латок та надбудов.</p>
             </div>
 
-            <div class="value-card teal">
-              <div class="card-label">Value 03</div>
-              <h3 class="card-title">Робить систему гнучкою</h3>
-              <p class="card-text">Chimera не прив’язана до одного застиглого призначення. Вона створена для постійного розширення, адаптації та внутрішньої еволюції.</p>
+            <div class="mini-card">
+              <h3>Залишає систему гнучкою</h3>
+              <p>Chimera не прив’язана до однієї вузької ролі — вона будується як платформа, здатна розширюватися і змінюватися з часом.</p>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="section container reveal">
-        <div class="section-card teal">
-          <div class="section-head">
-            <h2 class="section-title">Ключові принципи Chimera</h2>
-            <div class="section-note">Design principles</div>
+        <div class="detail-panel teal" id="panel-structure">
+          <div class="detail-head">
+            <h2>Як вона влаштована</h2>
+            <button class="close-btn" data-close>Закрити</button>
           </div>
 
-          <div class="grid-3">
-            <div class="principle-card violet">
-              <div class="card-label">Principle 01</div>
-              <h3 class="card-title">Модульність</h3>
-              <p class="card-text">Кожен напрям може існувати як окремий блок, не змушуючи перебудовувати всю систему.</p>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <h3>Базова платформа</h3>
+              <p>Центральна основа визначає загальну структуру, напрям розвитку та архітектурну стійкість усієї системи.</p>
             </div>
 
-            <div class="principle-card teal">
-              <div class="card-label">Principle 02</div>
-              <h3 class="card-title">Розширюваність</h3>
-              <p class="card-text">Платформа спеціально будується так, щоб з часом природно вбирати нові механіки.</p>
+            <div class="mini-card">
+              <h3>Внутрішні модулі</h3>
+              <p>Окремі логічні блоки відповідають за конкретні напрями та можуть розвиватися незалежно, не ламаючи весь проєкт.</p>
             </div>
 
-            <div class="principle-card violet">
-              <div class="card-label">Principle 03</div>
-              <h3 class="card-title">Цілісність</h3>
-              <p class="card-text">Різні частини системи не повинні існувати ізольовано — вони мають підтримувати одна одну як єдине ціле.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section container reveal">
-        <div class="section-card blue">
-          <div class="section-head">
-            <h2 class="section-title">Як улаштована система</h2>
-            <div class="section-note">Structure</div>
-          </div>
-
-          <div class="grid-3">
-            <div class="feature-card blue">
-              <div class="card-label">Layer 01</div>
-              <h3 class="card-title">Базова платформа</h3>
-              <p class="card-text">Центральна основа, яка задає загальну структуру, напрям розвитку та архітектурну стійкість.</p>
-            </div>
-
-            <div class="feature-card violet">
-              <div class="card-label">Layer 02</div>
-              <h3 class="card-title">Внутрішні модулі</h3>
-              <p class="card-text">Окремі блоки логіки, що відповідають за конкретні напрями й можуть розвиватися незалежно.</p>
-            </div>
-
-            <div class="feature-card teal">
-              <div class="card-label">Layer 03</div>
-              <h3 class="card-title">Сервісні потоки</h3>
-              <p class="card-text">Система визначається не лише функціями, а й тим, як ці функції з’єднуються в ланцюги, реакції та процеси.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section container reveal">
-        <div class="section-card violet">
-          <div class="section-head">
-            <h2 class="section-title">Загальний напрям проєкту</h2>
-            <div class="section-note">Long-term vision</div>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <p>
-                Chimera розвивається як довгострокова платформа. Її сенс не в тому, щоб вирішити одну вузьку задачу, а в тому, щоб поступово ставати ширшою, сильнішою та зрілішою системою з більшим внутрішнім потенціалом.
-              </p>
-            </div>
-            <div>
-              <p>
-                Саме тому акцент робиться не на випадковому списку можливостей, а на сильній архітектурній основі: таку систему легше розширювати, переосмислювати, вдосконалювати й піднімати на новий рівень з часом.
-              </p>
+            <div class="mini-card">
+              <h3>Пов’язані процеси</h3>
+              <p>Система формується не лише функціями, а й тим, як ці функції з’єднуються між собою в одну внутрішню логіку.</p>
             </div>
           </div>
         </div>
@@ -1334,11 +1301,11 @@
             </p>
 
             <p class="hero-sub">
-              No es “un bot para una sola tarea”. Y tampoco es solo una colección suelta de scripts. La idea de Chimera es unir distintas mecánicas, herramientas y lógica interna dentro de una arquitectura coherente que pueda evolucionar con el tiempo.
+              No es solo una herramienta y no es un conjunto aleatorio de soluciones separadas. La idea de Chimera es unir distintas mecánicas y lógica interna dentro de una arquitectura coherente que pueda evolucionar con el tiempo.
             </p>
 
             <div class="author-line">
-              <strong>Creado por:</strong> impresent, aglvet. El proyecto se desarrolla como un sistema personal de largo plazo, con enfoque en flexibilidad, escalabilidad y una base arquitectónica fuerte para el crecimiento futuro.
+              <strong>Creado por:</strong> impresent, aglvet. El proyecto se desarrolla como un sistema personal a largo plazo con enfoque en flexibilidad, escalabilidad y una base arquitectónica fuerte.
             </div>
           </div>
 
@@ -1347,145 +1314,106 @@
               <div class="eyebrow">System overview</div>
               <h2 class="side-title">Un solo sistema en lugar de un conjunto caótico de soluciones</h2>
               <p class="side-text">
-                Chimera existe para reunir distintas ideas de trabajo, mecanismos de servicio, automatizaciones y módulos internos dentro de una sola plataforma, en lugar de dispersarlos en piezas separadas.
+                Chimera existe para reunir distintas ideas de trabajo, mecánicas internas y bloques de servicio dentro de una sola plataforma, en lugar de dispersarlos en piezas separadas.
               </p>
 
               <div class="side-points">
-                <div class="side-point">Una base arquitectónica para crecer y aumentar la complejidad del sistema</div>
-                <div class="side-point">Una plataforma flexible que puede ampliarse sin reescrituras completas</div>
-                <div class="side-point">Una lógica legible: desde comportamientos básicos hasta mecanismos internos más avanzados</div>
+                <div class="side-point">Una sola base para el crecimiento del sistema y el aumento de su complejidad</div>
+                <div class="side-point">Una plataforma flexible sin capas caóticas</div>
+                <div class="side-point">Una lógica legible desde escenarios básicos hasta procesos más avanzados</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section container reveal">
-        <div class="section-card blue">
-          <div class="section-head">
-            <h2 class="section-title">Por qué existe Chimera</h2>
-            <div class="section-note">Core purpose</div>
+      <section class="quick-nav container reveal">
+        <div class="nav-grid">
+          <a class="nav-card blue" href="#panel-purpose" data-panel="panel-purpose">
+            <div class="nav-kicker">Sección 01</div>
+            <h2 class="nav-title">Por qué existe Chimera</h2>
+            <p class="nav-text">Brevemente sobre qué problema resuelve el sistema y por qué tiene sentido.</p>
+          </a>
+
+          <a class="nav-card violet" href="#panel-value" data-panel="panel-value">
+            <div class="nav-kicker">Sección 02</div>
+            <h2 class="nav-title">Por qué es útil</h2>
+            <p class="nav-text">Qué aporta una plataforma así en la práctica y por qué es mejor que soluciones separadas.</p>
+          </a>
+
+          <a class="nav-card teal" href="#panel-structure" data-panel="panel-structure">
+            <div class="nav-kicker">Sección 03</div>
+            <h2 class="nav-title">Cómo está estructurada</h2>
+            <p class="nav-text">Sobre el principio interno del sistema: modularidad, expansión y arquitectura coherente.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="details container">
+        <div class="detail-panel blue" id="panel-purpose">
+          <div class="detail-head">
+            <h2>Por qué existe Chimera</h2>
+            <button class="close-btn" data-close>Cerrar</button>
           </div>
 
           <div class="two-col">
             <div>
               <p>
-                Con el tiempo, cualquier sistema serio acumula acciones repetidas, tareas de servicio, procesos internos y herramientas auxiliares. Si todo eso existe por separado, el resultado se vuelve fragmentado, más difícil de gestionar y más difícil de desarrollar.
+                Con el tiempo, cualquier sistema serio acumula acciones repetidas, tareas internas, bloques auxiliares y lógica de servicio. Si todo eso existe por separado, la estructura se vuelve fragmentada, incómoda y más difícil de desarrollar.
               </p>
             </div>
             <div>
               <p>
-                Chimera existe como una plataforma unificada que permite que esos elementos vivan dentro de un mismo entorno: más fácil de organizar, más fácil de conectar y más fácil de convertir en un sistema coherente a largo plazo.
+                Chimera existe como una plataforma única en la que esos elementos pueden vivir dentro del mismo entorno: conectados por una lógica compartida, mejor organizados y transformados de soluciones dispersas en un sistema coherente.
               </p>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="section container reveal">
-        <div class="section-card violet">
-          <div class="section-head">
-            <h2 class="section-title">Qué la hace útil</h2>
-            <div class="section-note">Practical value</div>
+        <div class="detail-panel violet" id="panel-value">
+          <div class="detail-head">
+            <h2>Por qué es útil</h2>
+            <button class="close-btn" data-close>Cerrar</button>
           </div>
 
-          <div class="grid-3">
-            <div class="value-card blue">
-              <div class="card-label">Value 01</div>
-              <h3 class="card-title">Reúne todo en un solo sistema</h3>
-              <p class="card-text">En lugar de soluciones desconectadas, Chimera ofrece una base común donde distintas mecánicas pueden convivir y reforzarse mutuamente.</p>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <h3>Reúne todo en una sola base</h3>
+              <p>En lugar de muchas soluciones separadas, aparece una única base donde distintas mecánicas pueden convivir y reforzarse mutuamente.</p>
             </div>
 
-            <div class="value-card violet">
-              <div class="card-label">Value 02</div>
-              <h3 class="card-title">Permite crecer sin caos</h3>
-              <p class="card-text">Nuevas ideas y nuevos bloques pueden añadirse gradualmente sin convertir el proyecto en una pila aleatoria de extensiones.</p>
+            <div class="mini-card">
+              <h3>Permite crecer sin caos</h3>
+              <p>Las nuevas ideas pueden añadirse de forma gradual sin convertir el proyecto en una acumulación aleatoria de parches y extensiones.</p>
             </div>
 
-            <div class="value-card teal">
-              <div class="card-label">Value 03</div>
-              <h3 class="card-title">Mantiene el sistema flexible</h3>
-              <p class="card-text">Chimera no está atada a un propósito fijo. Está pensada para expansión continua, adaptación y evolución interna.</p>
+            <div class="mini-card">
+              <h3>Mantiene el sistema flexible</h3>
+              <p>Chimera no está atada a un papel estrecho — se construye como una plataforma capaz de expandirse y cambiar con el tiempo.</p>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="section container reveal">
-        <div class="section-card teal">
-          <div class="section-head">
-            <h2 class="section-title">Principios clave de Chimera</h2>
-            <div class="section-note">Design principles</div>
+        <div class="detail-panel teal" id="panel-structure">
+          <div class="detail-head">
+            <h2>Cómo está estructurada</h2>
+            <button class="close-btn" data-close>Cerrar</button>
           </div>
 
-          <div class="grid-3">
-            <div class="principle-card violet">
-              <div class="card-label">Principle 01</div>
-              <h3 class="card-title">Modularidad</h3>
-              <p class="card-text">Cada dirección puede existir como su propio bloque sin obligar a reconstruir todo el sistema.</p>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <h3>Plataforma base</h3>
+              <p>La base central define la estructura general, la dirección de desarrollo y la estabilidad arquitectónica de todo el sistema.</p>
             </div>
 
-            <div class="principle-card teal">
-              <div class="card-label">Principle 02</div>
-              <h3 class="card-title">Expansibilidad</h3>
-              <p class="card-text">La plataforma está pensada deliberadamente para absorber nuevas mecánicas con el tiempo.</p>
+            <div class="mini-card">
+              <h3>Módulos internos</h3>
+              <p>Bloques lógicos separados son responsables de direcciones concretas y pueden evolucionar sin romper todo el proyecto.</p>
             </div>
 
-            <div class="principle-card violet">
-              <div class="card-label">Principle 03</div>
-              <h3 class="card-title">Coherencia</h3>
-              <p class="card-text">Las distintas partes del sistema no deben existir aisladas, sino apoyarse entre sí como un todo.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section container reveal">
-        <div class="section-card blue">
-          <div class="section-head">
-            <h2 class="section-title">Cómo está estructurado el sistema</h2>
-            <div class="section-note">Structure</div>
-          </div>
-
-          <div class="grid-3">
-            <div class="feature-card blue">
-              <div class="card-label">Layer 01</div>
-              <h3 class="card-title">Plataforma base</h3>
-              <p class="card-text">El fundamento central que define la estructura general, la dirección de desarrollo y la estabilidad arquitectónica.</p>
-            </div>
-
-            <div class="feature-card violet">
-              <div class="card-label">Layer 02</div>
-              <h3 class="card-title">Módulos internos</h3>
-              <p class="card-text">Bloques separados de lógica responsables de direcciones específicas y capaces de evolucionar de forma independiente.</p>
-            </div>
-
-            <div class="feature-card teal">
-              <div class="card-label">Layer 03</div>
-              <h3 class="card-title">Flujos de servicio</h3>
-              <p class="card-text">El sistema no está definido solo por funciones, sino también por cómo esas funciones se conectan en cadenas, reacciones y procesos.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section container reveal">
-        <div class="section-card violet">
-          <div class="section-head">
-            <h2 class="section-title">Dirección general del proyecto</h2>
-            <div class="section-note">Long-term vision</div>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <p>
-                Chimera se desarrolla como una plataforma a largo plazo. Su propósito no es resolver un único problema estrecho, sino convertirse gradualmente en un sistema más amplio, más sólido y más maduro con mayor potencial interno.
-              </p>
-            </div>
-            <div>
-              <p>
-                Por eso el foco no está en listas aleatorias de funciones, sino en una base arquitectónica fuerte: un sistema así es más fácil de expandir, reinterpretar, refinar y llevar a un nivel superior con el tiempo.
-              </p>
+            <div class="mini-card">
+              <h3>Procesos conectados</h3>
+              <p>El sistema no se forma solo por funciones, sino también por la forma en que esas funciones se conectan dentro de una lógica interna común.</p>
             </div>
           </div>
         </div>
@@ -1528,11 +1456,65 @@
 
       subtitle.textContent = subtitles[lang] || subtitles.ru;
       localStorage.setItem("chimera-lang", lang);
+
+      closePanels();
       initReveal();
     }
 
     langButtons.forEach(btn => {
       btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+    });
+
+    function getVisibleLangBlock(){
+      return document.querySelector(".lang-content:not(.hidden-lang)");
+    }
+
+    function closePanels(){
+      const visibleBlock = getVisibleLangBlock();
+      if(!visibleBlock) return;
+      visibleBlock.querySelectorAll(".detail-panel").forEach(panel => {
+        panel.classList.remove("active");
+      });
+    }
+
+    function openPanel(panelId){
+      const visibleBlock = getVisibleLangBlock();
+      if(!visibleBlock) return;
+
+      visibleBlock.querySelectorAll(".detail-panel").forEach(panel => {
+        panel.classList.remove("active");
+      });
+
+      const target = visibleBlock.querySelector(`#${panelId}`);
+      if(target){
+        target.classList.add("active");
+        setTimeout(() => {
+          target.scrollIntoView({ behavior:"smooth", block:"start" });
+        }, 80);
+      }
+    }
+
+    document.addEventListener("click", (e) => {
+      const card = e.target.closest("[data-panel]");
+      if(card){
+        e.preventDefault();
+        openPanel(card.dataset.panel);
+      }
+
+      const closeBtn = e.target.closest("[data-close]");
+      if(closeBtn){
+        const panel = closeBtn.closest(".detail-panel");
+        if(panel){
+          panel.classList.remove("active");
+          setTimeout(() => {
+            const visibleBlock = getVisibleLangBlock();
+            const quickNav = visibleBlock ? visibleBlock.querySelector(".quick-nav") : null;
+            if(quickNav){
+              quickNav.scrollIntoView({ behavior:"smooth", block:"start" });
+            }
+          }, 80);
+        }
+      }
     });
 
     function initReveal(){

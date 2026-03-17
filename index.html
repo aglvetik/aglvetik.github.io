@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chimera System</title>
-  <meta name="description" content="Chimera — modular Discord automation and analytics project by impresent and aglvet." />
+  <meta name="description" content="Chimera — modular Discord automation platform and scripting ecosystem by impresent and aglvet." />
 
   <style>
     :root{
@@ -17,7 +17,6 @@
       --shadow:0 14px 38px rgba(0,0,0,0.34);
       --shadow-strong:0 18px 46px rgba(0,0,0,0.42);
       --radius:22px;
-      --radius-sm:16px;
       --max:1140px;
 
       --green-dot:#66e0a3;
@@ -25,28 +24,20 @@
 
       --blue-1:rgba(98,162,255,0.18);
       --blue-2:rgba(53,112,211,0.14);
-      --blue-3:rgba(120,193,255,0.12);
 
       --violet-1:rgba(165,120,255,0.22);
       --violet-2:rgba(113,78,214,0.16);
-      --violet-3:rgba(207,158,255,0.10);
 
       --teal-1:rgba(64,196,170,0.22);
       --teal-2:rgba(29,133,134,0.15);
-      --teal-3:rgba(129,234,219,0.10);
 
       --accent-blue:#8cbcff;
       --accent-violet:#c5a7ff;
       --accent-teal:#8fe9dd;
     }
 
-    *{
-      box-sizing:border-box;
-    }
-
-    html{
-      scroll-behavior:smooth;
-    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
 
     body{
       margin:0;
@@ -242,7 +233,7 @@
 
     h1{
       margin:0 0 14px;
-      font-size:clamp(40px, 7vw, 70px);
+      font-size:clamp(40px, 7vw, 72px);
       line-height:0.96;
       letter-spacing:-0.05em;
     }
@@ -312,14 +303,6 @@
         linear-gradient(145deg, #111827 0%, #101828 52%, #111827 100%);
     }
 
-    .hero-side img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      opacity:0.95;
-    }
-
     .capsule{
       width:100%;
       min-height:340px;
@@ -359,15 +342,9 @@
     }
 
     @keyframes shimmer{
-      0%{
-        transform:translateX(-18%) translateY(0) rotate(0deg);
-      }
-      50%{
-        transform:translateX(10%) translateY(-2%) rotate(2deg);
-      }
-      100%{
-        transform:translateX(22%) translateY(0) rotate(0deg);
-      }
+      0%{transform:translateX(-18%) translateY(0) rotate(0deg)}
+      50%{transform:translateX(10%) translateY(-2%) rotate(2deg)}
+      100%{transform:translateX(22%) translateY(0) rotate(0deg)}
     }
 
     .capsule-top{
@@ -426,26 +403,22 @@
     }
 
     .mini-kpi.blue{
-      background:
-        linear-gradient(180deg, rgba(98,162,255,0.15), rgba(98,162,255,0.05));
+      background:linear-gradient(180deg, rgba(98,162,255,0.15), rgba(98,162,255,0.05));
       border-color:rgba(140,188,255,0.22);
     }
 
     .mini-kpi.violet{
-      background:
-        linear-gradient(180deg, rgba(165,120,255,0.17), rgba(165,120,255,0.05));
+      background:linear-gradient(180deg, rgba(165,120,255,0.17), rgba(165,120,255,0.05));
       border-color:rgba(197,167,255,0.22);
     }
 
     .mini-kpi.teal{
-      background:
-        linear-gradient(180deg, rgba(64,196,170,0.16), rgba(64,196,170,0.05));
+      background:linear-gradient(180deg, rgba(64,196,170,0.16), rgba(64,196,170,0.05));
       border-color:rgba(143,233,221,0.22);
     }
 
     .mini-kpi.mixed{
-      background:
-        linear-gradient(180deg, rgba(140,188,255,0.10), rgba(197,167,255,0.10), rgba(64,196,170,0.08));
+      background:linear-gradient(180deg, rgba(140,188,255,0.10), rgba(197,167,255,0.10), rgba(64,196,170,0.08));
       border-color:rgba(255,255,255,0.14);
     }
 
@@ -533,15 +506,9 @@
     }
 
     @keyframes panelGlow{
-      0%{
-        transform:translateX(-10%) rotate(0deg);
-      }
-      50%{
-        transform:translateX(10%) rotate(2deg);
-      }
-      100%{
-        transform:translateX(20%) rotate(0deg);
-      }
+      0%{transform:translateX(-10%) rotate(0deg)}
+      50%{transform:translateX(10%) rotate(2deg)}
+      100%{transform:translateX(20%) rotate(0deg)}
     }
 
     .nav-card.overview{
@@ -549,7 +516,6 @@
         radial-gradient(circle at 100% 0%, rgba(98,162,255,0.26), transparent 30%),
         linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
     }
-
     .nav-card.overview::before{
       background:
         linear-gradient(120deg,
@@ -559,7 +525,6 @@
           rgba(98,162,255,0.10) 72%,
           transparent 100%);
     }
-
     .nav-card.overview::after{
       background:radial-gradient(circle, rgba(140,188,255,0.26), transparent 70%);
     }
@@ -569,7 +534,6 @@
         radial-gradient(circle at 100% 0%, rgba(165,120,255,0.30), transparent 30%),
         linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
     }
-
     .nav-card.architecture::before{
       background:
         linear-gradient(120deg,
@@ -579,7 +543,6 @@
           rgba(165,120,255,0.10) 72%,
           transparent 100%);
     }
-
     .nav-card.architecture::after{
       background:radial-gradient(circle, rgba(197,167,255,0.28), transparent 70%);
     }
@@ -589,7 +552,6 @@
         radial-gradient(circle at 100% 0%, rgba(64,196,170,0.30), transparent 30%),
         linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
     }
-
     .nav-card.functionality::before{
       background:
         linear-gradient(120deg,
@@ -599,7 +561,6 @@
           rgba(64,196,170,0.10) 72%,
           transparent 100%);
     }
-
     .nav-card.functionality::after{
       background:radial-gradient(circle, rgba(143,233,221,0.26), transparent 70%);
     }
@@ -657,7 +618,6 @@
         radial-gradient(circle at bottom left, rgba(53,112,211,0.16), transparent 22%),
         linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
     }
-
     .detail-panel.overview::before{
       background:
         linear-gradient(120deg,
@@ -674,7 +634,6 @@
         radial-gradient(circle at bottom left, rgba(113,78,214,0.16), transparent 22%),
         linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
     }
-
     .detail-panel.architecture::before{
       background:
         linear-gradient(120deg,
@@ -691,7 +650,6 @@
         radial-gradient(circle at bottom left, rgba(29,133,134,0.16), transparent 22%),
         linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
     }
-
     .detail-panel.functionality::before{
       background:
         linear-gradient(120deg,
@@ -768,21 +726,13 @@
       border-color:rgba(255,255,255,0.18);
     }
 
-    .mini-card.blue{
-      background:
-        linear-gradient(180deg, rgba(98,162,255,0.14), rgba(98,162,255,0.04));
-      border-color:rgba(140,188,255,0.18);
-    }
-
     .mini-card.violet{
-      background:
-        linear-gradient(180deg, rgba(165,120,255,0.16), rgba(165,120,255,0.04));
+      background:linear-gradient(180deg, rgba(165,120,255,0.16), rgba(165,120,255,0.04));
       border-color:rgba(197,167,255,0.18);
     }
 
     .mini-card.teal{
-      background:
-        linear-gradient(180deg, rgba(64,196,170,0.16), rgba(64,196,170,0.04));
+      background:linear-gradient(180deg, rgba(64,196,170,0.16), rgba(64,196,170,0.04));
       border-color:rgba(143,233,221,0.18);
     }
 
@@ -844,14 +794,8 @@
     }
 
     @keyframes fadeUp{
-      from{
-        opacity:0;
-        transform:translateY(14px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
+      from{opacity:0;transform:translateY(14px)}
+      to{opacity:1;transform:translateY(0)}
     }
 
     @media (max-width: 980px){
@@ -928,7 +872,7 @@
         <div class="brand-mark">C</div>
         <div class="brand-text">
           <strong>Chimera</strong>
-          <span id="topbarSubtitle">Экспериментальный проект • Активная разработка</span>
+          <span id="topbarSubtitle">Экспериментальная платформа • Активная разработка</span>
         </div>
       </div>
 
@@ -950,24 +894,24 @@
           <div class="hero-main reveal">
             <div class="status-row">
               <span class="badge badge-strong"><span class="dot"></span> Активная разработка</span>
-              <span class="badge"><span class="dot"></span> Модульная архитектура</span>
-              <span class="badge"><span class="dot"></span> Многоязычный сайт</span>
+              <span class="badge"><span class="dot"></span> Модульная платформа</span>
+              <span class="badge"><span class="dot"></span> Широкий набор инструментов</span>
             </div>
 
             <h1>Chimera</h1>
 
             <p class="hero-lead">
-              Модульный проект автоматизации и аналитики для Discord, созданный как персональная система для структурированного сбора событий, анализа активности и развития единой экосистемы.
+              Chimera — это не один инструмент и не один бот, а большая модульная система с широким функционалом: от простых утилит и подсчёта активности до сложных автоматизаций, тикет-систем, служебных сценариев, управляющих модулей и набора связанных скриптов.
             </p>
 
             <p class="hero-sub">
-              Основная информация вынесена в три ключевых раздела: общее описание, архитектура и функционал. Всё остальное открывается только по нажатию, без перегруженной стартовой страницы.
+              Аналитика здесь является только одним из направлений. Основная идея проекта — построить гибкую платформу, в которой можно постепенно наращивать возможности, подключать новые сервисы, расширять логику и собирать всё в единую экосистему.
             </p>
 
             <div class="author-inline">
-              <h3>Автор</h3>
+              <h3>Авторская основа</h3>
               <p>
-                Проект Chimera был создан <strong>impresent</strong> и <strong>aglvet</strong> как долгосрочный персональный проект, сосредоточенный на автоматизации Discord, аналитике и идее модульной инфраструктуры.
+                Проект Chimera развивается как долгосрочная персональная система, созданная <strong>impresent</strong> и <strong>aglvet</strong>, с упором на масштабируемую архитектуру, автоматизацию, системные сценарии и расширяемый набор инструментов.
               </p>
               <div class="author-tags">
                 <span class="tag">Основная идентичность • impresent</span>
@@ -978,46 +922,44 @@
           </div>
 
           <div class="hero-side reveal">
-            <!-- <img src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
-
             <div class="capsule">
               <div class="capsule-top">
                 <div>
-                  <div class="capsule-kicker">Системная капсула</div>
-                  <h3>Снимок Chimera</h3>
+                  <div class="capsule-kicker">Системная сводка</div>
+                  <h3>Chimera Platform Snapshot</h3>
                 </div>
-                <div class="capsule-pill">Экспериментальная сборка</div>
+                <div class="capsule-pill">Platform build</div>
               </div>
 
               <p class="capsule-text">
-                Компактное представление проекта: текущий фокус, ключевые опоры системы и направление дальнейшего роста.
+                Платформа с большим количеством функций, сценариев и модулей, где аналитика — только часть общей системы.
               </p>
 
               <div class="kpi-grid">
                 <div class="mini-kpi blue">
-                  <div class="kpi-label">Текущее состояние</div>
-                  <div class="kpi-value">Концепция и структура проекта активно формируются</div>
+                  <div class="kpi-label">Текущий вектор</div>
+                  <div class="kpi-value">Расширение платформы за счёт модулей, сервисов и внутренних сценариев</div>
                 </div>
 
                 <div class="mini-kpi violet">
-                  <div class="kpi-label">Основной фокус</div>
-                  <div class="kpi-value">Автоматизация Discord, аналитика и проектирование модульной экосистемы</div>
+                  <div class="kpi-label">Тип системы</div>
+                  <div class="kpi-value">Модульная automation platform с большим набором инструментов</div>
                 </div>
 
                 <div class="mini-kpi teal">
-                  <div class="kpi-label">Модель дизайна</div>
-                  <div class="kpi-value">Многоуровневая архитектура с масштабируемым расширением модулей</div>
+                  <div class="kpi-label">Диапазон функций</div>
+                  <div class="kpi-value">От подсчёта активности и утилит до тикетов, workflow и комплексных логик</div>
                 </div>
 
                 <div class="mini-kpi mixed">
-                  <div class="kpi-label">Авторские идентичности</div>
+                  <div class="kpi-label">Ключевые идентичности</div>
                   <div class="kpi-value">impresent · aglvet</div>
                 </div>
               </div>
 
               <div class="capsule-bottom">
-                <div class="capsule-line">Основная идея → превратить Discord-активность в более структурированную аналитическую среду</div>
-                <div class="capsule-line">Направление проекта → долгосрочное развитие системы, а не одного отдельного инструмента</div>
+                <div class="capsule-line">Ключевая идея → создать единую систему с большим функционалом, а не отдельный узкий инструмент</div>
+                <div class="capsule-line">Стратегия → расширение через модули, скрипты, сервисные блоки и внутренние подсистемы</div>
               </div>
             </div>
           </div>
@@ -1028,9 +970,9 @@
         <div class="nav-grid">
           <a class="nav-card overview" href="#panel-overview" data-panel="panel-overview">
             <div class="nav-kicker">Раздел 01</div>
-            <h2 class="nav-title">Общее описание</h2>
+            <h2 class="nav-title">Концепция платформы</h2>
             <p class="nav-text">
-              Что такое Chimera, зачем она создаётся и как выглядит основная идея проекта.
+              Что такое Chimera как система, в чём её главная идея и почему она шире, чем просто аналитика.
             </p>
           </a>
 
@@ -1038,15 +980,15 @@
             <div class="nav-kicker">Раздел 02</div>
             <h2 class="nav-title">Архитектура</h2>
             <p class="nav-text">
-              Основные уровни системы, логика построения и взаимодействие ключевых компонентов.
+              Как платформа строится из уровней, модулей, сервисов и расширяемых внутренних компонентов.
             </p>
           </a>
 
           <a class="nav-card functionality" href="#panel-functions" data-panel="panel-functions">
             <div class="nav-kicker">Раздел 03</div>
-            <h2 class="nav-title">Функционал</h2>
+            <h2 class="nav-title">Функциональные направления</h2>
             <p class="nav-text">
-              Главные направления работы проекта: аналитика, автоматизация, логирование и развитие модулей.
+              Какие типы возможностей включает платформа: automation, tickets, utilities, logging, analytics и многое другое.
             </p>
           </a>
         </div>
@@ -1055,25 +997,25 @@
       <section class="details container">
         <div class="detail-panel overview" id="panel-overview">
           <div class="detail-head">
-            <h2>Общее описание</h2>
+            <h2>Концепция платформы</h2>
             <button class="close-btn" data-close>Закрыть</button>
           </div>
 
           <div class="two-col">
             <div>
               <p>
-                Chimera — это персональный проект, направленный на превращение активности в Discord в более структурированную среду для анализа, организации и выборочной автоматизации.
+                Chimera — это модульная системная платформа, в которой аналитика является только одной из функций. Проект задуман как широкая техническая экосистема, объединяющая разные типы инструментов, скриптов, служебных блоков и автоматизированных сценариев.
               </p>
               <p class="muted">
-                Проект развивается как единая система, а не как отдельный одноразовый бот. Основная идея заключается в том, чтобы соединить сбор событий, обработку информации и расширяемую модульную структуру.
+                Здесь нет узкой идеи “один бот — одна задача”. Наоборот, платформа строится как большая база для множества направлений: utility-модулей, ticket-систем, внутренних сервисов, управляющих компонентов, автоматизаций, логирования, workflow-логики и расширяемых подсистем.
               </p>
             </div>
             <div>
               <p>
-                Chimera сейчас находится в стадии активной разработки. Архитектура проекта постепенно уточняется, а новые модули добавляются по мере развития концепции и появления новых задач.
+                Суть Chimera — не только собирать данные, а быть гибкой платформой, которую можно постепенно насыщать всё более сложным функционалом. Сегодня это могут быть одни сервисы, завтра — новые модули, новые скрипты, новые процессы и новые системные блоки.
               </p>
               <p class="muted">
-                Внешне проект подаётся как аккуратная технологическая экосистема с возможностью масштабирования и дальнейшего углубления аналитических возможностей.
+                За счёт этого проект развивается не как статичный продукт, а как архитектурная основа для большого набора возможностей, которые можно комбинировать, развивать и связывать в одну систему.
               </p>
             </div>
           </div>
@@ -1086,81 +1028,81 @@
           </div>
 
           <p class="muted">
-            Проект строится как модульная система, где каждый слой отвечает за свою область, а расширение возможно без полного переписывания всей основы.
+            Платформа строится как модульная архитектура, где каждый слой отвечает за свою область, а новые функции добавляются через отдельные модули, сервисы и сценарии, не ломая всю основу.
           </p>
 
           <div class="arch-grid">
             <div class="mini-card violet">
-              <h3>Управляющее ядро</h3>
-              <p>Центральный управляющий слой, отвечающий за координацию, общую логику и развитие структуры проекта.</p>
+              <h3>Core Platform</h3>
+              <p>Центральный системный слой, который задаёт общую логику проекта, структуру, координацию и направление развития платформы.</p>
             </div>
 
             <div class="mini-card violet">
-              <h3>Слой наблюдения</h3>
-              <p>Уровень наблюдения за событиями и приёма контекстной информации для дальнейшей обработки.</p>
+              <h3>Service Modules</h3>
+              <p>Независимые сервисные блоки, которые отвечают за отдельные функциональные направления и могут развиваться автономно.</p>
             </div>
 
             <div class="mini-card violet">
-              <h3>Рабочие модули</h3>
-              <p>Отдельные исполнительные модули для конкретных задач, автоматизации и вспомогательных процессов.</p>
+              <h3>Automation Layer</h3>
+              <p>Слой автоматизированных процессов, workflow-сценариев, служебных реакций и повторяемых операций.</p>
             </div>
 
             <div class="mini-card violet">
-              <h3>Сборщик событий</h3>
-              <p>Модуль приёма и структурирования событий, подготавливающий данные к последующей фиксации и анализу.</p>
+              <h3>Script Ecosystem</h3>
+              <p>Набор отдельных скриптов и вспомогательных логик, которые дополняют платформу и расширяют её внутренние возможности.</p>
             </div>
 
             <div class="mini-card violet">
-              <h3>Аналитический слой</h3>
-              <p>Аналитический слой для выявления паттернов, статистики активности и тематических направлений.</p>
+              <h3>Data & Event Layer</h3>
+              <p>Слой работы с событиями, логами, данными, состояниями системы и внутренними потоками информации.</p>
             </div>
 
             <div class="mini-card violet">
-              <h3>Хранилище</h3>
-              <p>Централизованное хранилище для структурированных записей, логов и архивной информации проекта.</p>
+              <h3>Expansion Model</h3>
+              <p>Принцип архитектурного роста, при котором новые подсистемы можно встраивать постепенно без полного переписывания платформы.</p>
             </div>
           </div>
         </div>
 
         <div class="detail-panel functionality" id="panel-functions">
           <div class="detail-head">
-            <h2>Функционал</h2>
+            <h2>Функциональные направления</h2>
             <button class="close-btn" data-close>Закрыть</button>
           </div>
 
           <p class="muted">
-            Chimera задумывается как гибкая экосистема, в которой функциональность можно постепенно наращивать по мере роста самого проекта.
+            Chimera ориентирована на широкий функционал. Ниже приведены не “единственные функции”, а только примеры направлений, которые могут быть встроены в платформу и развиваться как самостоятельные модули.
           </p>
 
           <div class="func-grid">
             <div class="mini-card teal">
-              <h3>Аналитика чатов</h3>
-              <p>Анализ структуры общения, активности, повторяющихся паттернов и общей динамики коммуникации.</p>
+              <h3>Activity & Statistics</h3>
+              <p>Подсчёт активности, статистика, сводки, базовые числовые метрики и аналитические представления.</p>
             </div>
 
             <div class="mini-card teal">
-              <h3>Аналитика голосовой активности</h3>
-              <p>Наблюдение за голосовой активностью, сессиями, временными отрезками и поведенческим контекстом.</p>
+              <h3>Ticket Systems</h3>
+              <p>Простые и сложные тикет-системы, логика очередей, сценарии обслуживания и служебные workflow-процессы.</p>
             </div>
 
             <div class="mini-card teal">
-              <h3>Уведомления</h3>
-              <p>Система напоминаний, внутренних уведомлений и вспомогательных сигналов по заданным сценариям.</p>
+              <h3>Utilities</h3>
+              <p>Набор вспомогательных утилит, внутренних сервисов, helper-модулей и прикладных инструментов для разных задач.</p>
             </div>
 
             <div class="mini-card teal">
-              <h3>Автоматизация</h3>
-              <p>Автоматизация повторяющихся действий и перенос рутинных процессов в модульную систему.</p>
+              <h3>Automation</h3>
+              <p>Автоматизированные сценарии, реактивные процессы, служебные задачи и повторяемая системная логика.</p>
             </div>
 
             <div class="mini-card teal">
-              <h3>Логирование</h3>
-              <p>Фиксация активности и долгосрочное хранение событий для ретроспективного просмотра и аналитики.</p>
+              <h3>Logging & Tracking</h3>
+              <p>Фиксация событий, логирование процессов, сохранение состояний и отслеживание важных внутренних действий.</p>
             </div>
 
             <div class="mini-card teal">
-              <h3>ИИ-анализ</h3>
-              <p>Экспериментальное аналитическое направление для классификации, сводок и выявления закономерностей.</p>
+              <h3>Complex Service Logic</h3>
+              <p>Более сложные подсистемы: multi-step workflows, распределённые сценарии, модульные цепочки и комбинированные сервисные механики.</p>
             </div>
           </div>
         </div>
@@ -1174,24 +1116,24 @@
           <div class="hero-main reveal">
             <div class="status-row">
               <span class="badge badge-strong"><span class="dot"></span> Active development</span>
-              <span class="badge"><span class="dot"></span> Modular architecture</span>
-              <span class="badge"><span class="dot"></span> Multi-language website</span>
+              <span class="badge"><span class="dot"></span> Modular platform</span>
+              <span class="badge"><span class="dot"></span> Broad feature set</span>
             </div>
 
             <h1>Chimera</h1>
 
             <p class="hero-lead">
-              A modular Discord automation and analytics project created as a personal system for structured event collection, activity analysis and the development of a unified ecosystem.
+              Chimera is not a single-purpose bot and not just an analytics tool. It is a large modular system with a wide feature range: from lightweight utilities and activity tracking to complex automation flows, ticket systems, service logic, management modules and a broader ecosystem of connected scripts.
             </p>
 
             <p class="hero-sub">
-              The main information is organized into three key sections: general overview, architecture and functionality. Everything else opens only on demand, without an overloaded front page.
+              Analytics is only one layer of the platform. The main idea behind Chimera is to build a flexible system that can continuously grow through modules, services, scripts and internal subsystems, all connected into one larger architecture.
             </p>
 
             <div class="author-inline">
-              <h3>Author</h3>
+              <h3>Author foundation</h3>
               <p>
-                Chimera was created by <strong>impresent</strong> and <strong>aglvet</strong> as a long-term personal project focused on Discord automation, analytics and modular infrastructure design.
+                Chimera is being developed by <strong>impresent</strong> and <strong>aglvet</strong> as a long-term personal platform focused on scalable architecture, automation, service workflows, modular tooling and system expansion.
               </p>
               <div class="author-tags">
                 <span class="tag">Primary identity • impresent</span>
@@ -1202,46 +1144,44 @@
           </div>
 
           <div class="hero-side reveal">
-            <!-- <img src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
-
             <div class="capsule">
               <div class="capsule-top">
                 <div>
-                  <div class="capsule-kicker">System capsule</div>
-                  <h3>Chimera Snapshot</h3>
+                  <div class="capsule-kicker">Platform summary</div>
+                  <h3>Chimera Platform Snapshot</h3>
                 </div>
-                <div class="capsule-pill">Experimental build</div>
+                <div class="capsule-pill">Platform build</div>
               </div>
 
               <p class="capsule-text">
-                A compact visual summary of the project: current focus, core pillars and the direction of future growth.
+                A broad modular platform where analytics is only one function among many services, systems and workflows.
               </p>
 
               <div class="kpi-grid">
                 <div class="mini-kpi blue">
-                  <div class="kpi-label">Current state</div>
-                  <div class="kpi-value">Project structure and concept are actively taking shape</div>
+                  <div class="kpi-label">Current direction</div>
+                  <div class="kpi-value">Expanding the platform through modules, services and internal workflows</div>
                 </div>
 
                 <div class="mini-kpi violet">
-                  <div class="kpi-label">Core focus</div>
-                  <div class="kpi-value">Discord automation, analytics and modular ecosystem design</div>
+                  <div class="kpi-label">System type</div>
+                  <div class="kpi-value">A modular automation platform with a large toolkit and script ecosystem</div>
                 </div>
 
                 <div class="mini-kpi teal">
-                  <div class="kpi-label">Design model</div>
-                  <div class="kpi-value">Layered architecture with scalable module expansion</div>
+                  <div class="kpi-label">Feature range</div>
+                  <div class="kpi-value">From activity counting and utilities to tickets, workflows and more complex service logic</div>
                 </div>
 
                 <div class="mini-kpi mixed">
-                  <div class="kpi-label">Author identities</div>
+                  <div class="kpi-label">Core identities</div>
                   <div class="kpi-value">impresent · aglvet</div>
                 </div>
               </div>
 
               <div class="capsule-bottom">
-                <div class="capsule-line">Core idea → turn Discord activity into a more structured analytical environment</div>
-                <div class="capsule-line">Project direction → long-term system evolution instead of a single isolated tool</div>
+                <div class="capsule-line">Core idea → build one system with a broad feature range instead of one narrow-purpose tool</div>
+                <div class="capsule-line">Strategy → expand through modules, scripts, service blocks and internal subsystems</div>
               </div>
             </div>
           </div>
@@ -1252,20 +1192,26 @@
         <div class="nav-grid">
           <a class="nav-card overview" href="#panel-overview" data-panel="panel-overview">
             <div class="nav-kicker">Section 01</div>
-            <h2 class="nav-title">Overview</h2>
-            <p class="nav-text">What Chimera is, why it exists and how the project idea is structured.</p>
+            <h2 class="nav-title">Platform concept</h2>
+            <p class="nav-text">
+              What Chimera is as a system, why it is broader than analytics and how the platform idea is structured.
+            </p>
           </a>
 
           <a class="nav-card architecture" href="#panel-architecture" data-panel="panel-architecture">
             <div class="nav-kicker">Section 02</div>
             <h2 class="nav-title">Architecture</h2>
-            <p class="nav-text">Core system layers, structural logic and interaction between major components.</p>
+            <p class="nav-text">
+              How the platform is built from layers, modules, services and expandable internal components.
+            </p>
           </a>
 
           <a class="nav-card functionality" href="#panel-functions" data-panel="panel-functions">
             <div class="nav-kicker">Section 03</div>
-            <h2 class="nav-title">Functionality</h2>
-            <p class="nav-text">Main project directions: analytics, automation, logging and modular expansion.</p>
+            <h2 class="nav-title">Functional directions</h2>
+            <p class="nav-text">
+              The types of capabilities the platform can include: automation, tickets, utilities, logging, analytics and much more.
+            </p>
           </a>
         </div>
       </section>
@@ -1273,25 +1219,25 @@
       <section class="details container">
         <div class="detail-panel overview" id="panel-overview">
           <div class="detail-head">
-            <h2>Overview</h2>
+            <h2>Platform concept</h2>
             <button class="close-btn" data-close>Close</button>
           </div>
 
           <div class="two-col">
             <div>
               <p>
-                Chimera is a personal project focused on transforming Discord activity into a more structured environment for analysis, organization and selective automation.
+                Chimera is a modular platform where analytics is only one of many possible functions. The project is designed as a wider technical ecosystem that can combine different tool types, scripts, service components, automation flows and expandable subsystems.
               </p>
               <p class="muted">
-                The project is being developed as a unified system rather than a single one-purpose bot. Its central idea is to connect event collection, information processing and an expandable modular structure.
+                This is not based on the idea of “one bot, one role.” Instead, Chimera is structured as a broader system that can host utility modules, ticket systems, internal services, workflow engines, logging layers, management components and other platform services.
               </p>
             </div>
             <div>
               <p>
-                Chimera is currently in active development. The architecture continues to evolve, and new modules are introduced as the concept expands and new tasks emerge.
+                The purpose of Chimera is not just to observe data, but to become a flexible platform that can continuously absorb more functionality over time. New modules, scripts, service chains and internal logic can be added as the system evolves.
               </p>
               <p class="muted">
-                The project is presented as a clean technological ecosystem with room for scaling and deeper analytical growth over time.
+                Because of that, Chimera is framed not as a static product but as a growing platform foundation for a large and diverse set of capabilities.
               </p>
             </div>
           </div>
@@ -1304,36 +1250,82 @@
           </div>
 
           <p class="muted">
-            The project is designed as a modular system where each layer handles its own role and expansion can happen without rebuilding the whole foundation.
+            The platform is designed as a modular architecture in which each layer has its own responsibility, while new functions can be introduced through separate modules, services and scripts without rewriting the entire base.
           </p>
 
           <div class="arch-grid">
-            <div class="mini-card violet"><h3>Core Control</h3><p>Central management layer responsible for coordination, high-level logic and project structure.</p></div>
-            <div class="mini-card violet"><h3>Monitoring Layer</h3><p>Observation layer for incoming events and contextual information intended for later processing.</p></div>
-            <div class="mini-card violet"><h3>Worker Modules</h3><p>Separate execution modules for task-specific behavior, automation and auxiliary logic.</p></div>
-            <div class="mini-card violet"><h3>Collector</h3><p>Event intake and structuring layer preparing information for storage and analysis.</p></div>
-            <div class="mini-card violet"><h3>Analyzer</h3><p>Analytical layer for activity patterns, statistics and broader thematic interpretation.</p></div>
-            <div class="mini-card violet"><h3>Storage</h3><p>Centralized storage for structured records, logs and archived project information.</p></div>
+            <div class="mini-card violet">
+              <h3>Core Platform</h3>
+              <p>The central system layer that defines overall logic, structure, coordination and strategic platform growth.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Service Modules</h3>
+              <p>Independent service blocks responsible for different functional directions and capable of evolving separately.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Automation Layer</h3>
+              <p>A layer for automated workflows, service reactions, chained logic and repeated operational routines.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Script Ecosystem</h3>
+              <p>A broader set of scripts and helper logic that extend the platform and reinforce its internal capabilities.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Data & Event Layer</h3>
+              <p>The layer that works with events, logs, system states and internal information streams.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Expansion Model</h3>
+              <p>An architecture growth model where new subsystems can be integrated gradually without rebuilding the full system core.</p>
+            </div>
           </div>
         </div>
 
         <div class="detail-panel functionality" id="panel-functions">
           <div class="detail-head">
-            <h2>Functionality</h2>
+            <h2>Functional directions</h2>
             <button class="close-btn" data-close>Close</button>
           </div>
 
           <p class="muted">
-            Chimera is conceived as a flexible ecosystem where functionality can be expanded gradually as the project itself grows.
+            Chimera is designed around broad functionality. The areas below are not the only features, but examples of directions that can exist as built-in platform modules.
           </p>
 
           <div class="func-grid">
-            <div class="mini-card teal"><h3>Chat Analytics</h3><p>Analysis of communication structure, activity patterns and broader interaction dynamics.</p></div>
-            <div class="mini-card teal"><h3>Voice Analytics</h3><p>Observation of voice activity, sessions, time segments and contextual participation patterns.</p></div>
-            <div class="mini-card teal"><h3>Notifications</h3><p>Reminder logic, internal alerts and supportive signaling based on defined scenarios.</p></div>
-            <div class="mini-card teal"><h3>Automation</h3><p>Transfer of repeated actions and routine workflows into a modular automated environment.</p></div>
-            <div class="mini-card teal"><h3>Logging</h3><p>Long-term event capture for retrospective review and analytical visibility.</p></div>
-            <div class="mini-card teal"><h3>AI Analysis</h3><p>Experimental analytical direction for summaries, classification and pattern interpretation.</p></div>
+            <div class="mini-card teal">
+              <h3>Activity & Statistics</h3>
+              <p>Activity counting, numerical metrics, summaries and analytical representations.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Ticket Systems</h3>
+              <p>Simple and advanced ticket systems, queue logic, service flows and structured support workflows.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Utilities</h3>
+              <p>Helper modules, internal services, utility tools and smaller operational building blocks.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Automation</h3>
+              <p>Automated scenarios, service reactions, repeated task handling and workflow execution logic.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Logging & Tracking</h3>
+              <p>Event capture, process logging, state storage and traceability of important internal actions.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Complex Service Logic</h3>
+              <p>More advanced subsystems such as multi-step workflows, distributed logic chains and composite service mechanisms.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1346,24 +1338,24 @@
           <div class="hero-main reveal">
             <div class="status-row">
               <span class="badge badge-strong"><span class="dot"></span> Aktive Entwicklung</span>
-              <span class="badge"><span class="dot"></span> Modulare Architektur</span>
-              <span class="badge"><span class="dot"></span> Mehrsprachige Website</span>
+              <span class="badge"><span class="dot"></span> Modulare Plattform</span>
+              <span class="badge"><span class="dot"></span> Breites Funktionsspektrum</span>
             </div>
 
             <h1>Chimera</h1>
 
             <p class="hero-lead">
-              Ein modulares Discord-Automatisierungs- und Analyseprojekt, entwickelt als persönliches System für strukturierte Ereigniserfassung, Aktivitätsanalyse und den Aufbau eines einheitlichen Ökosystems.
+              Chimera ist weder nur ein einzelner Bot noch nur ein Analysewerkzeug. Es ist eine große modulare Plattform mit einem breiten Funktionsspektrum: von einfachen Utilities und Aktivitätszählung bis hin zu komplexen Automatisierungen, Ticket-Systemen, Service-Logik, Verwaltungsmodulen und einem erweiterten Ökosystem verbundener Skripte.
             </p>
 
             <p class="hero-sub">
-              Die Hauptinformationen sind in drei Kernbereiche gegliedert: allgemeiner Überblick, Architektur und Funktionalität. Alles Weitere wird nur bei Bedarf geöffnet, ohne eine überladene Startseite.
+              Analyse ist dabei nur eine Ebene der Plattform. Die Grundidee von Chimera besteht darin, ein flexibles System aufzubauen, das über Module, Services, Skripte und interne Subsysteme kontinuierlich erweitert werden kann.
             </p>
 
             <div class="author-inline">
-              <h3>Autor</h3>
+              <h3>Grundlage des Projekts</h3>
               <p>
-                Chimera wurde von <strong>impresent</strong> und <strong>aglvet</strong> als langfristiges persönliches Projekt im Bereich Discord-Automatisierung, Analyse und modularer Infrastruktur entwickelt.
+                Chimera wird von <strong>impresent</strong> und <strong>aglvet</strong> als langfristige persönliche Plattform entwickelt, mit Fokus auf skalierbare Architektur, Automatisierung, Service-Workflows, modulare Werkzeuge und Systemerweiterung.
               </p>
               <div class="author-tags">
                 <span class="tag">Hauptidentität • impresent</span>
@@ -1374,46 +1366,44 @@
           </div>
 
           <div class="hero-side reveal">
-            <!-- <img src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
-
             <div class="capsule">
               <div class="capsule-top">
                 <div>
-                  <div class="capsule-kicker">Systemkapsel</div>
-                  <h3>Chimera-Snapshot</h3>
+                  <div class="capsule-kicker">Plattformübersicht</div>
+                  <h3>Chimera Platform Snapshot</h3>
                 </div>
-                <div class="capsule-pill">Experimenteller Build</div>
+                <div class="capsule-pill">Platform build</div>
               </div>
 
               <p class="capsule-text">
-                Eine kompakte visuelle Zusammenfassung des Projekts: aktueller Fokus, zentrale Pfeiler und Richtung des weiteren Ausbaus.
+                Eine breite modulare Plattform, in der Analyse nur eine Funktion unter vielen Services, Systemen und Workflows ist.
               </p>
 
               <div class="kpi-grid">
                 <div class="mini-kpi blue">
-                  <div class="kpi-label">Aktueller Zustand</div>
-                  <div class="kpi-value">Projektstruktur und Konzept werden aktiv weiterentwickelt</div>
+                  <div class="kpi-label">Aktuelle Richtung</div>
+                  <div class="kpi-value">Erweiterung der Plattform durch Module, Services und interne Abläufe</div>
                 </div>
 
                 <div class="mini-kpi violet">
-                  <div class="kpi-label">Hauptfokus</div>
-                  <div class="kpi-value">Discord-Automatisierung, Analyse und Design modularer Ökosysteme</div>
+                  <div class="kpi-label">Systemtyp</div>
+                  <div class="kpi-value">Modulare Automatisierungsplattform mit großem Toolset und Skript-Ökosystem</div>
                 </div>
 
                 <div class="mini-kpi teal">
-                  <div class="kpi-label">Architekturmodell</div>
-                  <div class="kpi-value">Mehrschichtige Architektur mit skalierbarer Modulerweiterung</div>
+                  <div class="kpi-label">Funktionsspektrum</div>
+                  <div class="kpi-value">Von Aktivitätszählung und Utilities bis zu Tickets, Workflows und komplexer Service-Logik</div>
                 </div>
 
                 <div class="mini-kpi mixed">
-                  <div class="kpi-label">Autorenidentitäten</div>
+                  <div class="kpi-label">Kernidentitäten</div>
                   <div class="kpi-value">impresent · aglvet</div>
                 </div>
               </div>
 
               <div class="capsule-bottom">
-                <div class="capsule-line">Grundidee → Discord-Aktivität in eine strukturiertere Analyseumgebung überführen</div>
-                <div class="capsule-line">Projektrichtung → langfristige Systementwicklung statt eines einzelnen isolierten Tools</div>
+                <div class="capsule-line">Grundidee → ein einziges System mit breitem Funktionsumfang statt eines engen Einzelwerkzeugs</div>
+                <div class="capsule-line">Strategie → Erweiterung über Module, Skripte, Service-Blöcke und interne Subsysteme</div>
               </div>
             </div>
           </div>
@@ -1424,20 +1414,26 @@
         <div class="nav-grid">
           <a class="nav-card overview" href="#panel-overview" data-panel="panel-overview">
             <div class="nav-kicker">Bereich 01</div>
-            <h2 class="nav-title">Überblick</h2>
-            <p class="nav-text">Was Chimera ist, warum das Projekt existiert und wie die Grundidee aufgebaut ist.</p>
+            <h2 class="nav-title">Plattformkonzept</h2>
+            <p class="nav-text">
+              Was Chimera als System ist, warum es mehr als Analyse ist und wie die Plattformidee aufgebaut ist.
+            </p>
           </a>
 
           <a class="nav-card architecture" href="#panel-architecture" data-panel="panel-architecture">
             <div class="nav-kicker">Bereich 02</div>
             <h2 class="nav-title">Architektur</h2>
-            <p class="nav-text">Kernschichten des Systems, strukturelle Logik und Zusammenspiel der Hauptkomponenten.</p>
+            <p class="nav-text">
+              Wie die Plattform aus Schichten, Modulen, Services und erweiterbaren internen Komponenten aufgebaut wird.
+            </p>
           </a>
 
           <a class="nav-card functionality" href="#panel-functions" data-panel="panel-functions">
             <div class="nav-kicker">Bereich 03</div>
-            <h2 class="nav-title">Funktionalität</h2>
-            <p class="nav-text">Zentrale Projektbereiche: Analyse, Automatisierung, Logging und modulare Erweiterung.</p>
+            <h2 class="nav-title">Funktionsrichtungen</h2>
+            <p class="nav-text">
+              Welche Fähigkeiten die Plattform umfassen kann: Automatisierung, Tickets, Utilities, Logging, Analyse und vieles mehr.
+            </p>
           </a>
         </div>
       </section>
@@ -1445,25 +1441,25 @@
       <section class="details container">
         <div class="detail-panel overview" id="panel-overview">
           <div class="detail-head">
-            <h2>Überblick</h2>
+            <h2>Plattformkonzept</h2>
             <button class="close-btn" data-close>Schließen</button>
           </div>
 
           <div class="two-col">
             <div>
               <p>
-                Chimera ist ein persönliches Projekt mit dem Ziel, Discord-Aktivität in eine strukturiertere Umgebung für Analyse, Organisation und selektive Automatisierung zu überführen.
+                Chimera ist eine modulare Plattform, bei der Analyse nur eine von vielen möglichen Funktionen ist. Das Projekt ist als breiteres technisches Ökosystem angelegt, das verschiedene Werkzeugtypen, Skripte, Service-Komponenten, Automatisierungsabläufe und erweiterbare Subsysteme miteinander verbinden kann.
               </p>
               <p class="muted">
-                Das Projekt wird als einheitliches System entwickelt und nicht als einzelner Bot mit nur einer Aufgabe. Die zentrale Idee ist die Verbindung von Ereigniserfassung, Informationsverarbeitung und ausbaubarer Modulstruktur.
+                Die Grundidee lautet nicht „ein Bot, eine Aufgabe“. Stattdessen wird Chimera als größeres System aufgebaut, das Utility-Module, Ticket-Systeme, interne Services, Workflow-Engines, Logging-Schichten, Verwaltungsblöcke und weitere Plattformdienste aufnehmen kann.
               </p>
             </div>
             <div>
               <p>
-                Chimera befindet sich derzeit in aktiver Entwicklung. Die Architektur wird fortlaufend präzisiert, und neue Module werden mit der Weiterentwicklung des Konzepts ergänzt.
+                Das Ziel von Chimera besteht nicht nur darin, Daten zu beobachten, sondern eine flexible Plattform zu werden, die im Laufe der Zeit immer mehr Funktionalität aufnehmen kann. Neue Module, Skripte, Service-Ketten und interne Logiken können schrittweise hinzugefügt werden.
               </p>
               <p class="muted">
-                Das Projekt wird als sauberes technisches Ökosystem mit Potenzial für Skalierung und tiefere Analysefunktionen präsentiert.
+                Dadurch wird Chimera nicht als statisches Produkt verstanden, sondern als wachsende Plattformbasis für ein großes und vielfältiges Set an Fähigkeiten.
               </p>
             </div>
           </div>
@@ -1476,36 +1472,82 @@
           </div>
 
           <p class="muted">
-            Das Projekt ist als modulares System gedacht, in dem jede Ebene eine eigene Rolle erfüllt und Erweiterungen ohne kompletten Neuaufbau der Grundlage möglich sind.
+            Die Plattform ist als modulare Architektur konzipiert, in der jede Ebene ihre eigene Verantwortung trägt, während neue Funktionen über separate Module, Services und Skripte eingeführt werden können, ohne die gesamte Basis neu zu schreiben.
           </p>
 
           <div class="arch-grid">
-            <div class="mini-card violet"><h3>Steuerkern</h3><p>Zentrale Steuerungsebene für Koordination, übergreifende Logik und Projektstruktur.</p></div>
-            <div class="mini-card violet"><h3>Beobachtungsschicht</h3><p>Beobachtungsebene für eingehende Ereignisse und kontextbezogene Informationen.</p></div>
-            <div class="mini-card violet"><h3>Arbeitsmodule</h3><p>Getrennte Ausführungsmodule für aufgabenspezifisches Verhalten, Automatisierung und Hilfslogik.</p></div>
-            <div class="mini-card violet"><h3>Event-Sammler</h3><p>Ereignisaufnahme und Strukturierung als Vorbereitung für Speicherung und Analyse.</p></div>
-            <div class="mini-card violet"><h3>Analyseschicht</h3><p>Analyseschicht für Aktivitätsmuster, Statistiken und thematische Auswertung.</p></div>
-            <div class="mini-card violet"><h3>Speicher</h3><p>Zentrale Speicherung strukturierter Einträge, Logs und archivierter Projektinformationen.</p></div>
+            <div class="mini-card violet">
+              <h3>Core Platform</h3>
+              <p>Die zentrale Systemebene, die Gesamtlogik, Struktur, Koordination und strategisches Plattformwachstum definiert.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Service Modules</h3>
+              <p>Unabhängige Service-Blöcke für verschiedene Funktionsrichtungen, die sich separat weiterentwickeln können.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Automation Layer</h3>
+              <p>Eine Ebene für automatisierte Workflows, Service-Reaktionen, verknüpfte Logik und wiederkehrende Betriebsabläufe.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Script Ecosystem</h3>
+              <p>Ein breiteres Set an Skripten und Hilfslogik, das die Plattform ergänzt und ihre internen Möglichkeiten erweitert.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Data & Event Layer</h3>
+              <p>Die Ebene, die mit Ereignissen, Logs, Systemzuständen und internen Informationsströmen arbeitet.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Expansion Model</h3>
+              <p>Ein Architekturmodell, bei dem neue Subsysteme schrittweise integriert werden können, ohne den Kern neu aufzubauen.</p>
+            </div>
           </div>
         </div>
 
         <div class="detail-panel functionality" id="panel-functions">
           <div class="detail-head">
-            <h2>Funktionalität</h2>
+            <h2>Funktionsrichtungen</h2>
             <button class="close-btn" data-close>Schließen</button>
           </div>
 
           <p class="muted">
-            Chimera ist als flexibles Ökosystem konzipiert, in dem die Funktionalität schrittweise erweitert werden kann.
+            Chimera ist auf breite Funktionalität ausgelegt. Die folgenden Bereiche sind keine vollständige Liste, sondern Beispiele für Richtungen, die als eingebaute Plattformmodule existieren können.
           </p>
 
           <div class="func-grid">
-            <div class="mini-card teal"><h3>Chat-Analyse</h3><p>Analyse von Kommunikationsstruktur, Aktivitätsmustern und Interaktionsdynamik.</p></div>
-            <div class="mini-card teal"><h3>Sprachkanal-Analyse</h3><p>Beobachtung von Sprachaktivität, Sitzungen, Zeitabschnitten und Teilnahmeverhalten.</p></div>
-            <div class="mini-card teal"><h3>Benachrichtigungen</h3><p>Erinnerungslogik, interne Hinweise und unterstützende Signale nach definierten Szenarien.</p></div>
-            <div class="mini-card teal"><h3>Automatisierung</h3><p>Übertragung wiederkehrender Handlungen und Routinen in ein modulares automatisiertes Umfeld.</p></div>
-            <div class="mini-card teal"><h3>Logging</h3><p>Langfristige Erfassung von Ereignissen für spätere Sichtbarkeit und Analyse.</p></div>
-            <div class="mini-card teal"><h3>KI-Analyse</h3><p>Experimentelle Analyseschicht für Zusammenfassungen, Klassifikation und Musterinterpretation.</p></div>
+            <div class="mini-card teal">
+              <h3>Activity & Statistics</h3>
+              <p>Aktivitätszählung, numerische Metriken, Zusammenfassungen und analytische Darstellungen.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Ticket Systems</h3>
+              <p>Einfache und fortgeschrittene Ticket-Systeme, Queue-Logik, Service-Flows und strukturierte Support-Workflows.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Utilities</h3>
+              <p>Hilfsmodule, interne Services, Utility-Tools und kleinere operative Bausteine.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Automation</h3>
+              <p>Automatisierte Szenarien, Service-Reaktionen, wiederkehrende Aufgabenverarbeitung und Workflow-Ausführung.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Logging & Tracking</h3>
+              <p>Ereigniserfassung, Prozess-Logging, Zustandspeicherung und Nachverfolgbarkeit wichtiger interner Aktionen.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Complex Service Logic</h3>
+              <p>Fortgeschrittene Subsysteme wie mehrstufige Workflows, verteilte Logik-Ketten und kombinierte Service-Mechanismen.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1518,24 +1560,24 @@
           <div class="hero-main reveal">
             <div class="status-row">
               <span class="badge badge-strong"><span class="dot"></span> Активна розробка</span>
-              <span class="badge"><span class="dot"></span> Модульна архітектура</span>
-              <span class="badge"><span class="dot"></span> Багатомовний сайт</span>
+              <span class="badge"><span class="dot"></span> Модульна платформа</span>
+              <span class="badge"><span class="dot"></span> Широкий набір функцій</span>
             </div>
 
             <h1>Chimera</h1>
 
             <p class="hero-lead">
-              Модульний проєкт автоматизації та аналітики для Discord, створений як персональна система для структурованого збору подій, аналізу активності та розвитку єдиної екосистеми.
+              Chimera — це не один бот і не лише аналітичний інструмент. Це велика модульна система з широким функціоналом: від простих утиліт і підрахунку активності до складних автоматизацій, ticket-систем, сервісної логіки, керувальних модулів і ширшої екосистеми пов’язаних скриптів.
             </p>
 
             <p class="hero-sub">
-              Основна інформація поділена на три ключові розділи: загальний опис, архітектура та функціональність. Усе інше відкривається лише за потреби, без перевантаженої стартової сторінки.
+              Аналітика тут є лише одним шаром платформи. Основна ідея Chimera — створити гнучку систему, яку можна постійно розширювати через модулі, сервіси, скрипти та внутрішні підсистеми.
             </p>
 
             <div class="author-inline">
-              <h3>Автор</h3>
+              <h3>Основа проєкту</h3>
               <p>
-                Проєкт Chimera був створений <strong>impresent</strong> і <strong>aglvet</strong> як довгостроковий персональний проєкт, зосереджений на автоматизації Discord, аналітиці та ідеї модульної інфраструктури.
+                Chimera розвивається <strong>impresent</strong> і <strong>aglvet</strong> як довгострокова персональна платформа з акцентом на масштабовану архітектуру, автоматизацію, сервісні workflow, модульні інструменти та системне розширення.
               </p>
               <div class="author-tags">
                 <span class="tag">Основна ідентичність • impresent</span>
@@ -1546,46 +1588,44 @@
           </div>
 
           <div class="hero-side reveal">
-            <!-- <img src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
-
             <div class="capsule">
               <div class="capsule-top">
                 <div>
-                  <div class="capsule-kicker">Системна капсула</div>
-                  <h3>Знімок Chimera</h3>
+                  <div class="capsule-kicker">Підсумок платформи</div>
+                  <h3>Chimera Platform Snapshot</h3>
                 </div>
-                <div class="capsule-pill">Експериментальна збірка</div>
+                <div class="capsule-pill">Platform build</div>
               </div>
 
               <p class="capsule-text">
-                Компактне візуальне представлення проєкту: поточний фокус, ключові опори системи та напрям подальшого розвитку.
+                Широка модульна платформа, де аналітика є лише однією функцією серед багатьох сервісів, систем і workflow.
               </p>
 
               <div class="kpi-grid">
                 <div class="mini-kpi blue">
-                  <div class="kpi-label">Поточний стан</div>
-                  <div class="kpi-value">Структура та концепція проєкту активно формуються</div>
+                  <div class="kpi-label">Поточний вектор</div>
+                  <div class="kpi-value">Розширення платформи через модулі, сервіси та внутрішні сценарії</div>
                 </div>
 
                 <div class="mini-kpi violet">
-                  <div class="kpi-label">Основний фокус</div>
-                  <div class="kpi-value">Автоматизація Discord, аналітика та проєктування модульної екосистеми</div>
+                  <div class="kpi-label">Тип системи</div>
+                  <div class="kpi-value">Модульна automation platform з великим набором інструментів і скриптів</div>
                 </div>
 
                 <div class="mini-kpi teal">
-                  <div class="kpi-label">Модель дизайну</div>
-                  <div class="kpi-value">Багаторівнева архітектура з масштабованим розширенням модулів</div>
+                  <div class="kpi-label">Діапазон функцій</div>
+                  <div class="kpi-value">Від підрахунку активності та утиліт до ticket-систем, workflow і складної сервісної логіки</div>
                 </div>
 
                 <div class="mini-kpi mixed">
-                  <div class="kpi-label">Авторські ідентичності</div>
+                  <div class="kpi-label">Ключові ідентичності</div>
                   <div class="kpi-value">impresent · aglvet</div>
                 </div>
               </div>
 
               <div class="capsule-bottom">
-                <div class="capsule-line">Основна ідея → перетворити Discord-активність на більш структуроване аналітичне середовище</div>
-                <div class="capsule-line">Напрям проєкту → довгостроковий розвиток системи, а не одного окремого інструмента</div>
+                <div class="capsule-line">Ключова ідея → створити єдину систему з широким функціоналом, а не один вузький інструмент</div>
+                <div class="capsule-line">Стратегія → розширення через модулі, скрипти, сервісні блоки та внутрішні підсистеми</div>
               </div>
             </div>
           </div>
@@ -1596,20 +1636,26 @@
         <div class="nav-grid">
           <a class="nav-card overview" href="#panel-overview" data-panel="panel-overview">
             <div class="nav-kicker">Розділ 01</div>
-            <h2 class="nav-title">Загальний опис</h2>
-            <p class="nav-text">Що таке Chimera, навіщо вона створюється та як побудована основна ідея проєкту.</p>
+            <h2 class="nav-title">Концепція платформи</h2>
+            <p class="nav-text">
+              Що таке Chimera як система, чому вона ширша за аналітику та як побудована платформа.
+            </p>
           </a>
 
           <a class="nav-card architecture" href="#panel-architecture" data-panel="panel-architecture">
             <div class="nav-kicker">Розділ 02</div>
             <h2 class="nav-title">Архітектура</h2>
-            <p class="nav-text">Основні рівні системи, логіка побудови та взаємодія ключових компонентів.</p>
+            <p class="nav-text">
+              Як платформа будується з рівнів, модулів, сервісів і розширюваних внутрішніх компонентів.
+            </p>
           </a>
 
           <a class="nav-card functionality" href="#panel-functions" data-panel="panel-functions">
             <div class="nav-kicker">Розділ 03</div>
-            <h2 class="nav-title">Функціональність</h2>
-            <p class="nav-text">Головні напрями проєкту: аналітика, автоматизація, логування та розвиток модулів.</p>
+            <h2 class="nav-title">Функціональні напрями</h2>
+            <p class="nav-text">
+              Які можливості може включати платформа: automation, tickets, utilities, logging, analytics та інше.
+            </p>
           </a>
         </div>
       </section>
@@ -1617,25 +1663,25 @@
       <section class="details container">
         <div class="detail-panel overview" id="panel-overview">
           <div class="detail-head">
-            <h2>Загальний опис</h2>
+            <h2>Концепція платформи</h2>
             <button class="close-btn" data-close>Закрити</button>
           </div>
 
           <div class="two-col">
             <div>
               <p>
-                Chimera — це персональний проєкт, спрямований на перетворення активності в Discord на більш структуроване середовище для аналізу, організації та вибіркової автоматизації.
+                Chimera — це модульна платформа, у якій аналітика є лише однією з багатьох можливих функцій. Проєкт задуманий як ширша технічна екосистема, яка може поєднувати різні типи інструментів, скриптів, сервісних компонентів, автоматизаційних процесів і розширюваних підсистем.
               </p>
               <p class="muted">
-                Проєкт розвивається як єдина система, а не як окремий одноразовий бот. Центральна ідея полягає у поєднанні збору подій, обробки інформації та розширюваної модульної структури.
+                Тут немає вузької моделі “один бот — одна роль”. Навпаки, Chimera будується як більша система, що може містити utility-модулі, ticket-системи, внутрішні сервіси, workflow-рушії, logging-шари, керувальні блоки та інші платформні сервіси.
               </p>
             </div>
             <div>
               <p>
-                Chimera зараз перебуває у фазі активної розробки. Архітектура поступово уточнюється, а нові модулі додаються в міру розвитку концепції та появи нових завдань.
+                Мета Chimera — не лише спостерігати за даними, а стати гнучкою платформою, яка з часом може вбирати все більше функціоналу. Нові модулі, скрипти, сервісні ланцюги та внутрішня логіка можуть додаватися поступово.
               </p>
               <p class="muted">
-                Зовні проєкт подається як акуратна технологічна екосистема з можливістю масштабування та поглиблення аналітичних можливостей.
+                Завдяки цьому Chimera подається не як статичний продукт, а як зростаюча платформна основа для великого й різноманітного набору можливостей.
               </p>
             </div>
           </div>
@@ -1648,36 +1694,82 @@
           </div>
 
           <p class="muted">
-            Проєкт будується як модульна система, де кожен шар відповідає за свою роль, а розширення можливе без повного переписування всієї основи.
+            Платформа проєктується як модульна архітектура, у якій кожен рівень має власну відповідальність, а нові функції можуть додаватися через окремі модулі, сервіси й скрипти без переписування всієї основи.
           </p>
 
           <div class="arch-grid">
-            <div class="mini-card violet"><h3>Керівне ядро</h3><p>Центральний керуючий шар, що відповідає за координацію, загальну логіку та розвиток структури проєкту.</p></div>
-            <div class="mini-card violet"><h3>Шар спостереження</h3><p>Рівень спостереження за подіями та приймання контекстної інформації для подальшої обробки.</p></div>
-            <div class="mini-card violet"><h3>Робочі модулі</h3><p>Окремі виконавчі модулі для конкретних завдань, автоматизації та допоміжних процесів.</p></div>
-            <div class="mini-card violet"><h3>Збирач подій</h3><p>Модуль приймання і структурування подій, який готує дані до фіксації та аналізу.</p></div>
-            <div class="mini-card violet"><h3>Аналітичний шар</h3><p>Аналітичний шар для виявлення патернів, статистики активності та тематичних напрямів.</p></div>
-            <div class="mini-card violet"><h3>Сховище</h3><p>Централізоване сховище для структурованих записів, логів і архівної інформації проєкту.</p></div>
+            <div class="mini-card violet">
+              <h3>Core Platform</h3>
+              <p>Центральний системний рівень, що визначає загальну логіку, структуру, координацію та стратегічне зростання платформи.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Service Modules</h3>
+              <p>Незалежні сервісні блоки для різних функціональних напрямів, які можуть розвиватися окремо.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Automation Layer</h3>
+              <p>Рівень автоматизованих workflow, сервісних реакцій, пов’язаної логіки та повторюваних операцій.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Script Ecosystem</h3>
+              <p>Ширший набір скриптів і допоміжної логіки, що доповнює платформу та посилює її внутрішні можливості.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Data & Event Layer</h3>
+              <p>Рівень, що працює з подіями, логами, станами системи та внутрішніми потоками інформації.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Expansion Model</h3>
+              <p>Модель архітектурного росту, у якій нові підсистеми можна інтегрувати поступово без перебудови ядра.</p>
+            </div>
           </div>
         </div>
 
         <div class="detail-panel functionality" id="panel-functions">
           <div class="detail-head">
-            <h2>Функціональність</h2>
+            <h2>Функціональні напрями</h2>
             <button class="close-btn" data-close>Закрити</button>
           </div>
 
           <p class="muted">
-            Chimera задумується як гнучка екосистема, у якій функціональність можна поступово нарощувати в міру розвитку самого проєкту.
+            Chimera орієнтована на широкий функціонал. Нижче наведено не “вичерпний список”, а лише приклади напрямів, які можуть існувати як вбудовані модулі платформи.
           </p>
 
           <div class="func-grid">
-            <div class="mini-card teal"><h3>Аналітика чатів</h3><p>Аналіз структури спілкування, активності, повторюваних патернів і загальної динаміки комунікації.</p></div>
-            <div class="mini-card teal"><h3>Аналітика голосової активності</h3><p>Спостереження за голосовою активністю, сесіями, часовими відрізками та поведінковим контекстом.</p></div>
-            <div class="mini-card teal"><h3>Сповіщення</h3><p>Система нагадувань, внутрішніх сповіщень та допоміжних сигналів за заданими сценаріями.</p></div>
-            <div class="mini-card teal"><h3>Автоматизація</h3><p>Автоматизація повторюваних дій і перенесення рутинних процесів у модульне середовище.</p></div>
-            <div class="mini-card teal"><h3>Логування</h3><p>Фіксація активності та довгострокове зберігання подій для ретроспективного перегляду й аналітики.</p></div>
-            <div class="mini-card teal"><h3>ШІ-аналіз</h3><p>Експериментальний аналітичний напрям для класифікації, зведень і виявлення закономірностей.</p></div>
+            <div class="mini-card teal">
+              <h3>Activity & Statistics</h3>
+              <p>Підрахунок активності, числові метрики, зведення й аналітичні представлення.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Ticket Systems</h3>
+              <p>Прості та складні ticket-системи, логіка черг, сервісні сценарії та структуровані support-workflow.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Utilities</h3>
+              <p>Helper-модулі, внутрішні сервіси, utility-інструменти й дрібніші операційні блоки.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Automation</h3>
+              <p>Автоматизовані сценарії, сервісні реакції, обробка повторюваних завдань і workflow-виконання.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Logging & Tracking</h3>
+              <p>Фіксація подій, logging-процесів, збереження станів і відстеження важливих внутрішніх дій.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Complex Service Logic</h3>
+              <p>Складніші підсистеми, як-от multi-step workflows, розподілені логічні ланцюги та комбіновані сервісні механіки.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1690,24 +1782,24 @@
           <div class="hero-main reveal">
             <div class="status-row">
               <span class="badge badge-strong"><span class="dot"></span> Desarrollo activo</span>
-              <span class="badge"><span class="dot"></span> Arquitectura modular</span>
-              <span class="badge"><span class="dot"></span> Sitio multilingüe</span>
+              <span class="badge"><span class="dot"></span> Plataforma modular</span>
+              <span class="badge"><span class="dot"></span> Amplio conjunto funcional</span>
             </div>
 
             <h1>Chimera</h1>
 
             <p class="hero-lead">
-              Un proyecto modular de automatización y analítica para Discord, creado como un sistema personal para la recopilación estructurada de eventos, el análisis de actividad y el desarrollo de un ecosistema unificado.
+              Chimera no es solo un bot ni solo una herramienta analítica. Es una gran plataforma modular con un rango funcional amplio: desde utilidades simples y conteo de actividad hasta automatizaciones complejas, sistemas de tickets, lógica de servicios, módulos de gestión y un ecosistema más amplio de scripts conectados.
             </p>
 
             <p class="hero-sub">
-              La información principal está organizada en tres secciones clave: descripción general, arquitectura y funcionalidad. Todo lo demás se abre solo cuando el visitante lo necesita.
+              La analítica es solo una capa de la plataforma. La idea principal de Chimera es construir un sistema flexible que pueda seguir creciendo mediante módulos, servicios, scripts y subsistemas internos.
             </p>
 
             <div class="author-inline">
-              <h3>Autor</h3>
+              <h3>Base del proyecto</h3>
               <p>
-                Chimera fue creado por <strong>impresent</strong> y <strong>aglvet</strong> como un proyecto personal a largo plazo centrado en automatización de Discord, analítica e infraestructura modular.
+                Chimera está siendo desarrollado por <strong>impresent</strong> y <strong>aglvet</strong> como una plataforma personal a largo plazo centrada en arquitectura escalable, automatización, workflows de servicio, herramientas modulares y expansión del sistema.
               </p>
               <div class="author-tags">
                 <span class="tag">Identidad principal • impresent</span>
@@ -1718,46 +1810,44 @@
           </div>
 
           <div class="hero-side reveal">
-            <!-- <img src="assets/chimera-cover.jpg" alt="Chimera cover image"> -->
-
             <div class="capsule">
               <div class="capsule-top">
                 <div>
-                  <div class="capsule-kicker">Cápsula del sistema</div>
-                  <h3>Instantánea de Chimera</h3>
+                  <div class="capsule-kicker">Resumen de plataforma</div>
+                  <h3>Chimera Platform Snapshot</h3>
                 </div>
-                <div class="capsule-pill">Compilación experimental</div>
+                <div class="capsule-pill">Platform build</div>
               </div>
 
               <p class="capsule-text">
-                Un resumen visual compacto del proyecto: enfoque actual, pilares principales y dirección de crecimiento.
+                Una plataforma modular amplia donde la analítica es solo una función entre muchos servicios, sistemas y workflows.
               </p>
 
               <div class="kpi-grid">
                 <div class="mini-kpi blue">
-                  <div class="kpi-label">Estado actual</div>
-                  <div class="kpi-value">La estructura y el concepto del proyecto siguen tomando forma</div>
+                  <div class="kpi-label">Dirección actual</div>
+                  <div class="kpi-value">Expansión de la plataforma mediante módulos, servicios y flujos internos</div>
                 </div>
 
                 <div class="mini-kpi violet">
-                  <div class="kpi-label">Enfoque central</div>
-                  <div class="kpi-value">Automatización de Discord, analítica y diseño de ecosistemas modulares</div>
+                  <div class="kpi-label">Tipo de sistema</div>
+                  <div class="kpi-value">Plataforma modular de automatización con gran conjunto de herramientas y scripts</div>
                 </div>
 
                 <div class="mini-kpi teal">
-                  <div class="kpi-label">Modelo de diseño</div>
-                  <div class="kpi-value">Arquitectura por capas con expansión escalable de módulos</div>
+                  <div class="kpi-label">Rango funcional</div>
+                  <div class="kpi-value">Desde conteo de actividad y utilidades hasta tickets, workflows y lógica de servicio compleja</div>
                 </div>
 
                 <div class="mini-kpi mixed">
-                  <div class="kpi-label">Identidades de autor</div>
+                  <div class="kpi-label">Identidades centrales</div>
                   <div class="kpi-value">impresent · aglvet</div>
                 </div>
               </div>
 
               <div class="capsule-bottom">
-                <div class="capsule-line">Idea central → convertir la actividad de Discord en un entorno analítico más estructurado</div>
-                <div class="capsule-line">Dirección del proyecto → evolución a largo plazo del sistema en lugar de una sola herramienta aislada</div>
+                <div class="capsule-line">Idea central → construir un solo sistema con un amplio rango funcional en lugar de una sola herramienta estrecha</div>
+                <div class="capsule-line">Estrategia → expansión mediante módulos, scripts, bloques de servicio y subsistemas internos</div>
               </div>
             </div>
           </div>
@@ -1768,20 +1858,26 @@
         <div class="nav-grid">
           <a class="nav-card overview" href="#panel-overview" data-panel="panel-overview">
             <div class="nav-kicker">Sección 01</div>
-            <h2 class="nav-title">Descripción general</h2>
-            <p class="nav-text">Qué es Chimera, por qué existe y cómo está construida la idea principal del proyecto.</p>
+            <h2 class="nav-title">Concepto de plataforma</h2>
+            <p class="nav-text">
+              Qué es Chimera como sistema, por qué es más que analítica y cómo está estructurada la plataforma.
+            </p>
           </a>
 
           <a class="nav-card architecture" href="#panel-architecture" data-panel="panel-architecture">
             <div class="nav-kicker">Sección 02</div>
             <h2 class="nav-title">Arquitectura</h2>
-            <p class="nav-text">Capas principales del sistema, lógica estructural e interacción entre los componentes.</p>
+            <p class="nav-text">
+              Cómo la plataforma se construye a partir de capas, módulos, servicios y componentes internos expansibles.
+            </p>
           </a>
 
           <a class="nav-card functionality" href="#panel-functions" data-panel="panel-functions">
             <div class="nav-kicker">Sección 03</div>
-            <h2 class="nav-title">Funcionalidad</h2>
-            <p class="nav-text">Direcciones principales del proyecto: analítica, automatización, logging y expansión modular.</p>
+            <h2 class="nav-title">Direcciones funcionales</h2>
+            <p class="nav-text">
+              Qué tipos de capacidades puede incluir la plataforma: automation, tickets, utilities, logging, analytics y mucho más.
+            </p>
           </a>
         </div>
       </section>
@@ -1789,25 +1885,25 @@
       <section class="details container">
         <div class="detail-panel overview" id="panel-overview">
           <div class="detail-head">
-            <h2>Descripción general</h2>
+            <h2>Concepto de plataforma</h2>
             <button class="close-btn" data-close>Cerrar</button>
           </div>
 
           <div class="two-col">
             <div>
               <p>
-                Chimera es un proyecto personal enfocado en transformar la actividad de Discord en un entorno más estructurado para análisis, organización y automatización selectiva.
+                Chimera es una plataforma modular en la que la analítica es solo una de muchas funciones posibles. El proyecto está concebido como un ecosistema técnico más amplio capaz de combinar distintos tipos de herramientas, scripts, componentes de servicio, automatizaciones y subsistemas ampliables.
               </p>
               <p class="muted">
-                El proyecto se desarrolla como un sistema unificado y no como un solo bot de una sola función. La idea central es conectar la recopilación de eventos, el procesamiento de información y una estructura modular ampliable.
+                La idea base no es “un bot, una tarea”. Al contrario, Chimera se estructura como un sistema mayor que puede albergar módulos utility, sistemas de tickets, servicios internos, motores de workflow, capas de logging, componentes de gestión y otros servicios de plataforma.
               </p>
             </div>
             <div>
               <p>
-                Chimera se encuentra actualmente en desarrollo activo. La arquitectura sigue evolucionando y se añaden nuevos módulos a medida que la idea del proyecto crece.
+                El objetivo de Chimera no es solo observar datos, sino convertirse en una plataforma flexible capaz de absorber más funcionalidad con el tiempo. Nuevos módulos, scripts, cadenas de servicio y lógica interna pueden añadirse de forma gradual.
               </p>
               <p class="muted">
-                El proyecto se presenta como un ecosistema tecnológico limpio, con potencial de escalado y de crecimiento analítico más profundo.
+                Por eso Chimera no se presenta como un producto estático, sino como una base de plataforma en crecimiento para un conjunto grande y diverso de capacidades.
               </p>
             </div>
           </div>
@@ -1820,36 +1916,82 @@
           </div>
 
           <p class="muted">
-            El proyecto está diseñado como un sistema modular donde cada capa cumple su propio papel y la expansión es posible sin reconstruir toda la base.
+            La plataforma está diseñada como una arquitectura modular en la que cada capa tiene su propia responsabilidad, mientras que nuevas funciones pueden añadirse mediante módulos, servicios y scripts separados sin reescribir toda la base.
           </p>
 
           <div class="arch-grid">
-            <div class="mini-card violet"><h3>Núcleo de control</h3><p>Capa central responsable de la coordinación, la lógica general y la estructura del proyecto.</p></div>
-            <div class="mini-card violet"><h3>Capa de observación</h3><p>Capa de observación de eventos e información contextual para su procesamiento posterior.</p></div>
-            <div class="mini-card violet"><h3>Módulos de trabajo</h3><p>Módulos de ejecución separados para tareas específicas, automatización y lógica auxiliar.</p></div>
-            <div class="mini-card violet"><h3>Recolector</h3><p>Módulo de recepción y estructuración de eventos para preparar los datos para almacenamiento y análisis.</p></div>
-            <div class="mini-card violet"><h3>Capa analítica</h3><p>Capa analítica para detectar patrones, estadísticas de actividad e interpretación temática.</p></div>
-            <div class="mini-card violet"><h3>Almacenamiento</h3><p>Almacenamiento centralizado para registros estructurados, logs e información archivada del proyecto.</p></div>
+            <div class="mini-card violet">
+              <h3>Core Platform</h3>
+              <p>Capa central del sistema que define la lógica general, la estructura, la coordinación y el crecimiento estratégico de la plataforma.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Service Modules</h3>
+              <p>Bloques de servicio independientes responsables de distintas direcciones funcionales y capaces de evolucionar por separado.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Automation Layer</h3>
+              <p>Capa para workflows automatizados, reacciones de servicio, lógica encadenada y rutinas operativas repetidas.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Script Ecosystem</h3>
+              <p>Un conjunto más amplio de scripts y lógica auxiliar que amplía la plataforma y refuerza sus capacidades internas.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Data & Event Layer</h3>
+              <p>Capa que trabaja con eventos, logs, estados del sistema y flujos internos de información.</p>
+            </div>
+
+            <div class="mini-card violet">
+              <h3>Expansion Model</h3>
+              <p>Modelo de crecimiento arquitectónico en el que nuevos subsistemas pueden integrarse gradualmente sin reconstruir el núcleo.</p>
+            </div>
           </div>
         </div>
 
         <div class="detail-panel functionality" id="panel-functions">
           <div class="detail-head">
-            <h2>Funcionalidad</h2>
+            <h2>Direcciones funcionales</h2>
             <button class="close-btn" data-close>Cerrar</button>
           </div>
 
           <p class="muted">
-            Chimera está concebido como un ecosistema flexible en el que la funcionalidad puede ampliarse gradualmente con el crecimiento del proyecto.
+            Chimera está diseñada para una funcionalidad amplia. Las áreas siguientes no son la única lista posible, sino ejemplos de direcciones que pueden existir como módulos integrados de la plataforma.
           </p>
 
           <div class="func-grid">
-            <div class="mini-card teal"><h3>Analítica de chat</h3><p>Análisis de la estructura de comunicación, patrones de actividad y dinámica de interacción.</p></div>
-            <div class="mini-card teal"><h3>Analítica de voz</h3><p>Observación de actividad de voz, sesiones, segmentos temporales y contexto de participación.</p></div>
-            <div class="mini-card teal"><h3>Notificaciones</h3><p>Lógica de recordatorios, alertas internas y señales auxiliares según escenarios definidos.</p></div>
-            <div class="mini-card teal"><h3>Automatización</h3><p>Automatización de acciones repetitivas y traslado de rutinas a un entorno modular.</p></div>
-            <div class="mini-card teal"><h3>Registro de eventos</h3><p>Captura de actividad y almacenamiento a largo plazo para revisión retrospectiva y análisis.</p></div>
-            <div class="mini-card teal"><h3>Análisis con IA</h3><p>Dirección analítica experimental para clasificación, resúmenes e interpretación de patrones.</p></div>
+            <div class="mini-card teal">
+              <h3>Activity & Statistics</h3>
+              <p>Conteo de actividad, métricas numéricas, resúmenes y representaciones analíticas.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Ticket Systems</h3>
+              <p>Sistemas de tickets simples y avanzados, lógica de colas, flujos de servicio y workflows estructurados de soporte.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Utilities</h3>
+              <p>Módulos auxiliares, servicios internos, herramientas utility y bloques operativos más pequeños.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Automation</h3>
+              <p>Escenarios automatizados, reacciones de servicio, gestión de tareas repetidas y ejecución de workflows.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Logging & Tracking</h3>
+              <p>Captura de eventos, logging de procesos, almacenamiento de estados y trazabilidad de acciones internas importantes.</p>
+            </div>
+
+            <div class="mini-card teal">
+              <h3>Complex Service Logic</h3>
+              <p>Subsistemas más avanzados como multi-step workflows, cadenas lógicas distribuidas y mecanismos de servicio compuestos.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1859,21 +2001,21 @@
   <footer class="container">
     <div class="footer-box">
       <div class="footer-main">
-        <strong>Chimera</strong> is an experimental modular project conceived by <strong>impresent</strong> and <strong>aglvet</strong>. It is currently evolving as a long-term Discord automation and analytics ecosystem.
+        <strong>Chimera</strong> is an experimental modular platform developed by <strong>impresent</strong> and <strong>aglvet</strong>. It is evolving as a long-term automation, tooling and service ecosystem with broad functional scope.
       </div>
       <div class="footer-side">
-        Active development • Modular system design
+        Platform growth • Modular system design
       </div>
     </div>
   </footer>
 
   <script>
     const subtitles = {
-      ru: "Экспериментальный проект • Активная разработка",
-      en: "Experimental project • Active development",
-      de: "Experimentelles Projekt • Aktive Entwicklung",
-      uk: "Експериментальний проєкт • Активна розробка",
-      es: "Proyecto experimental • Desarrollo activo"
+      ru: "Экспериментальная платформа • Активная разработка",
+      en: "Experimental platform • Active development",
+      de: "Experimentelle Plattform • Aktive Entwicklung",
+      uk: "Експериментальна платформа • Активна розробка",
+      es: "Plataforma experimental • Desarrollo activo"
     };
 
     const langButtons = document.querySelectorAll(".lang-btn");

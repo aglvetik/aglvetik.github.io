@@ -1,41 +1,36 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>RISE Moderation Concept</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RISE — Концепция модерационного бота</title>
 
 <style>
 :root{
-  --bg:#07110c;
-  --bg-soft:#0c1a14;
-  --text:#e9fff3;
-  --muted:#9fd3b8;
+  --bg:#06110c;
+  --card:#0b1f17;
+  --text:#e8fff5;
+  --muted:#9ad1b8;
   --line:rgba(255,255,255,0.08);
-
-  --green:#4cff9a;
-  --green-soft:rgba(76,255,154,0.15);
+  --green:#5dffb0;
 }
 
 body{
   margin:0;
   font-family:Inter, Arial;
-  background:linear-gradient(180deg,#050b08,#07110c);
+  background:linear-gradient(180deg,#040b07,#06110c);
   color:var(--text);
 }
 
 .container{
-  width:min(1000px,90%);
+  width:min(1000px,92%);
   margin:auto;
-}
-
-.hero{
-  padding:80px 0;
+  padding:60px 0;
 }
 
 h1{
-  font-size:60px;
-  margin:0 0 10px;
+  font-size:52px;
+  margin:0;
 }
 
 .subtitle{
@@ -44,130 +39,147 @@ h1{
 }
 
 .card{
-  background:var(--bg-soft);
+  background:var(--card);
   border:1px solid var(--line);
-  border-radius:20px;
-  padding:25px;
-  margin-bottom:20px;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:18px;
+}
+
+.title{
+  font-size:20px;
+  margin-bottom:12px;
+  color:#caffea;
 }
 
 .code{
   background:#020504;
   border:1px solid rgba(255,255,255,0.05);
-  padding:12px;
-  border-radius:12px;
+  padding:10px 12px;
+  border-radius:10px;
   font-family:monospace;
-  margin:10px 0;
-  color:#a6ffcf;
+  margin:6px 0;
+  color:#aaffd4;
 }
 
-.section-title{
-  margin-bottom:10px;
-  font-size:22px;
-  color:#c9ffe2;
+ul{
+  padding-left:18px;
+  margin:8px 0;
 }
 
+li{
+  margin-bottom:6px;
+  color:#d7fff0;
+}
 </style>
 </head>
 
 <body>
 
-<div class="container hero">
+<div class="container">
 
 <h1>RISE</h1>
 <div class="subtitle">Концепция модерационного бота</div>
 
 <div class="card">
-<div class="section-title">Общее</div>
-<p>
-Префиксный модерационный бот с упором на простоту, скорость и контроль.
-Работа через команды без slash-интерфейса.
-</p>
+<div class="title">Префиксные команды</div>
+
+<div class="code">!мут (!м)</div>
+<div class="code">!кик (!к)</div>
+<div class="code">!бан (!б)</div>
+<div class="code">!очистить [кол-во]</div>
 </div>
 
 <div class="card">
-<div class="section-title">Команды</div>
+<div class="title">Формат работы команд</div>
 
-<div class="code">!мут / !м @пользователь 10 м причина</div>
-<div class="code">!кик / !к @пользователь причина</div>
-<div class="code">!бан / !б @пользователь причина</div>
+<p>Указание пользователя:</p>
+<ul>
+<li>@user</li>
+<li>ID (123456789)</li>
+<li>ник</li>
+<li>ответ на сообщение пользователя</li>
+</ul>
+
+<p>Примеры:</p>
+<div class="code">!мут @user 10 м причина</div>
+<div class="code">!м 123456789 1 ч спам</div>
+<div class="code">!бан @user причина</div>
+<div class="code">!кик ник причина</div>
 <div class="code">!очистить 20</div>
-
 </div>
 
 <div class="card">
-<div class="section-title">Формат времени</div>
+<div class="title">Логика мута</div>
 
-<div class="code">с — секунды</div>
-<div class="code">м — минуты</div>
-<div class="code">ч — часы</div>
-<div class="code">д — дни</div>
-
-<p>Пример:</p>
-<div class="code">!м @user 1 ч флуд</div>
-
+<ul>
+<li>поддержка времени: с / м / ч / д</li>
+<li>временный мут снимается автоматически</li>
+<li>при муте отключается возможность писать (роль mute)</li>
+<li>если роль отсутствует — создаётся или используется указанная</li>
+</ul>
 </div>
 
 <div class="card">
-<div class="section-title">Указание пользователя</div>
+<div class="title">Очистка сообщений</div>
 
-<p>
-Поддерживается несколько форматов:
-</p>
-
-<div class="code">@mention</div>
-<div class="code">ID пользователя</div>
-<div class="code">ник (если уникален)</div>
-
+<ul>
+<li>!очистить N — удаляет последние сообщения</li>
+<li>ограничение на количество (например до 100)</li>
+<li>игнор старых/системных сообщений (ограничения Discord API)</li>
+</ul>
 </div>
 
 <div class="card">
-<div class="section-title">Логика работы</div>
+<div class="title">Права и проверки</div>
 
-<p>
-— муты с таймером и авто-снятием<br>
-— проверка ролей (иерархия)<br>
-— запрет наказаний администраторов<br>
-— защита от самонаказания<br>
-— обработка некорректных команд<br>
-</p>
-
+<ul>
+<li>нельзя применять команды к равным/высшим ролям</li>
+<li>нельзя трогать администраторов</li>
+<li>проверка прав модератора</li>
+<li>защита от самонаказания</li>
+</ul>
 </div>
 
 <div class="card">
-<div class="section-title">Очистка сообщений</div>
+<div class="title">Логирование</div>
 
-<p>
-Удаление последних сообщений в канале с ограничением по количеству.
-</p>
-
-<div class="code">!очистить 20</div>
-
+<ul>
+<li>отдельный лог-канал</li>
+<li>фиксируется:
+  <ul>
+    <li>кто выдал</li>
+    <li>кому</li>
+    <li>команда</li>
+    <li>причина</li>
+    <li>время (для мутов)</li>
+  </ul>
+</li>
+<li>формат: embed или текст</li>
+</ul>
 </div>
 
 <div class="card">
-<div class="section-title">Логирование</div>
+<div class="title">Обработка ошибок</div>
 
-<p>
-Фиксация всех действий в отдельный канал:
-</p>
-
-<div class="code">
-модератор → пользователь → действие → причина → время
-</div>
-
+<ul>
+<li>неверный формат → пример команды</li>
+<li>пользователь не найден → ошибка</li>
+<li>нет прав → отказ</li>
+<li>некорректное время → ошибка</li>
+</ul>
 </div>
 
 <div class="card">
-<div class="section-title">Расширение</div>
+<div class="title">Дополнительно</div>
 
-<p>
-— система предупреждений<br>
-— авто-наказания<br>
-— авто-модерация<br>
-— настройка ролей<br>
-</p>
-
+<ul>
+<li>!варн — система предупреждений</li>
+<li>авто-наказания за накопление</li>
+<li>авто-модерация (фильтр)</li>
+<li>настройка префикса</li>
+<li>настройка ролей (захардкожено)</li>
+</ul>
 </div>
 
 </div>

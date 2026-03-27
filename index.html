@@ -1,1539 +1,176 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chimera</title>
-  <meta name="description" content="Chimera — modular system platform by impresent and aglvet." />
-
-  <style>
-    :root{
-      --bg:#0a0f17;
-      --bg-soft:#101826;
-      --text:#edf2fb;
-      --muted:#9fb0c8;
-      --line:rgba(255,255,255,0.10);
-      --line-strong:rgba(255,255,255,0.16);
-      --shadow:0 14px 40px rgba(0,0,0,0.34);
-      --shadow-strong:0 18px 46px rgba(0,0,0,0.42);
-      --radius:24px;
-      --radius-sm:18px;
-      --max:1160px;
-
-      --blue:rgba(112,170,255,0.24);
-      --violet:rgba(177,137,255,0.24);
-      --teal:rgba(98,214,194,0.22);
-
-      --green:#6be2a5;
-      --green-glow:rgba(107,226,165,0.32);
-    }
-
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-
-    body{
-      margin:0;
-      font-family:Inter, Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at 0% 0%, rgba(112,170,255,0.10), transparent 25%),
-        radial-gradient(circle at 100% 0%, rgba(177,137,255,0.10), transparent 28%),
-        radial-gradient(circle at 50% 100%, rgba(98,214,194,0.07), transparent 24%),
-        linear-gradient(180deg, #090d14 0%, #0a0f17 100%);
-      line-height:1.65;
-      overflow-x:hidden;
-    }
-
-    a{
-      color:inherit;
-      text-decoration:none;
-    }
-
-    .container{
-      width:min(var(--max), calc(100% - 28px));
-      margin:0 auto;
-    }
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:1000;
-      backdrop-filter:blur(14px);
-      background:rgba(10,15,23,0.78);
-      border-bottom:1px solid var(--line);
-    }
-
-    .topbar-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-      padding:14px 0;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
-
-    .brand-mark{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-      font-weight:800;
-      background:
-        linear-gradient(135deg, rgba(128,182,255,0.98), rgba(193,161,255,0.95) 55%, rgba(111,228,210,0.90));
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.05),
-        0 0 28px rgba(146,126,255,0.18);
-      flex:0 0 auto;
-    }
-
-    .brand-text strong{
-      display:block;
-      font-size:16px;
-      letter-spacing:0.04em;
-    }
-
-    .brand-text span{
-      display:block;
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .lang-switch{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      justify-content:flex-end;
-      margin-left:auto;
-      padding-right:6px;
-    }
-
-    .lang-btn{
-      border:1px solid rgba(255,255,255,0.10);
-      background:rgba(255,255,255,0.045);
-      color:var(--text);
-      padding:9px 12px;
-      border-radius:999px;
-      cursor:pointer;
-      font-size:13px;
-      transition:0.22s ease;
-    }
-
-    .lang-btn:hover{
-      background:rgba(255,255,255,0.09);
-      transform:translateY(-1px);
-    }
-
-    .lang-btn.active{
-      background:linear-gradient(135deg, rgba(128,182,255,0.18), rgba(193,161,255,0.18), rgba(111,228,210,0.14));
-      border-color:rgba(193,161,255,0.34);
-      box-shadow:0 0 18px rgba(146,126,255,0.14);
-    }
-
-    .hero{
-      padding:70px 0 26px;
-    }
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.08fr 0.92fr;
-      gap:24px;
-      align-items:stretch;
-    }
-
-    .hero-main,
-    .hero-side,
-    .nav-card,
-    .detail-panel,
-    .mini-card{
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-    }
-
-    .hero-main{
-      position:relative;
-      overflow:hidden;
-      padding:36px;
-      background:
-        radial-gradient(circle at 100% 100%, rgba(193,161,255,0.17), transparent 28%),
-        radial-gradient(circle at 0% 0%, rgba(128,182,255,0.14), transparent 24%),
-        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.018));
-    }
-
-    .hero-main::after{
-      content:"";
-      position:absolute;
-      inset:-25%;
-      background:
-        linear-gradient(115deg,
-          transparent 0%,
-          rgba(128,182,255,0.04) 20%,
-          transparent 38%,
-          rgba(193,161,255,0.05) 52%,
-          transparent 68%,
-          rgba(111,228,210,0.04) 84%,
-          transparent 100%);
-      animation:flow 11s linear infinite;
-      pointer-events:none;
-      opacity:0.9;
-    }
-
-    .hero-main > *{
-      position:relative;
-      z-index:1;
-    }
-
-    .status-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-bottom:18px;
-    }
-
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:12px;
-      color:#dbe6fb;
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.10);
-      backdrop-filter:blur(6px);
-    }
-
-    .badge-strong{
-      background:linear-gradient(135deg, rgba(107,226,165,0.14), rgba(128,182,255,0.08));
-      border-color:rgba(107,226,165,0.28);
-      color:#f1fff8;
-      box-shadow:0 0 20px rgba(107,226,165,0.10);
-      font-weight:700;
-    }
-
-    .dot{
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:var(--green);
-      box-shadow:0 0 12px var(--green-glow);
-      flex:0 0 auto;
-    }
-
-    h1{
-      margin:0 0 14px;
-      font-size:clamp(42px, 8vw, 74px);
-      line-height:0.95;
-      letter-spacing:-0.05em;
-    }
-
-    .hero-lead{
-      margin:0 0 16px;
-      font-size:18px;
-      color:#dce5f3;
-      max-width:760px;
-    }
-
-    .hero-sub{
-      margin:0 0 26px;
-      color:var(--muted);
-      font-size:15px;
-      max-width:760px;
-    }
-
-    .author-line{
-      padding:16px 18px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,0.08);
-      background:linear-gradient(135deg, rgba(128,182,255,0.06), rgba(193,161,255,0.06), rgba(111,228,210,0.05));
-    }
-
-    .author-line strong{
-      color:#eef4ff;
-    }
-
-    .hero-side{
-      position:relative;
-      overflow:hidden;
-      background:
-        radial-gradient(circle at 20% 18%, rgba(128,182,255,0.18), transparent 28%),
-        radial-gradient(circle at 82% 10%, rgba(193,161,255,0.19), transparent 30%),
-        radial-gradient(circle at 50% 100%, rgba(111,228,210,0.13), transparent 25%),
-        linear-gradient(145deg, #111a2b 0%, #101827 52%, #111a2b 100%);
-      padding:24px;
-    }
-
-    .hero-side::before{
-      content:"";
-      position:absolute;
-      inset:16px;
-      border:1px solid rgba(255,255,255,0.10);
-      border-radius:20px;
-      pointer-events:none;
-    }
-
-    .hero-side::after{
-      content:"";
-      position:absolute;
-      inset:-25%;
-      background:
-        linear-gradient(120deg,
-          transparent 0%,
-          rgba(128,182,255,0.04) 20%,
-          transparent 38%,
-          rgba(193,161,255,0.05) 54%,
-          transparent 70%,
-          rgba(111,228,210,0.04) 86%,
-          transparent 100%);
-      animation:flow 10s linear infinite;
-      pointer-events:none;
-      opacity:0.9;
-    }
-
-    .hero-side-content{
-      position:relative;
-      z-index:1;
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-      height:100%;
-    }
-
-    .eyebrow{
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:0.14em;
-      color:#b8c7dd;
-    }
-
-    .side-title{
-      margin:0;
-      font-size:30px;
-      line-height:1.05;
-    }
-
-    .side-text{
-      margin:0;
-      color:#cad5e6;
-    }
-
-    .side-points{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:10px;
-      margin-top:auto;
-    }
-
-    .side-point{
-      padding:13px 14px;
-      border-radius:16px;
-      background:rgba(255,255,255,0.055);
-      border:1px solid rgba(255,255,255,0.10);
-      color:#deebfb;
-      font-size:14px;
-    }
-
-    .quick-nav{
-      padding:18px 0 18px;
-    }
-
-    .nav-grid{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:18px;
-    }
-
-    .nav-card{
-      display:block;
-      padding:24px;
-      transition:0.28s ease;
-      position:relative;
-      overflow:hidden;
-      border-color:var(--line-strong);
-      cursor:pointer;
-    }
-
-    .nav-card:hover{
-      transform:translateY(-5px);
-      box-shadow:var(--shadow-strong);
-      filter:saturate(1.08);
-    }
-
-    .nav-card::before{
-      content:"";
-      position:absolute;
-      inset:-30%;
-      opacity:0;
-      transition:opacity 0.35s ease;
-      pointer-events:none;
-      animation:panelGlow 7s linear infinite;
-    }
-
-    .nav-card:hover::before{
-      opacity:1;
-    }
-
-    .nav-card::after{
-      content:"";
-      position:absolute;
-      right:-30px;
-      bottom:-40px;
-      width:130px;
-      height:130px;
-      border-radius:50%;
-      pointer-events:none;
-      opacity:0.95;
-    }
-
-    .nav-card.blue{
-      background:
-        radial-gradient(circle at 100% 0%, rgba(112,170,255,0.26), transparent 30%),
-        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
-    }
-
-    .nav-card.blue::before{
-      background:linear-gradient(120deg, transparent 0%, rgba(128,182,255,0.08) 24%, transparent 48%, rgba(112,170,255,0.10) 72%, transparent 100%);
-    }
-
-    .nav-card.blue::after{
-      background:radial-gradient(circle, rgba(128,182,255,0.26), transparent 70%);
-    }
-
-    .nav-card.violet{
-      background:
-        radial-gradient(circle at 100% 0%, rgba(177,137,255,0.30), transparent 30%),
-        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
-    }
-
-    .nav-card.violet::before{
-      background:linear-gradient(120deg, transparent 0%, rgba(193,161,255,0.08) 24%, transparent 48%, rgba(177,137,255,0.10) 72%, transparent 100%);
-    }
-
-    .nav-card.violet::after{
-      background:radial-gradient(circle, rgba(193,161,255,0.28), transparent 70%);
-    }
-
-    .nav-card.teal{
-      background:
-        radial-gradient(circle at 100% 0%, rgba(98,214,194,0.30), transparent 30%),
-        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
-    }
-
-    .nav-card.teal::before{
-      background:linear-gradient(120deg, transparent 0%, rgba(111,228,210,0.07) 24%, transparent 48%, rgba(98,214,194,0.10) 72%, transparent 100%);
-    }
-
-    .nav-card.teal::after{
-      background:radial-gradient(circle, rgba(111,228,210,0.26), transparent 70%);
-    }
-
-    .nav-kicker{
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:0.12em;
-      color:#b9c6da;
-      margin-bottom:10px;
-      position:relative;
-      z-index:1;
-    }
-
-    .nav-title{
-      margin:0 0 10px;
-      font-size:24px;
-      letter-spacing:-0.03em;
-      position:relative;
-      z-index:1;
-    }
-
-    .nav-text{
-      margin:0;
-      color:var(--muted);
-      font-size:15px;
-      position:relative;
-      z-index:1;
-    }
-
-    .details{
-      padding:10px 0 44px;
-    }
-
-    .detail-panel{
-      display:none;
-      padding:28px;
-      margin-bottom:18px;
-      animation:fadeUp 0.35s ease;
-      border-color:var(--line-strong);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .detail-panel.active{
-      display:block;
-    }
-
-    .detail-panel::before{
-      content:"";
-      position:absolute;
-      inset:-25%;
-      pointer-events:none;
-      opacity:0.75;
-      animation:panelGlow 10s linear infinite;
-    }
-
-    .detail-panel.blue{
-      background:
-        radial-gradient(circle at top right, rgba(112,170,255,0.24), transparent 24%),
-        radial-gradient(circle at bottom left, rgba(70,120,220,0.15), transparent 22%),
-        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
-    }
-
-    .detail-panel.blue::before{
-      background:linear-gradient(120deg, transparent 0%, rgba(128,182,255,0.06) 30%, transparent 55%, rgba(112,170,255,0.08) 78%, transparent 100%);
-    }
-
-    .detail-panel.violet{
-      background:
-        radial-gradient(circle at top right, rgba(177,137,255,0.26), transparent 24%),
-        radial-gradient(circle at bottom left, rgba(120,84,220,0.15), transparent 22%),
-        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
-    }
-
-    .detail-panel.violet::before{
-      background:linear-gradient(120deg, transparent 0%, rgba(193,161,255,0.06) 30%, transparent 55%, rgba(177,137,255,0.08) 78%, transparent 100%);
-    }
-
-    .detail-panel.teal{
-      background:
-        radial-gradient(circle at top right, rgba(98,214,194,0.26), transparent 24%),
-        radial-gradient(circle at bottom left, rgba(40,150,130,0.15), transparent 22%),
-        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.020));
-    }
-
-    .detail-panel.teal::before{
-      background:linear-gradient(120deg, transparent 0%, rgba(111,228,210,0.06) 30%, transparent 55%, rgba(98,214,194,0.08) 78%, transparent 100%);
-    }
-
-    .detail-panel > *{
-      position:relative;
-      z-index:1;
-    }
-
-    .detail-head{
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin-bottom:18px;
-    }
-
-    .detail-head h2{
-      margin:0;
-      font-size:30px;
-      letter-spacing:-0.03em;
-    }
-
-    .close-btn{
-      border:1px solid rgba(255,255,255,0.10);
-      background:rgba(255,255,255,0.05);
-      color:var(--text);
-      border-radius:12px;
-      padding:10px 14px;
-      cursor:pointer;
-      transition:0.2s ease;
-    }
-
-    .close-btn:hover{
-      background:rgba(255,255,255,0.10);
-    }
-
-    .two-col{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:22px;
-    }
-
-    .mini-grid{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:16px;
-      margin-top:18px;
-    }
-
-    .mini-card{
-      background:rgba(255,255,255,0.05);
-      border-color:rgba(255,255,255,0.12);
-      padding:18px;
-      transition:0.24s ease;
-    }
-
-    .mini-card:hover{
-      transform:translateY(-3px);
-      border-color:rgba(255,255,255,0.18);
-    }
-
-    .mini-card h3{
-      margin:0 0 10px;
-      font-size:19px;
-      line-height:1.2;
-    }
-
-    .mini-card p{
-      margin:0;
-      color:var(--muted);
-      font-size:15px;
-    }
-
-    .reveal{
-      opacity:0;
-      transform:translateY(20px);
-      transition:opacity 0.65s ease, transform 0.65s ease;
-    }
-
-    .reveal.visible{
-      opacity:1;
-      transform:translateY(0);
-    }
-
-    .hidden-lang{
-      display:none;
-    }
-
-    footer{
-      padding:18px 0 42px;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .footer-box{
-      border-top:1px solid var(--line);
-      padding-top:18px;
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:space-between;
-      gap:14px;
-      align-items:flex-start;
-    }
-
-    .footer-main{
-      max-width:760px;
-      color:#cfd9ea;
-    }
-
-    .footer-main strong{
-      color:#eef4ff;
-      font-weight:700;
-    }
-
-    .footer-side{
-      color:var(--muted);
-      white-space:nowrap;
-    }
-
-    @keyframes flow{
-      0%{transform:translateX(-14%) rotate(0deg)}
-      50%{transform:translateX(8%) rotate(2deg)}
-      100%{transform:translateX(18%) rotate(0deg)}
-    }
-
-    @keyframes panelGlow{
-      0%{transform:translateX(-10%) rotate(0deg)}
-      50%{transform:translateX(10%) rotate(2deg)}
-      100%{transform:translateX(20%) rotate(0deg)}
-    }
-
-    @keyframes fadeUp{
-      from{opacity:0;transform:translateY(14px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-
-    @media (max-width:980px){
-      .hero-grid,
-      .nav-grid,
-      .two-col,
-      .mini-grid{
-        grid-template-columns:1fr 1fr;
-      }
-    }
-
-    @media (max-width:760px){
-      .topbar-inner{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-
-      .lang-switch{
-        width:100%;
-        justify-content:flex-end;
-        padding-right:2px;
-      }
-
-      .hero{
-        padding-top:38px;
-      }
-
-      .hero-grid,
-      .nav-grid,
-      .two-col,
-      .mini-grid{
-        grid-template-columns:1fr;
-      }
-
-      .hero-main,
-      .hero-side,
-      .nav-card,
-      .detail-panel{
-        padding:20px;
-      }
-
-      h1{
-        font-size:46px;
-      }
-
-      .hero-lead{
-        font-size:17px;
-      }
-
-      .footer-box{
-        flex-direction:column;
-      }
-
-      .footer-side{
-        white-space:normal;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RISE Moderation Concept</title>
+
+<style>
+:root{
+  --bg:#07110c;
+  --bg-soft:#0c1a14;
+  --text:#e9fff3;
+  --muted:#9fd3b8;
+  --line:rgba(255,255,255,0.08);
+
+  --green:#4cff9a;
+  --green-soft:rgba(76,255,154,0.15);
+}
+
+body{
+  margin:0;
+  font-family:Inter, Arial;
+  background:linear-gradient(180deg,#050b08,#07110c);
+  color:var(--text);
+}
+
+.container{
+  width:min(1000px,90%);
+  margin:auto;
+}
+
+.hero{
+  padding:80px 0;
+}
+
+h1{
+  font-size:60px;
+  margin:0 0 10px;
+}
+
+.subtitle{
+  color:var(--muted);
+  margin-bottom:30px;
+}
+
+.card{
+  background:var(--bg-soft);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:25px;
+  margin-bottom:20px;
+}
+
+.code{
+  background:#020504;
+  border:1px solid rgba(255,255,255,0.05);
+  padding:12px;
+  border-radius:12px;
+  font-family:monospace;
+  margin:10px 0;
+  color:#a6ffcf;
+}
+
+.section-title{
+  margin-bottom:10px;
+  font-size:22px;
+  color:#c9ffe2;
+}
+
+</style>
 </head>
+
 <body>
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand">
-        <div class="brand-mark">C</div>
-        <div class="brand-text">
-          <strong>Chimera</strong>
-          <span id="topbarSubtitle">Модульная система • Активная разработка</span>
-        </div>
-      </div>
 
-      <div class="lang-switch">
-        <button class="lang-btn" data-lang="en">English</button>
-        <button class="lang-btn active" data-lang="ru">Русский</button>
-        <button class="lang-btn" data-lang="de">Deutsch</button>
-        <button class="lang-btn" data-lang="uk">Українська</button>
-        <button class="lang-btn" data-lang="es">Español</button>
-      </div>
-    </div>
-  </header>
+<div class="container hero">
 
-  <main>
-    <!-- RU -->
-    <div class="lang-content" id="lang-ru">
-      <section class="hero container">
-        <div class="hero-grid">
-          <div class="hero-main reveal">
-            <div class="status-row">
-              <span class="badge badge-strong"><span class="dot"></span> Активная разработка</span>
-              <span class="badge"><span class="dot"></span> Модульная система</span>
-              <span class="badge"><span class="dot"></span> Расширяемая экосистема</span>
-            </div>
+<h1>RISE</h1>
+<div class="subtitle">Концепция модерационного бота</div>
 
-            <h1>Chimera</h1>
+<div class="card">
+<div class="section-title">Общее</div>
+<p>
+Префиксный модерационный бот с упором на простоту, скорость и контроль.
+Работа через команды без slash-интерфейса.
+</p>
+</div>
 
-            <p class="hero-lead">
-              Chimera — это персональная системная платформа, созданная как единая среда для автоматизации, организации процессов, обработки событий, внутренних сервисов и постепенного наращивания функционала.
-            </p>
+<div class="card">
+<div class="section-title">Команды</div>
 
-            <p class="hero-sub">
-              Это не просто один инструмент и не набор случайных решений. Идея Chimera — объединить разные механики и внутреннюю логику в одну цельную архитектуру, которую можно развивать долго и последовательно.
-            </p>
+<div class="code">!мут / !м @пользователь 10 м причина</div>
+<div class="code">!кик / !к @пользователь причина</div>
+<div class="code">!бан / !б @пользователь причина</div>
+<div class="code">!очистить 20</div>
 
-            <div class="author-line">
-              <strong>Создатели:</strong> impresent, aglvet. Проект развивается как долгосрочная личная система с упором на гибкость, масштабируемость и сильную архитектурную основу.
-            </div>
-          </div>
+</div>
 
-          <div class="hero-side reveal">
-            <div class="hero-side-content">
-              <div class="eyebrow">System overview</div>
-              <h2 class="side-title">Одна система вместо хаотичного набора решений</h2>
-              <p class="side-text">
-                Chimera нужна для того, чтобы собирать разные рабочие идеи, внутренние механики и сервисные блоки в одну платформу, а не распылять их по отдельным кускам.
-              </p>
+<div class="card">
+<div class="section-title">Формат времени</div>
 
-              <div class="side-points">
-                <div class="side-point">Единая основа для роста и усложнения системы</div>
-                <div class="side-point">Гибкая платформа без хаотичных надстроек</div>
-                <div class="side-point">Понятная логика от базовых сценариев до сложных процессов</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+<div class="code">с — секунды</div>
+<div class="code">м — минуты</div>
+<div class="code">ч — часы</div>
+<div class="code">д — дни</div>
 
-      <section class="quick-nav container reveal">
-        <div class="nav-grid">
-          <a class="nav-card blue" href="#panel-purpose" data-panel="panel-purpose">
-            <div class="nav-kicker">Раздел 01</div>
-            <h2 class="nav-title">Зачем нужна Chimera</h2>
-            <p class="nav-text">Коротко о том, какую проблему решает система и почему она вообще имеет смысл.</p>
-          </a>
+<p>Пример:</p>
+<div class="code">!м @user 1 ч флуд</div>
 
-          <a class="nav-card violet" href="#panel-value" data-panel="panel-value">
-            <div class="nav-kicker">Раздел 02</div>
-            <h2 class="nav-title">Чем она полезна</h2>
-            <p class="nav-text">Что даёт такая платформа на практике и почему она удобнее разрозненных решений.</p>
-          </a>
+</div>
 
-          <a class="nav-card teal" href="#panel-structure" data-panel="panel-structure">
-            <div class="nav-kicker">Раздел 03</div>
-            <h2 class="nav-title">Как она устроена</h2>
-            <p class="nav-text">О внутреннем принципе системы: модульность, расширяемость и цельная архитектура.</p>
-          </a>
-        </div>
-      </section>
+<div class="card">
+<div class="section-title">Указание пользователя</div>
 
-      <section class="details container">
-        <div class="detail-panel blue" id="panel-purpose">
-          <div class="detail-head">
-            <h2>Зачем нужна Chimera</h2>
-            <button class="close-btn" data-close>Закрыть</button>
-          </div>
+<p>
+Поддерживается несколько форматов:
+</p>
 
-          <div class="two-col">
-            <div>
-              <p>
-                Со временем любая серьёзная система начинает обрастать повторяющимися действиями, внутренними задачами, вспомогательными блоками и служебной логикой. Когда всё это существует отдельно, структура становится неудобной, раздробленной и тяжёлой для развития.
-              </p>
-            </div>
-            <div>
-              <p>
-                Chimera нужна как единая платформа, которая позволяет собрать такие элементы в одну среду: связать их общей логикой, выстроить между ними порядок и превратить хаотичный набор решений в цельную систему.
-              </p>
-            </div>
-          </div>
-        </div>
+<div class="code">@mention</div>
+<div class="code">ID пользователя</div>
+<div class="code">ник (если уникален)</div>
 
-        <div class="detail-panel violet" id="panel-value">
-          <div class="detail-head">
-            <h2>Чем она полезна</h2>
-            <button class="close-btn" data-close>Закрыть</button>
-          </div>
+</div>
 
-          <div class="mini-grid">
-            <div class="mini-card">
-              <h3>Собирает всё в одну основу</h3>
-              <p>Вместо множества разрозненных решений появляется одна база, в которой разные механики могут существовать вместе и усиливать друг друга.</p>
-            </div>
+<div class="card">
+<div class="section-title">Логика работы</div>
 
-            <div class="mini-card">
-              <h3>Позволяет расти без хаоса</h3>
-              <p>Новые идеи можно встраивать постепенно, не превращая проект в случайную коллекцию надстроек и костылей.</p>
-            </div>
+<p>
+— муты с таймером и авто-снятием<br>
+— проверка ролей (иерархия)<br>
+— запрет наказаний администраторов<br>
+— защита от самонаказания<br>
+— обработка некорректных команд<br>
+</p>
 
-            <div class="mini-card">
-              <h3>Оставляет систему гибкой</h3>
-              <p>Chimera не привязана к одной узкой задаче — она строится как платформа, способная меняться и расширяться со временем.</p>
-            </div>
-          </div>
-        </div>
+</div>
 
-        <div class="detail-panel teal" id="panel-structure">
-          <div class="detail-head">
-            <h2>Как она устроена</h2>
-            <button class="close-btn" data-close>Закрыть</button>
-          </div>
+<div class="card">
+<div class="section-title">Очистка сообщений</div>
 
-          <div class="mini-grid">
-            <div class="mini-card">
-              <h3>Базовая платформа</h3>
-              <p>Центральная основа задаёт общую структуру, направление развития и архитектурную устойчивость всей системы.</p>
-            </div>
+<p>
+Удаление последних сообщений в канале с ограничением по количеству.
+</p>
 
-            <div class="mini-card">
-              <h3>Внутренние модули</h3>
-              <p>Отдельные блоки логики отвечают за конкретные направления и могут развиваться независимо, не ломая весь проект целиком.</p>
-            </div>
+<div class="code">!очистить 20</div>
 
-            <div class="mini-card">
-              <h3>Связанные процессы</h3>
-              <p>Система строится не только из функций, но и из того, как они соединяются между собой в общую внутреннюю логику.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+</div>
 
-    <!-- EN -->
-    <div class="lang-content hidden-lang" id="lang-en">
-      <section class="hero container">
-        <div class="hero-grid">
-          <div class="hero-main reveal">
-            <div class="status-row">
-              <span class="badge badge-strong"><span class="dot"></span> Active development</span>
-              <span class="badge"><span class="dot"></span> Modular system</span>
-              <span class="badge"><span class="dot"></span> Expandable ecosystem</span>
-            </div>
+<div class="card">
+<div class="section-title">Логирование</div>
 
-            <h1>Chimera</h1>
+<p>
+Фиксация всех действий в отдельный канал:
+</p>
 
-            <p class="hero-lead">
-              Chimera is a personal system platform designed as a unified environment for automation, process organization, event handling, internal services and long-term functional growth.
-            </p>
+<div class="code">
+модератор → пользователь → действие → причина → время
+</div>
 
-            <p class="hero-sub">
-              It is not just one tool and not a random set of separate solutions. The idea behind Chimera is to bring different mechanics and internal logic into one coherent architecture that can evolve over time.
-            </p>
+</div>
 
-            <div class="author-line">
-              <strong>Creators:</strong> impresent, aglvet. The project is being developed as a long-term personal system with a focus on flexibility, scalability and a strong architectural foundation.
-            </div>
-          </div>
+<div class="card">
+<div class="section-title">Расширение</div>
 
-          <div class="hero-side reveal">
-            <div class="hero-side-content">
-              <div class="eyebrow">System overview</div>
-              <h2 class="side-title">One system instead of a chaotic set of solutions</h2>
-              <p class="side-text">
-                Chimera exists to bring different working ideas, internal mechanics and service blocks into one platform instead of scattering them across disconnected pieces.
-              </p>
+<p>
+— система предупреждений<br>
+— авто-наказания<br>
+— авто-модерация<br>
+— настройка ролей<br>
+</p>
 
-              <div class="side-points">
-                <div class="side-point">One foundation for system growth and increasing complexity</div>
-                <div class="side-point">A flexible platform without chaotic layering</div>
-                <div class="side-point">Readable logic from basic scenarios to more advanced processes</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+</div>
 
-      <section class="quick-nav container reveal">
-        <div class="nav-grid">
-          <a class="nav-card blue" href="#panel-purpose" data-panel="panel-purpose">
-            <div class="nav-kicker">Section 01</div>
-            <h2 class="nav-title">Why Chimera exists</h2>
-            <p class="nav-text">A short explanation of what problem the system solves and why it makes sense.</p>
-          </a>
+</div>
 
-          <a class="nav-card violet" href="#panel-value" data-panel="panel-value">
-            <div class="nav-kicker">Section 02</div>
-            <h2 class="nav-title">Why it is useful</h2>
-            <p class="nav-text">What such a platform provides in practice and why it is better than disconnected solutions.</p>
-          </a>
-
-          <a class="nav-card teal" href="#panel-structure" data-panel="panel-structure">
-            <div class="nav-kicker">Section 03</div>
-            <h2 class="nav-title">How it is structured</h2>
-            <p class="nav-text">About the internal principle of the system: modularity, expandability and coherent architecture.</p>
-          </a>
-        </div>
-      </section>
-
-      <section class="details container">
-        <div class="detail-panel blue" id="panel-purpose">
-          <div class="detail-head">
-            <h2>Why Chimera exists</h2>
-            <button class="close-btn" data-close>Close</button>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <p>
-                Over time, any serious system accumulates repeated actions, internal tasks, support blocks and service logic. When all of this exists separately, the structure becomes fragmented, inconvenient and harder to grow.
-              </p>
-            </div>
-            <div>
-              <p>
-                Chimera exists as one platform that allows such elements to live inside the same environment: connected by shared logic, organized more clearly and turned from scattered solutions into one coherent system.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="detail-panel violet" id="panel-value">
-          <div class="detail-head">
-            <h2>Why it is useful</h2>
-            <button class="close-btn" data-close>Close</button>
-          </div>
-
-          <div class="mini-grid">
-            <div class="mini-card">
-              <h3>Brings everything into one base</h3>
-              <p>Instead of many disconnected solutions, there is one foundation where different mechanics can coexist and strengthen each other.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Allows growth without chaos</h3>
-              <p>New ideas can be added gradually without turning the project into a random pile of patches and extensions.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Keeps the system flexible</h3>
-              <p>Chimera is not tied to one narrow role — it is built as a platform that can expand and change over time.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="detail-panel teal" id="panel-structure">
-          <div class="detail-head">
-            <h2>How it is structured</h2>
-            <button class="close-btn" data-close>Close</button>
-          </div>
-
-          <div class="mini-grid">
-            <div class="mini-card">
-              <h3>Base platform</h3>
-              <p>The central foundation defines overall structure, development direction and architectural stability for the whole system.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Internal modules</h3>
-              <p>Separate logic blocks are responsible for specific directions and can evolve independently without breaking the whole project.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Connected processes</h3>
-              <p>The system is shaped not only by functions, but by how those functions connect into one internal logic.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- DE -->
-    <div class="lang-content hidden-lang" id="lang-de">
-      <section class="hero container">
-        <div class="hero-grid">
-          <div class="hero-main reveal">
-            <div class="status-row">
-              <span class="badge badge-strong"><span class="dot"></span> Aktive Entwicklung</span>
-              <span class="badge"><span class="dot"></span> Modulares System</span>
-              <span class="badge"><span class="dot"></span> Erweiterbares Ökosystem</span>
-            </div>
-
-            <h1>Chimera</h1>
-
-            <p class="hero-lead">
-              Chimera ist eine persönliche Systemplattform, die als einheitliche Umgebung für Automatisierung, Prozessorganisation, Ereignisverarbeitung, interne Services und langfristiges funktionales Wachstum entwickelt wird.
-            </p>
-
-            <p class="hero-sub">
-              Es ist nicht nur ein einzelnes Werkzeug und kein zufälliger Satz getrennter Lösungen. Die Idee hinter Chimera ist es, verschiedene Mechaniken und interne Logiken in einer kohärenten Architektur zu vereinen, die sich im Laufe der Zeit weiterentwickeln kann.
-            </p>
-
-            <div class="author-line">
-              <strong>Erstellt von:</strong> impresent, aglvet. Das Projekt wird als langfristiges persönliches System entwickelt, mit Fokus auf Flexibilität, Skalierbarkeit und eine starke architektonische Grundlage.
-            </div>
-          </div>
-
-          <div class="hero-side reveal">
-            <div class="hero-side-content">
-              <div class="eyebrow">System overview</div>
-              <h2 class="side-title">Ein System statt eines chaotischen Bündels von Lösungen</h2>
-              <p class="side-text">
-                Chimera soll verschiedene Arbeitsideen, interne Mechaniken und Service-Blöcke in einer Plattform zusammenführen, statt sie auf getrennte Teile zu verteilen.
-              </p>
-
-              <div class="side-points">
-                <div class="side-point">Eine Grundlage für Systemwachstum und steigende Komplexität</div>
-                <div class="side-point">Eine flexible Plattform ohne chaotische Überbauten</div>
-                <div class="side-point">Lesbare Logik von einfachen Szenarien bis zu komplexeren Prozessen</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="quick-nav container reveal">
-        <div class="nav-grid">
-          <a class="nav-card blue" href="#panel-purpose" data-panel="panel-purpose">
-            <div class="nav-kicker">Bereich 01</div>
-            <h2 class="nav-title">Warum Chimera existiert</h2>
-            <p class="nav-text">Kurz darüber, welches Problem das System löst und warum es überhaupt sinnvoll ist.</p>
-          </a>
-
-          <a class="nav-card violet" href="#panel-value" data-panel="panel-value">
-            <div class="nav-kicker">Bereich 02</div>
-            <h2 class="nav-title">Warum es nützlich ist</h2>
-            <p class="nav-text">Was eine solche Plattform praktisch bringt und warum sie besser ist als getrennte Einzelteile.</p>
-          </a>
-
-          <a class="nav-card teal" href="#panel-structure" data-panel="panel-structure">
-            <div class="nav-kicker">Bereich 03</div>
-            <h2 class="nav-title">Wie es aufgebaut ist</h2>
-            <p class="nav-text">Über das innere Prinzip des Systems: Modularität, Erweiterbarkeit und kohärente Architektur.</p>
-          </a>
-        </div>
-      </section>
-
-      <section class="details container">
-        <div class="detail-panel blue" id="panel-purpose">
-          <div class="detail-head">
-            <h2>Warum Chimera existiert</h2>
-            <button class="close-btn" data-close>Schließen</button>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <p>
-                Mit der Zeit sammelt jedes ernsthafte System wiederkehrende Aktionen, interne Aufgaben, Hilfsblöcke und Service-Logik an. Wenn all das getrennt existiert, wird die Struktur fragmentiert, unübersichtlich und schwerer auszubauen.
-              </p>
-            </div>
-            <div>
-              <p>
-                Chimera existiert als eine Plattform, in der solche Elemente in derselben Umgebung zusammengeführt werden können: verbunden durch gemeinsame Logik, klarer organisiert und aus verstreuten Lösungen zu einem kohärenten System geformt.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="detail-panel violet" id="panel-value">
-          <div class="detail-head">
-            <h2>Warum es nützlich ist</h2>
-            <button class="close-btn" data-close>Schließen</button>
-          </div>
-
-          <div class="mini-grid">
-            <div class="mini-card">
-              <h3>Bringt alles in eine gemeinsame Basis</h3>
-              <p>Statt vieler getrennter Lösungen entsteht eine Grundlage, in der verschiedene Mechaniken zusammen existieren und sich gegenseitig stärken können.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Erlaubt Wachstum ohne Chaos</h3>
-              <p>Neue Ideen können schrittweise ergänzt werden, ohne das Projekt in einen zufälligen Haufen aus Erweiterungen und Provisorien zu verwandeln.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Hält das System flexibel</h3>
-              <p>Chimera ist nicht an eine enge Einzelrolle gebunden — es wird als Plattform aufgebaut, die sich mit der Zeit erweitern und verändern kann.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="detail-panel teal" id="panel-structure">
-          <div class="detail-head">
-            <h2>Wie es aufgebaut ist</h2>
-            <button class="close-btn" data-close>Schließen</button>
-          </div>
-
-          <div class="mini-grid">
-            <div class="mini-card">
-              <h3>Basisplattform</h3>
-              <p>Die zentrale Grundlage definiert Gesamtstruktur, Entwicklungsrichtung und architektonische Stabilität des gesamten Systems.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Interne Module</h3>
-              <p>Getrennte Logikblöcke sind für bestimmte Richtungen verantwortlich und können sich unabhängig weiterentwickeln, ohne das Gesamtprojekt zu zerstören.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Verbundene Prozesse</h3>
-              <p>Das System wird nicht nur durch Funktionen bestimmt, sondern auch dadurch, wie diese Funktionen in eine gemeinsame interne Logik eingebunden sind.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- UK -->
-    <div class="lang-content hidden-lang" id="lang-uk">
-      <section class="hero container">
-        <div class="hero-grid">
-          <div class="hero-main reveal">
-            <div class="status-row">
-              <span class="badge badge-strong"><span class="dot"></span> Активна розробка</span>
-              <span class="badge"><span class="dot"></span> Модульна система</span>
-              <span class="badge"><span class="dot"></span> Розширювана екосистема</span>
-            </div>
-
-            <h1>Chimera</h1>
-
-            <p class="hero-lead">
-              Chimera — це персональна системна платформа, створена як єдине середовище для автоматизації, організації процесів, обробки подій, внутрішніх сервісів і довгострокового функціонального зростання.
-            </p>
-
-            <p class="hero-sub">
-              Це не просто один інструмент і не випадковий набір розділених рішень. Ідея Chimera полягає в тому, щоб об’єднати різні механіки та внутрішню логіку в цілісну архітектуру, яка може розвиватися з часом.
-            </p>
-
-            <div class="author-line">
-              <strong>Створено:</strong> impresent, aglvet. Проєкт розвивається як довгострокова особиста система з акцентом на гнучкість, масштабованість і сильну архітектурну основу.
-            </div>
-          </div>
-
-          <div class="hero-side reveal">
-            <div class="hero-side-content">
-              <div class="eyebrow">System overview</div>
-              <h2 class="side-title">Одна система замість хаотичного набору рішень</h2>
-              <p class="side-text">
-                Chimera потрібна для того, щоб об’єднувати різні робочі ідеї, внутрішні механіки та сервісні блоки в одну платформу, а не розносити їх по окремих частинах.
-              </p>
-
-              <div class="side-points">
-                <div class="side-point">Єдина основа для росту системи та збільшення її складності</div>
-                <div class="side-point">Гнучка платформа без хаотичних надбудов</div>
-                <div class="side-point">Зрозуміла логіка від базових сценаріїв до складніших процесів</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="quick-nav container reveal">
-        <div class="nav-grid">
-          <a class="nav-card blue" href="#panel-purpose" data-panel="panel-purpose">
-            <div class="nav-kicker">Розділ 01</div>
-            <h2 class="nav-title">Навіщо існує Chimera</h2>
-            <p class="nav-text">Коротко про те, яку проблему вирішує система і чому вона взагалі має сенс.</p>
-          </a>
-
-          <a class="nav-card violet" href="#panel-value" data-panel="panel-value">
-            <div class="nav-kicker">Розділ 02</div>
-            <h2 class="nav-title">Чому вона корисна</h2>
-            <p class="nav-text">Що така платформа дає на практиці і чому вона краща за розділені рішення.</p>
-          </a>
-
-          <a class="nav-card teal" href="#panel-structure" data-panel="panel-structure">
-            <div class="nav-kicker">Розділ 03</div>
-            <h2 class="nav-title">Як вона влаштована</h2>
-            <p class="nav-text">Про внутрішній принцип системи: модульність, розширюваність і цілісна архітектура.</p>
-          </a>
-        </div>
-      </section>
-
-      <section class="details container">
-        <div class="detail-panel blue" id="panel-purpose">
-          <div class="detail-head">
-            <h2>Навіщо існує Chimera</h2>
-            <button class="close-btn" data-close>Закрити</button>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <p>
-                З часом будь-яка серйозна система накопичує повторювані дії, внутрішні завдання, допоміжні блоки та сервісну логіку. Якщо все це існує окремо, структура стає фрагментованою, незручною та складнішою для розвитку.
-              </p>
-            </div>
-            <div>
-              <p>
-                Chimera існує як одна платформа, у якій такі елементи можуть жити в одному середовищі: пов’язані спільною логікою, краще організовані та перетворені з розділених рішень на цілісну систему.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="detail-panel violet" id="panel-value">
-          <div class="detail-head">
-            <h2>Чому вона корисна</h2>
-            <button class="close-btn" data-close>Закрити</button>
-          </div>
-
-          <div class="mini-grid">
-            <div class="mini-card">
-              <h3>Збирає все в одну основу</h3>
-              <p>Замість багатьох розділених рішень з’являється одна база, у якій різні механіки можуть співіснувати та підсилювати одна одну.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Дає ріст без хаосу</h3>
-              <p>Нові ідеї можна додавати поступово, не перетворюючи проєкт на випадкову купу латок та надбудов.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Залишає систему гнучкою</h3>
-              <p>Chimera не прив’язана до однієї вузької ролі — вона будується як платформа, здатна розширюватися і змінюватися з часом.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="detail-panel teal" id="panel-structure">
-          <div class="detail-head">
-            <h2>Як вона влаштована</h2>
-            <button class="close-btn" data-close>Закрити</button>
-          </div>
-
-          <div class="mini-grid">
-            <div class="mini-card">
-              <h3>Базова платформа</h3>
-              <p>Центральна основа визначає загальну структуру, напрям розвитку та архітектурну стійкість усієї системи.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Внутрішні модулі</h3>
-              <p>Окремі логічні блоки відповідають за конкретні напрями та можуть розвиватися незалежно, не ламаючи весь проєкт.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Пов’язані процеси</h3>
-              <p>Система формується не лише функціями, а й тим, як ці функції з’єднуються між собою в одну внутрішню логіку.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- ES -->
-    <div class="lang-content hidden-lang" id="lang-es">
-      <section class="hero container">
-        <div class="hero-grid">
-          <div class="hero-main reveal">
-            <div class="status-row">
-              <span class="badge badge-strong"><span class="dot"></span> Desarrollo activo</span>
-              <span class="badge"><span class="dot"></span> Sistema modular</span>
-              <span class="badge"><span class="dot"></span> Ecosistema expandible</span>
-            </div>
-
-            <h1>Chimera</h1>
-
-            <p class="hero-lead">
-              Chimera es una plataforma de sistema personal diseñada como un entorno unificado para automatización, organización de procesos, manejo de eventos, servicios internos y crecimiento funcional a largo plazo.
-            </p>
-
-            <p class="hero-sub">
-              No es solo una herramienta y no es un conjunto aleatorio de soluciones separadas. La idea de Chimera es unir distintas mecánicas y lógica interna dentro de una arquitectura coherente que pueda evolucionar con el tiempo.
-            </p>
-
-            <div class="author-line">
-              <strong>Creado por:</strong> impresent, aglvet. El proyecto se desarrolla como un sistema personal a largo plazo con enfoque en flexibilidad, escalabilidad y una base arquitectónica fuerte.
-            </div>
-          </div>
-
-          <div class="hero-side reveal">
-            <div class="hero-side-content">
-              <div class="eyebrow">System overview</div>
-              <h2 class="side-title">Un solo sistema en lugar de un conjunto caótico de soluciones</h2>
-              <p class="side-text">
-                Chimera existe para reunir distintas ideas de trabajo, mecánicas internas y bloques de servicio dentro de una sola plataforma, en lugar de dispersarlos en piezas separadas.
-              </p>
-
-              <div class="side-points">
-                <div class="side-point">Una sola base para el crecimiento del sistema y el aumento de su complejidad</div>
-                <div class="side-point">Una plataforma flexible sin capas caóticas</div>
-                <div class="side-point">Una lógica legible desde escenarios básicos hasta procesos más avanzados</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="quick-nav container reveal">
-        <div class="nav-grid">
-          <a class="nav-card blue" href="#panel-purpose" data-panel="panel-purpose">
-            <div class="nav-kicker">Sección 01</div>
-            <h2 class="nav-title">Por qué existe Chimera</h2>
-            <p class="nav-text">Brevemente sobre qué problema resuelve el sistema y por qué tiene sentido.</p>
-          </a>
-
-          <a class="nav-card violet" href="#panel-value" data-panel="panel-value">
-            <div class="nav-kicker">Sección 02</div>
-            <h2 class="nav-title">Por qué es útil</h2>
-            <p class="nav-text">Qué aporta una plataforma así en la práctica y por qué es mejor que soluciones separadas.</p>
-          </a>
-
-          <a class="nav-card teal" href="#panel-structure" data-panel="panel-structure">
-            <div class="nav-kicker">Sección 03</div>
-            <h2 class="nav-title">Cómo está estructurada</h2>
-            <p class="nav-text">Sobre el principio interno del sistema: modularidad, expansión y arquitectura coherente.</p>
-          </a>
-        </div>
-      </section>
-
-      <section class="details container">
-        <div class="detail-panel blue" id="panel-purpose">
-          <div class="detail-head">
-            <h2>Por qué existe Chimera</h2>
-            <button class="close-btn" data-close>Cerrar</button>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <p>
-                Con el tiempo, cualquier sistema serio acumula acciones repetidas, tareas internas, bloques auxiliares y lógica de servicio. Si todo eso existe por separado, la estructura se vuelve fragmentada, incómoda y más difícil de desarrollar.
-              </p>
-            </div>
-            <div>
-              <p>
-                Chimera existe como una plataforma única en la que esos elementos pueden vivir dentro del mismo entorno: conectados por una lógica compartida, mejor organizados y transformados de soluciones dispersas en un sistema coherente.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="detail-panel violet" id="panel-value">
-          <div class="detail-head">
-            <h2>Por qué es útil</h2>
-            <button class="close-btn" data-close>Cerrar</button>
-          </div>
-
-          <div class="mini-grid">
-            <div class="mini-card">
-              <h3>Reúne todo en una sola base</h3>
-              <p>En lugar de muchas soluciones separadas, aparece una única base donde distintas mecánicas pueden convivir y reforzarse mutuamente.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Permite crecer sin caos</h3>
-              <p>Las nuevas ideas pueden añadirse de forma gradual sin convertir el proyecto en una acumulación aleatoria de parches y extensiones.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Mantiene el sistema flexible</h3>
-              <p>Chimera no está atada a un papel estrecho — se construye como una plataforma capaz de expandirse y cambiar con el tiempo.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="detail-panel teal" id="panel-structure">
-          <div class="detail-head">
-            <h2>Cómo está estructurada</h2>
-            <button class="close-btn" data-close>Cerrar</button>
-          </div>
-
-          <div class="mini-grid">
-            <div class="mini-card">
-              <h3>Plataforma base</h3>
-              <p>La base central define la estructura general, la dirección de desarrollo y la estabilidad arquitectónica de todo el sistema.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Módulos internos</h3>
-              <p>Bloques lógicos separados son responsables de direcciones concretas y pueden evolucionar sin romper todo el proyecto.</p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Procesos conectados</h3>
-              <p>El sistema no se forma solo por funciones, sino también por la forma en que esas funciones se conectan dentro de una lógica interna común.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <footer class="container">
-    <div class="footer-box">
-      <div class="footer-main">
-        <strong>Chimera</strong> is a long-term modular system platform created by <strong>impresent</strong> and <strong>aglvet</strong>, designed to grow as a unified environment for internal logic, automation and architectural expansion.
-      </div>
-      <div class="footer-side">
-        System platform • Active development
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    const subtitles = {
-      ru: "Модульная система • Активная разработка",
-      en: "Modular system • Active development",
-      de: "Modulares System • Aktive Entwicklung",
-      uk: "Модульна система • Активна розробка",
-      es: "Sistema modular • Desarrollo activo"
-    };
-
-    const langButtons = document.querySelectorAll(".lang-btn");
-    const langContents = document.querySelectorAll(".lang-content");
-    const subtitle = document.getElementById("topbarSubtitle");
-
-    function setLanguage(lang){
-      langContents.forEach(block => block.classList.add("hidden-lang"));
-      const active = document.getElementById(`lang-${lang}`);
-      if(active) active.classList.remove("hidden-lang");
-
-      langButtons.forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.lang === lang);
-      });
-
-      subtitle.textContent = subtitles[lang] || subtitles.ru;
-      localStorage.setItem("chimera-lang", lang);
-
-      closePanels();
-      initReveal();
-    }
-
-    langButtons.forEach(btn => {
-      btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
-    });
-
-    function getVisibleLangBlock(){
-      return document.querySelector(".lang-content:not(.hidden-lang)");
-    }
-
-    function closePanels(){
-      const visibleBlock = getVisibleLangBlock();
-      if(!visibleBlock) return;
-      visibleBlock.querySelectorAll(".detail-panel").forEach(panel => {
-        panel.classList.remove("active");
-      });
-    }
-
-    function openPanel(panelId){
-      const visibleBlock = getVisibleLangBlock();
-      if(!visibleBlock) return;
-
-      visibleBlock.querySelectorAll(".detail-panel").forEach(panel => {
-        panel.classList.remove("active");
-      });
-
-      const target = visibleBlock.querySelector(`#${panelId}`);
-      if(target){
-        target.classList.add("active");
-        setTimeout(() => {
-          target.scrollIntoView({ behavior:"smooth", block:"start" });
-        }, 80);
-      }
-    }
-
-    document.addEventListener("click", (e) => {
-      const card = e.target.closest("[data-panel]");
-      if(card){
-        e.preventDefault();
-        openPanel(card.dataset.panel);
-      }
-
-      const closeBtn = e.target.closest("[data-close]");
-      if(closeBtn){
-        const panel = closeBtn.closest(".detail-panel");
-        if(panel){
-          panel.classList.remove("active");
-          setTimeout(() => {
-            const visibleBlock = getVisibleLangBlock();
-            const quickNav = visibleBlock ? visibleBlock.querySelector(".quick-nav") : null;
-            if(quickNav){
-              quickNav.scrollIntoView({ behavior:"smooth", block:"start" });
-            }
-          }, 80);
-        }
-      }
-    });
-
-    function initReveal(){
-      const elements = document.querySelectorAll(".lang-content:not(.hidden-lang) .reveal");
-      elements.forEach(el => el.classList.remove("visible"));
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if(entry.isIntersecting){
-            entry.target.classList.add("visible");
-          }
-        });
-      }, { threshold: 0.12 });
-
-      elements.forEach(el => observer.observe(el));
-    }
-
-    const savedLang = localStorage.getItem("chimera-lang") || "ru";
-    setLanguage(savedLang);
-  </script>
 </body>
 </html>

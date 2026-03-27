@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RISE — Концепция модерационного бота</title>
+<title>RISE — Discord модерационный бот</title>
 
 <style>
 :root{
@@ -12,7 +12,6 @@
   --text:#e8fff5;
   --muted:#9ad1b8;
   --line:rgba(255,255,255,0.08);
-  --green:#5dffb0;
 }
 
 body{
@@ -69,7 +68,6 @@ ul{
 
 li{
   margin-bottom:6px;
-  color:#d7fff0;
 }
 </style>
 </head>
@@ -79,7 +77,7 @@ li{
 <div class="container">
 
 <h1>RISE</h1>
-<div class="subtitle">Концепция модерационного бота</div>
+<div class="subtitle">Концепция модерационного бота для Discord</div>
 
 <div class="card">
 <div class="title">Префиксные команды</div>
@@ -93,11 +91,10 @@ li{
 <div class="card">
 <div class="title">Формат работы команд</div>
 
-<p>Указание пользователя:</p>
+<p>Указание пользователя (только для Discord):</p>
 <ul>
 <li>@user</li>
 <li>ID (123456789)</li>
-<li>ник</li>
 <li>ответ на сообщение пользователя</li>
 </ul>
 
@@ -105,7 +102,7 @@ li{
 <div class="code">!мут @user 10 м причина</div>
 <div class="code">!м 123456789 1 ч спам</div>
 <div class="code">!бан @user причина</div>
-<div class="code">!кик ник причина</div>
+<div class="code">!кик @user причина</div>
 <div class="code">!очистить 20</div>
 </div>
 
@@ -115,7 +112,7 @@ li{
 <ul>
 <li>поддержка времени: с / м / ч / д</li>
 <li>временный мут снимается автоматически</li>
-<li>при муте отключается возможность писать (роль mute)</li>
+<li>при муте отключается возможность писать (роль mute в Discord)</li>
 <li>если роль отсутствует — создаётся или используется указанная</li>
 </ul>
 </div>
@@ -124,7 +121,7 @@ li{
 <div class="title">Очистка сообщений</div>
 
 <ul>
-<li>!очистить N — удаляет последние сообщения</li>
+<li>!очистить N — удаляет последние сообщения в канале Discord</li>
 <li>ограничение на количество (например до 100)</li>
 <li>игнор старых/системных сообщений (ограничения Discord API)</li>
 </ul>
@@ -145,7 +142,7 @@ li{
 <div class="title">Логирование</div>
 
 <ul>
-<li>отдельный лог-канал</li>
+<li>отдельный лог-канал Discord</li>
 <li>фиксируется:
   <ul>
     <li>кто выдал</li>
@@ -176,7 +173,7 @@ li{
 <ul>
 <li>!варн — система предупреждений</li>
 <li>авто-наказания за накопление</li>
-<li>авто-модерация (фильтр)</li>
+<li>авто-модерация (фильтр слов/спама)</li>
 <li>настройка префикса</li>
 <li>настройка ролей (захардкожено)</li>
 </ul>

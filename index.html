@@ -42,10 +42,10 @@
       padding: 24px;
       overflow-x: hidden;
       background-image:
-        linear-gradient(rgba(4, 5, 5, 0.55), rgba(4, 5, 5, 0.84)),
-        url("https://i.imgur.com/iYCUiVP.jpeg");
+        linear-gradient(rgba(6, 7, 8, 0.38), rgba(6, 7, 8, 0.72)),
+        url("https://i.imgur.com/YOTXI7x.jpeg");
       background-size: cover;
-      background-position: center center;
+      background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
     }
@@ -57,9 +57,9 @@
       pointer-events: none;
       backdrop-filter: blur(2px);
       background:
-        radial-gradient(circle at 20% 15%, rgba(191, 154, 86, 0.12), transparent 28%),
-        radial-gradient(circle at 82% 22%, rgba(191, 154, 86, 0.08), transparent 24%),
-        linear-gradient(to bottom, rgba(0,0,0,0.12), rgba(0,0,0,0.3));
+        radial-gradient(circle at 20% 15%, rgba(191, 154, 86, 0.1), transparent 28%),
+        radial-gradient(circle at 82% 22%, rgba(191, 154, 86, 0.06), transparent 24%),
+        linear-gradient(to bottom, rgba(0,0,0,0.06), rgba(0,0,0,0.22));
       z-index: 0;
     }
 
@@ -162,7 +162,7 @@
       flex-direction: column;
       gap: 12px;
       align-items: flex-end;
-      flex: 1 1 420px;
+      flex: 1 1 520px;
     }
 
     .mode-box {
@@ -237,10 +237,19 @@
       position: relative;
       z-index: 1;
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
+      gap: 12px;
       min-height: 28px;
       margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .accuracy {
+      color: var(--text-soft);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
     }
 
     .error-box {
@@ -425,7 +434,7 @@
     }
 
     .result {
-      width: min(100%, 520px);
+      width: min(100%, 560px);
       text-align: center;
       border-radius: 24px;
       padding: 28px;
@@ -447,7 +456,7 @@
 
     .result-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
       margin-bottom: 22px;
     }
@@ -468,7 +477,7 @@
     }
 
     .result-item .v {
-      font-size: 30px;
+      font-size: 28px;
       font-weight: 800;
       color: var(--success);
     }
@@ -480,7 +489,7 @@
       pointer-events: none;
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: 900px) {
       body {
         padding: 14px;
       }
@@ -558,6 +567,7 @@
       </div>
 
       <div class="status-row">
+        <div class="accuracy" id="accuracyValue">Точность: 100%</div>
         <div class="error-box" id="errorBox">Ошибка. Начни заново.</div>
       </div>
 
@@ -591,6 +601,10 @@
               <div class="k">Ошибки</div>
               <div class="v" id="finalErrors">0</div>
             </div>
+            <div class="result-item">
+              <div class="k">Точность</div>
+              <div class="v" id="finalAccuracy">100%</div>
+            </div>
           </div>
           <button class="btn" id="retryBtn" type="button">Пройти ещё раз</button>
         </div>
@@ -605,16 +619,16 @@
 
 Быть верным своему клану и его бойцам.
 Соблюдать дисциплину, уважать командование и выполнять поставленные задачи.
-Клянусь действовать как часть единого батальона —
+Клянусь действовать как часть единого батальона -
 поддерживать своих братьев в бою, не отступать перед трудностями и всегда сражаться до конца.
 Клянусь хранить честь КАЗБАТ, укреплять его силу и репутацию на каждом поле боя.
 Если потребуется, я готов стоять до последнего вместе со своим отрядом,
-потому что сила КАЗБАТ — в единстве его бойцов.
+потому что сила КАЗБАТ - в единстве его бойцов.
 
 Отныне и навсегда:
-Я — боец КАЗБАТ.
-Моя честь — честь батальона.
-Моя победа — победа КАЗБАТ.
+Я - боец КАЗБАТ.
+Моя честь - честь батальона.
+Моя победа - победа КАЗБАТ.
 
 Клянусь!`;
 
@@ -633,9 +647,11 @@
     const charsValueEl = document.getElementById("charsValue");
     const progressTextEl = document.getElementById("progressText");
     const barFillEl = document.getElementById("barFill");
+    const accuracyValueEl = document.getElementById("accuracyValue");
     const overlayEl = document.getElementById("overlay");
     const finalTimeEl = document.getElementById("finalTime");
     const finalErrorsEl = document.getElementById("finalErrors");
+    const finalAccuracyEl = document.getElementById("finalAccuracy");
     const restartBtn = document.getElementById("restartBtn");
     const retryBtn = document.getElementById("retryBtn");
     const hiddenInput = document.getElementById("hiddenInput");
@@ -650,6 +666,8 @@
     let timerId = null;
     let errorLock = false;
     let mode = MODE_HARD;
+    let totalTyped = 0;
+    let correctTyped = 0;
     let spans = [];
 
     function renderText() {
@@ -681,16 +699,36 @@
       timeValueEl.textContent = formatTime(Date.now() - startTime);
     }
 
+    function getAccuracy() {
+      if (totalTyped === 0) return 100;
+      return Math.round((correctTyped / totalTyped) * 100);
+    }
+
+    function updateAccuracy() {
+      const accuracy = getAccuracy();
+      accuracyValueEl.textContent = `Точность: ${accuracy}%`;
+      finalAccuracyEl.textContent = `${accuracy}%`;
+    }
+
     function updateStats() {
       errorsValueEl.textContent = String(errorCount);
       charsValueEl.textContent = `${currentIndex} / ${chars.length}`;
       const percent = chars.length ? Math.round((currentIndex / chars.length) * 100) : 0;
       progressTextEl.textContent = `${percent}%`;
       barFillEl.style.width = `${percent}%`;
+      updateAccuracy();
     }
 
     function isLetterOrDigit(ch) {
       return /[\p{L}\p{N}]/u.test(ch);
+    }
+
+    function normalizeExpectedChar(ch) {
+      return ch === "—" ? "-" : ch;
+    }
+
+    function normalizeInputChar(ch) {
+      return ch === "—" ? "-" : ch;
     }
 
     function focusSurface() {
@@ -754,6 +792,8 @@
       errorLock = false;
       if (!keepErrors) errorCount = 0;
       startTime = 0;
+      totalTyped = 0;
+      correctTyped = 0;
       if (timerId) clearInterval(timerId);
       timerId = null;
       timeValueEl.textContent = "00:00";
@@ -774,6 +814,7 @@
       if (errorLock || finished) return;
       errorLock = true;
       errorCount += 1;
+      totalTyped += 1;
       updateStats();
 
       flashEl.classList.add("active");
@@ -793,7 +834,10 @@
         if (i === 0) span.classList.add("current");
       });
 
-      updateStats();
+      charsValueEl.textContent = `${currentIndex} / ${chars.length}`;
+      const percent = chars.length ? Math.round((currentIndex / chars.length) * 100) : 0;
+      progressTextEl.textContent = `${percent}%`;
+      barFillEl.style.width = `${percent}%`;
       oathFrameEl.scrollTop = 0;
 
       setTimeout(() => {
@@ -805,6 +849,9 @@
 
     function advanceCorrect() {
       if (currentIndex >= chars.length) return;
+
+      totalTyped += 1;
+      correctTyped += 1;
 
       spans[currentIndex].classList.remove("current", "error");
       spans[currentIndex].classList.add("done");
@@ -823,7 +870,9 @@
     function advanceError() {
       if (currentIndex >= chars.length) return;
 
+      totalTyped += 1;
       errorCount += 1;
+
       spans[currentIndex].classList.remove("current", "done");
       spans[currentIndex].classList.add("error");
       currentIndex += 1;
@@ -846,6 +895,7 @@
       timeValueEl.textContent = formatTime(total);
       finalTimeEl.textContent = formatTime(total);
       finalErrorsEl.textContent = String(errorCount);
+      finalAccuracyEl.textContent = `${getAccuracy()}%`;
       overlayEl.classList.add("show");
     }
 
@@ -860,7 +910,7 @@
       if (event.key === "Enter") return "\n";
       if (event.key === "Tab") return null;
       if (event.key.length !== 1) return null;
-      return event.key;
+      return normalizeInputChar(event.key);
     }
 
     function handleInput(typed) {
@@ -868,7 +918,8 @@
 
       beginIfNeeded();
 
-      const expected = chars[currentIndex];
+      const expected = normalizeExpectedChar(chars[currentIndex]);
+
       if (typed === expected) {
         advanceCorrect();
         return;

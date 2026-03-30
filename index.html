@@ -1,185 +1,400 @@
+// =========================
+// Project structure:
+// =========================
+// kazbat-typing-trainer/
+// ├─ index.html
+// ├─ package.json
+// ├─ tsconfig.json
+// ├─ vite.config.ts
+// └─ src/
+//    ├─ main.tsx
+//    ├─ App.tsx
+//    ├─ styles.css
+//    └─ components/
+//       ├─ Trainer.tsx
+//       ├─ Stats.tsx
+//       └─ Overlay.tsx
+
+// =========================
+// package.json
+// =========================
+{
+  "name": "kazbat-typing-trainer",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "@vitejs/plugin-react": "^4.0.0"
+  }
+}
+
+// =========================
+// vite.config.ts
+// =========================
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()]
+})
+
+// =========================
+// tsconfig.json
+// =========================
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["src"]
+}
+
+// =========================
+// index.html
+// =========================
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RISE — Discord модерационный бот</title>
-
-<style>
-:root{
-  --bg:#06110c;
-  --card:#0b1f17;
-  --text:#e8fff5;
-  --muted:#9ad1b8;
-  --line:rgba(255,255,255,0.08);
-}
-
-body{
-  margin:0;
-  font-family:Inter, Arial;
-  background:linear-gradient(180deg,#040b07,#06110c);
-  color:var(--text);
-}
-
-.container{
-  width:min(1000px,92%);
-  margin:auto;
-  padding:60px 0;
-}
-
-h1{
-  font-size:52px;
-  margin:0;
-}
-
-.subtitle{
-  color:var(--muted);
-  margin-bottom:30px;
-}
-
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:22px;
-  margin-bottom:18px;
-}
-
-.title{
-  font-size:20px;
-  margin-bottom:12px;
-  color:#caffea;
-}
-
-.code{
-  background:#020504;
-  border:1px solid rgba(255,255,255,0.05);
-  padding:10px 12px;
-  border-radius:10px;
-  font-family:monospace;
-  margin:6px 0;
-  color:#aaffd4;
-}
-
-ul{
-  padding-left:18px;
-  margin:8px 0;
-}
-
-li{
-  margin-bottom:6px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>RISE</h1>
-<div class="subtitle">Концепция модерационного бота для Discord</div>
-
-<div class="card">
-<div class="title">Префиксные команды</div>
-
-<div class="code">!мут (!м)</div>
-<div class="code">!кик (!к)</div>
-<div class="code">!бан (!б)</div>
-<div class="code">!очистить [кол-во]</div>
-</div>
-
-<div class="card">
-<div class="title">Формат работы команд</div>
-
-<p>Указание пользователя (только для Discord):</p>
-<ul>
-<li>@user</li>
-<li>ID (123456789)</li>
-<li>ответ на сообщение пользователя</li>
-</ul>
-
-<p>Примеры:</p>
-<div class="code">!мут @user 10 м причина</div>
-<div class="code">!м 123456789 1 ч спам</div>
-<div class="code">!бан @user причина</div>
-<div class="code">!кик @user причина</div>
-<div class="code">!очистить 20</div>
-</div>
-
-<div class="card">
-<div class="title">Логика мута</div>
-
-<ul>
-<li>поддержка времени: с / м / ч / д</li>
-<li>временный мут снимается автоматически</li>
-<li>при муте отключается возможность писать (роль mute в Discord)</li>
-<li>если роль отсутствует — создаётся или используется указанная</li>
-</ul>
-</div>
-
-<div class="card">
-<div class="title">Очистка сообщений</div>
-
-<ul>
-<li>!очистить N — удаляет последние сообщения в канале Discord</li>
-<li>ограничение на количество (например до 100)</li>
-<li>игнор старых/системных сообщений (ограничения Discord API)</li>
-</ul>
-</div>
-
-<div class="card">
-<div class="title">Права и проверки</div>
-
-<ul>
-<li>нельзя применять команды к равным/высшим ролям</li>
-<li>нельзя трогать администраторов</li>
-<li>проверка прав модератора</li>
-<li>защита от самонаказания</li>
-</ul>
-</div>
-
-<div class="card">
-<div class="title">Логирование</div>
-
-<ul>
-<li>отдельный лог-канал Discord</li>
-<li>фиксируется:
-  <ul>
-    <li>кто выдал</li>
-    <li>кому</li>
-    <li>команда</li>
-    <li>причина</li>
-    <li>время (для мутов)</li>
-  </ul>
-</li>
-<li>формат: embed или текст</li>
-</ul>
-</div>
-
-<div class="card">
-<div class="title">Обработка ошибок</div>
-
-<ul>
-<li>неверный формат → пример команды</li>
-<li>пользователь не найден → ошибка</li>
-<li>нет прав → отказ</li>
-<li>некорректное время → ошибка</li>
-</ul>
-</div>
-
-<div class="card">
-<div class="title">Дополнительно</div>
-
-<ul>
-<li>!варн — система предупреждений</li>
-<li>авто-наказания за накопление</li>
-<li>авто-модерация (фильтр слов/спама)</li>
-<li>настройка префикса</li>
-<li>настройка ролей (захардкожено)</li>
-</ul>
-</div>
-
-</div>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>КАЗБАТ / Клятва</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
+
+// =========================
+// src/main.tsx
+// =========================
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import './styles.css'
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+)
+
+// =========================
+// src/App.tsx
+// =========================
+import Trainer from './components/Trainer'
+
+export default function App() {
+  return (
+    <div className="app">
+      <Trainer />
+    </div>
+  )
+}
+
+// =========================
+// src/components/Trainer.tsx
+// =========================
+import { useEffect, useRef, useState } from 'react'
+import Stats from './Stats'
+import Overlay from './Overlay'
+
+const TEXT = `Я, вступая в ряды боевого подразделения КАЗБАТ, перед своими товарищами по оружию торжественно клянусь:
+
+Быть верным своему клану и его бойцам.
+Соблюдать дисциплину, уважать командование и выполнять поставленные задачи.
+Клянусь действовать как часть единого батальона —
+поддерживать своих братьев в бою, не отступать перед трудностями и всегда сражаться до конца.
+Клянусь хранить честь КАЗБАТ, укреплять его силу и репутацию на каждом поле боя.
+Если потребуется, я готов стоять до последнего вместе со своим отрядом,
+потому что сила КАЗБАТ — в единстве его бойцов.
+
+Отныне и навсегда:
+Я — боец КАЗБАТ.
+Моя честь — честь батальона.
+Моя победа — победа КАЗБАТ.
+
+Клянусь!`
+
+export default function Trainer() {
+  const [index, setIndex] = useState(0)
+  const [started, setStarted] = useState(false)
+  const [error, setError] = useState(false)
+  const [completed, setCompleted] = useState(false)
+  const [startTime, setStartTime] = useState<number | null>(null)
+  const [time, setTime] = useState(0)
+  const [errors, setErrors] = useState(0)
+
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    let interval: any
+    if (started && !completed) {
+      interval = setInterval(() => {
+        if (startTime) setTime(Date.now() - startTime)
+      }, 100)
+    }
+    return () => clearInterval(interval)
+  }, [started, startTime, completed])
+
+  const reset = () => {
+    setIndex(0)
+    setStarted(false)
+    setCompleted(false)
+    setError(false)
+    setErrors(0)
+    setTime(0)
+    setStartTime(null)
+    inputRef.current?.focus()
+  }
+
+  const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!started) {
+      setStarted(true)
+      setStartTime(Date.now())
+    }
+
+    const key = e.key
+
+    if (key.length > 1 && key !== 'Enter') return
+
+    const expected = TEXT[index]
+    const inputChar = key === 'Enter' ? '\n' : key
+
+    if (inputChar === expected) {
+      const next = index + 1
+      if (next >= TEXT.length) {
+        setCompleted(true)
+        setIndex(next)
+      } else {
+        setIndex(next)
+      }
+    } else {
+      setError(true)
+      setErrors(prev => prev + 1)
+      setTimeout(() => {
+        reset()
+      }, 600)
+    }
+  }
+
+  const chars = TEXT.split('')
+
+  return (
+    <div className={`container ${error ? 'error' : ''}`}>
+      <div className="card">
+        <h1>КАЗБАТ / Клятва</h1>
+        <p className="subtitle">Начни ввод и следуй тексту без ошибок</p>
+
+        <div className="text">
+          {chars.map((char, i) => {
+            let className = 'char'
+            if (i < index) className += ' correct'
+            if (i === index) className += ' current'
+
+            return (
+              <span key={i} className={className}>
+                {char === '\n' ? '\n' : char}
+              </span>
+            )
+          })}
+        </div>
+
+        <Stats
+          time={time}
+          progress={(index / TEXT.length) * 100}
+          errors={errors}
+        />
+
+        <button onClick={reset}>Начать заново</button>
+
+        <input
+          ref={inputRef}
+          className="hidden-input"
+          onKeyDown={handleKey}
+          autoFocus
+        />
+      </div>
+
+      {completed && (
+        <Overlay
+          time={time}
+          errors={errors}
+          onRestart={reset}
+        />
+      )}
+    </div>
+  )
+}
+
+// =========================
+// src/components/Stats.tsx
+// =========================
+export default function Stats({ time, progress, errors }: any) {
+  return (
+    <div className="stats">
+      <div>Время: {(time / 1000).toFixed(1)}с</div>
+      <div>Прогресс: {progress.toFixed(0)}%</div>
+      <div>Ошибки: {errors}</div>
+    </div>
+  )
+}
+
+// =========================
+// src/components/Overlay.tsx
+// =========================
+export default function Overlay({ time, errors, onRestart }: any) {
+  return (
+    <div className="overlay">
+      <div className="overlay-card">
+        <h2>Клятва завершена</h2>
+        <p>Время: {(time / 1000).toFixed(1)}с</p>
+        <p>Ошибки: {errors}</p>
+        <button onClick={onRestart}>Пройти ещё раз</button>
+      </div>
+    </div>
+  )
+}
+
+// =========================
+// src/styles.css
+// =========================
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: radial-gradient(circle at center, #111 0%, #050505 100%);
+  color: #e8d9a8;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  width: 800px;
+  padding: 30px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
+
+h1 {
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+  opacity: 0.7;
+}
+
+.text {
+  margin-top: 20px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.char {
+  opacity: 0.2;
+}
+
+.char.correct {
+  opacity: 1;
+  color: #e8d9a8;
+}
+
+.char.current {
+  border-bottom: 2px solid #e8d9a8;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5 }
+  50% { opacity: 1 }
+  100% { opacity: 0.5 }
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  background: #2a2a2a;
+  border: none;
+  color: #e8d9a8;
+  cursor: pointer;
+}
+
+.hidden-input {
+  position: absolute;
+  opacity: 0;
+}
+
+.container.error .card {
+  animation: shake 0.4s;
+  background: rgba(255,0,0,0.1);
+}
+
+@keyframes shake {
+  0% { transform: translateX(0) }
+  25% { transform: translateX(-5px) }
+  50% { transform: translateX(5px) }
+  75% { transform: translateX(-5px) }
+  100% { transform: translateX(0) }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.7);
+}
+
+.overlay-card {
+  padding: 40px;
+  background: #111;
+  border-radius: 12px;
+  text-align: center;
+}
+
+// =========================
+// RUN
+// =========================
+// 1. npm install
+// 2. npm run dev

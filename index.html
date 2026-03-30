@@ -1,131 +1,525 @@
-// =========================
-// Project structure:
-// =========================
-// kazbat-typing-trainer/
-// ├─ index.html
-// ├─ package.json
-// ├─ tsconfig.json
-// ├─ vite.config.ts
-// └─ src/
-//    ├─ main.tsx
-//    ├─ App.tsx
-//    ├─ styles.css
-//    └─ components/
-//       ├─ Trainer.tsx
-//       ├─ Stats.tsx
-//       └─ Overlay.tsx
-
-// =========================
-// package.json
-// =========================
-{
-  "name": "kazbat-typing-trainer",
-  "private": true,
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "typescript": "^5.0.0",
-    "vite": "^5.0.0",
-    "@vitejs/plugin-react": "^4.0.0"
-  }
-}
-
-// =========================
-// vite.config.ts
-// =========================
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-export default defineConfig({
-  plugins: [react()]
-})
-
-// =========================
-// tsconfig.json
-// =========================
-{
-  "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
-  },
-  "include": ["src"]
-}
-
-// =========================
-// index.html
-// =========================
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>КАЗБАТ / Клятва</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>КАЗБАТ — Тренажёр печати</title>
+  <style>
+    :root {
+      --bg-1: #0b0d0b;
+      --bg-2: #111510;
+      --panel: rgba(20, 24, 19, 0.88);
+      --panel-border: rgba(181, 144, 79, 0.28);
+      --text-dim: rgba(225, 214, 189, 0.24);
+      --text-mid: rgba(225, 214, 189, 0.6);
+      --text-full: #f1e3c5;
+      --accent: #b5904f;
+      --accent-soft: rgba(181, 144, 79, 0.18);
+      --accent-strong: rgba(181, 144, 79, 0.5);
+      --danger: #d94a4a;
+      --danger-soft: rgba(217, 74, 74, 0.18);
+      --success: #d5b77b;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+      --glow: 0 0 0 1px rgba(181, 144, 79, 0.12), 0 0 24px rgba(181, 144, 79, 0.08), 0 0 64px rgba(181, 144, 79, 0.06);
+    }
 
-// =========================
-// src/main.tsx
-// =========================
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './styles.css'
+    * {
+      box-sizing: border-box;
+    }
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(181, 144, 79, 0.08), transparent 28%),
+        radial-gradient(circle at 80% 30%, rgba(181, 144, 79, 0.06), transparent 30%),
+        linear-gradient(160deg, var(--bg-1), var(--bg-2) 55%, #0d100e);
+      color: var(--text-full);
+      font-family: "Segoe UI", Arial, sans-serif;
+      overflow-x: hidden;
+    }
 
-// =========================
-// src/App.tsx
-// =========================
-import Trainer from './components/Trainer'
+    body {
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      position: relative;
+    }
 
-export default function App() {
-  return (
-    <div className="app">
-      <Trainer />
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(circle at center, black 55%, transparent 100%);
+      opacity: 0.25;
+    }
+
+    .flash {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center, rgba(217, 74, 74, 0.28), rgba(217, 74, 74, 0.1) 38%, transparent 72%);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+      z-index: 30;
+      mix-blend-mode: screen;
+    }
+
+    .flash.active {
+      opacity: 1;
+    }
+
+    .wrap {
+      width: min(100%, 1100px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 28px;
+      box-shadow: var(--shadow), var(--glow);
+      padding: 28px 28px 22px;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      transform-origin: center;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(130deg, rgba(181, 144, 79, 0.08), transparent 30%),
+        linear-gradient(315deg, rgba(181, 144, 79, 0.06), transparent 35%);
+      pointer-events: none;
+    }
+
+    .card.shake {
+      animation: shake 0.38s ease;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      12% { transform: translateX(-7px); }
+      24% { transform: translateX(7px); }
+      36% { transform: translateX(-6px); }
+      48% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      72% { transform: translateX(4px); }
+      84% { transform: translateX(-2px); }
+      100% { transform: translateX(0); }
+    }
+
+    .topbar {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+    }
+
+    .title {
+      font-size: clamp(24px, 4vw, 38px);
+      line-height: 1.05;
+      font-weight: 700;
+      color: var(--text-full);
+      text-shadow: 0 0 18px rgba(181, 144, 79, 0.12);
+    }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      min-width: 128px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(181, 144, 79, 0.18);
+      background: rgba(255,255,255,0.02);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-mid);
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-full);
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hint {
+      color: var(--text-mid);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .error-box {
+      min-height: 24px;
+      color: #ff8f8f;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      text-shadow: 0 0 16px rgba(217, 74, 74, 0.24);
+    }
+
+    .error-box.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .typing-frame {
+      position: relative;
+      border-radius: 22px;
+      padding: 24px 22px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.012)),
+        rgba(8, 10, 8, 0.38);
+      border: 1px solid rgba(181, 144, 79, 0.14);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), inset 0 0 36px rgba(0,0,0,0.18);
+      min-height: 380px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .typing-frame.focused {
+      border-color: rgba(181, 144, 79, 0.24);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 0 0 1px rgba(181, 144, 79, 0.08), 0 0 32px rgba(181, 144, 79, 0.08);
+    }
+
+    .text {
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: clamp(18px, 2.2vw, 24px);
+      line-height: 1.9;
+      letter-spacing: 0.015em;
+      user-select: none;
+      caret-color: transparent;
+      outline: none;
+      min-height: 100%;
+    }
+
+    .char {
+      color: var(--text-dim);
+      transition:
+        color 0.16s ease,
+        text-shadow 0.16s ease,
+        background-color 0.16s ease,
+        box-shadow 0.16s ease,
+        transform 0.16s ease;
+      border-radius: 6px;
+    }
+
+    .char.done {
+      color: var(--text-full);
+      text-shadow: 0 0 10px rgba(181, 144, 79, 0.1);
+    }
+
+    .char.current {
+      color: #ffeac0;
+      background: linear-gradient(180deg, rgba(181, 144, 79, 0.2), rgba(181, 144, 79, 0.08));
+      box-shadow: 0 0 0 1px rgba(181, 144, 79, 0.18), 0 0 18px rgba(181, 144, 79, 0.14);
+      text-shadow: 0 0 18px rgba(255, 226, 171, 0.28);
+      animation: pulse 1.1s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(181, 144, 79, 0.16), 0 0 12px rgba(181, 144, 79, 0.1); }
+      50% { box-shadow: 0 0 0 1px rgba(181, 144, 79, 0.3), 0 0 24px rgba(181, 144, 79, 0.22); }
+    }
+
+    .char.nl {
+      display: inline;
+    }
+
+    .footer {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .progress-wrap {
+      flex: 1 1 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .progress-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-mid);
+      font-size: 13px;
+    }
+
+    .bar {
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(181, 144, 79, 0.14);
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.25);
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(181,144,79,0.55), rgba(241,227,197,0.8), rgba(181,144,79,0.6));
+      box-shadow: 0 0 18px rgba(181, 144, 79, 0.22);
+      transition: width 0.08s linear;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #20190d;
+      background: linear-gradient(180deg, #d6b57a, #b58f4b);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.25);
+      transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.25);
+      filter: brightness(1.03);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: linear-gradient(180deg, rgba(10,12,10,0.7), rgba(10,12,10,0.88));
+      backdrop-filter: blur(8px);
+      z-index: 10;
+      padding: 24px;
+    }
+
+    .overlay.show {
+      display: grid;
+      animation: fadeIn 0.28s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .result {
+      width: min(100%, 520px);
+      border-radius: 24px;
+      padding: 28px;
+      background: rgba(19, 22, 18, 0.95);
+      border: 1px solid rgba(181, 144, 79, 0.22);
+      box-shadow: var(--shadow), var(--glow);
+      text-align: center;
+    }
+
+    .result .eyebrow {
+      margin-bottom: 10px;
+    }
+
+    .result h2 {
+      margin: 0 0 20px;
+      font-size: clamp(28px, 5vw, 40px);
+      color: var(--text-full);
+      text-shadow: 0 0 18px rgba(181, 144, 79, 0.14);
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .result-item {
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(181, 144, 79, 0.15);
+    }
+
+    .result-item .k {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-mid);
+      margin-bottom: 8px;
+    }
+
+    .result-item .v {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--success);
+    }
+
+    .hidden-input {
+      position: fixed;
+      left: -9999px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 14px;
+      }
+
+      .card {
+        padding: 18px 16px 16px;
+        border-radius: 22px;
+      }
+
+      .typing-frame {
+        padding: 18px 14px;
+        min-height: 330px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat {
+        min-width: 112px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="flash" id="flash"></div>
+
+  <div class="wrap">
+    <div class="card" id="card">
+      <div class="topbar">
+        <div class="brand">
+          <div class="eyebrow">Тренажёр печати</div>
+          <div class="title">Клятва КАЗБАТ</div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-label">Время</div>
+            <div class="stat-value" id="timeValue">00:00</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Ошибки</div>
+            <div class="stat-value" id="errorsValue">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Символы</div>
+            <div class="stat-value" id="charsValue">0 / 0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-row">
+        <div class="hint" id="hintText">Нажми любую клавишу и начни печатать строго по порядку.</div>
+        <div class="error-box" id="errorBox">Ошибка. Начни заново.</div>
+      </div>
+
+      <div class="typing-frame focused" id="typingFrame" tabindex="0" aria-label="Тренажёр печати">
+        <div class="text" id="text"></div>
+      </div>
+
+      <div class="footer">
+        <div class="progress-wrap">
+          <div class="progress-head">
+            <span>Прогресс</span>
+            <span id="progressText">0%</span>
+          </div>
+          <div class="bar">
+            <div class="bar-fill" id="barFill"></div>
+          </div>
+        </div>
+        <button class="btn" id="restartBtn" type="button">Сбросить</button>
+      </div>
+
+      <div class="overlay" id="overlay">
+        <div class="result">
+          <div class="eyebrow">Результат</div>
+          <h2>Клятва завершена</h2>
+          <div class="result-grid">
+            <div class="result-item">
+              <div class="k">Время</div>
+              <div class="v" id="finalTime">00:00</div>
+            </div>
+            <div class="result-item">
+              <div class="k">Ошибки</div>
+              <div class="v" id="finalErrors">0</div>
+            </div>
+          </div>
+          <button class="btn" id="retryBtn" type="button">Пройти ещё раз</button>
+        </div>
+      </div>
     </div>
-  )
-}
+  </div>
 
-// =========================
-// src/components/Trainer.tsx
-// =========================
-import { useEffect, useRef, useState } from 'react'
-import Stats from './Stats'
-import Overlay from './Overlay'
+  <input class="hidden-input" id="hiddenInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
 
-const TEXT = `Я, вступая в ряды боевого подразделения КАЗБАТ, перед своими товарищами по оружию торжественно клянусь:
+  <script>
+    const oathText = `Я, вступая в ряды боевого подразделения КАЗБАТ, перед своими товарищами по оружию торжественно клянусь:
 
 Быть верным своему клану и его бойцам.
 Соблюдать дисциплину, уважать командование и выполнять поставленные задачи.
@@ -140,261 +534,288 @@ const TEXT = `Я, вступая в ряды боевого подразделе
 Моя честь — честь батальона.
 Моя победа — победа КАЗБАТ.
 
-Клянусь!`
+Клянусь!`;
 
-export default function Trainer() {
-  const [index, setIndex] = useState(0)
-  const [started, setStarted] = useState(false)
-  const [error, setError] = useState(false)
-  const [completed, setCompleted] = useState(false)
-  const [startTime, setStartTime] = useState<number | null>(null)
-  const [time, setTime] = useState(0)
-  const [errors, setErrors] = useState(0)
+    const chars = Array.from(oathText);
 
-  const inputRef = useRef<HTMLInputElement>(null)
+    const textEl = document.getElementById("text");
+    const cardEl = document.getElementById("card");
+    const typingFrameEl = document.getElementById("typingFrame");
+    const flashEl = document.getElementById("flash");
+    const errorBoxEl = document.getElementById("errorBox");
+    const timeValueEl = document.getElementById("timeValue");
+    const errorsValueEl = document.getElementById("errorsValue");
+    const charsValueEl = document.getElementById("charsValue");
+    const progressTextEl = document.getElementById("progressText");
+    const barFillEl = document.getElementById("barFill");
+    const overlayEl = document.getElementById("overlay");
+    const finalTimeEl = document.getElementById("finalTime");
+    const finalErrorsEl = document.getElementById("finalErrors");
+    const restartBtn = document.getElementById("restartBtn");
+    const retryBtn = document.getElementById("retryBtn");
+    const hintTextEl = document.getElementById("hintText");
+    const hiddenInput = document.getElementById("hiddenInput");
 
-  useEffect(() => {
-    let interval: any
-    if (started && !completed) {
-      interval = setInterval(() => {
-        if (startTime) setTime(Date.now() - startTime)
-      }, 100)
+    let currentIndex = 0;
+    let errorCount = 0;
+    let started = false;
+    let finished = false;
+    let startTime = 0;
+    let timerId = null;
+    let errorLock = false;
+    let spans = [];
+
+    function renderText() {
+      textEl.innerHTML = "";
+      const frag = document.createDocumentFragment();
+
+      spans = chars.map((ch, i) => {
+        const span = document.createElement("span");
+        span.className = "char";
+        if (ch === "\n") {
+          span.classList.add("nl");
+          span.textContent = "\n";
+        } else {
+          span.textContent = ch;
+        }
+        if (i === 0) span.classList.add("current");
+        frag.appendChild(span);
+        return span;
+      });
+
+      textEl.appendChild(frag);
+      updateStats();
     }
-    return () => clearInterval(interval)
-  }, [started, startTime, completed])
 
-  const reset = () => {
-    setIndex(0)
-    setStarted(false)
-    setCompleted(false)
-    setError(false)
-    setErrors(0)
-    setTime(0)
-    setStartTime(null)
-    inputRef.current?.focus()
-  }
-
-  const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!started) {
-      setStarted(true)
-      setStartTime(Date.now())
+    function formatTime(ms) {
+      const totalSeconds = Math.floor(ms / 1000);
+      const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+      const seconds = String(totalSeconds % 60).padStart(2, "0");
+      return `${minutes}:${seconds}`;
     }
 
-    const key = e.key
+    function updateTimer() {
+      if (!started || finished) return;
+      timeValueEl.textContent = formatTime(Date.now() - startTime);
+    }
 
-    if (key.length > 1 && key !== 'Enter') return
+    function updateStats() {
+      errorsValueEl.textContent = String(errorCount);
+      charsValueEl.textContent = `${currentIndex} / ${chars.length}`;
+      const percent = chars.length ? Math.round((currentIndex / chars.length) * 100) : 0;
+      progressTextEl.textContent = `${percent}%`;
+      barFillEl.style.width = `${percent}%`;
+    }
 
-    const expected = TEXT[index]
-    const inputChar = key === 'Enter' ? '\n' : key
-
-    if (inputChar === expected) {
-      const next = index + 1
-      if (next >= TEXT.length) {
-        setCompleted(true)
-        setIndex(next)
-      } else {
-        setIndex(next)
+    function setCurrentChar() {
+      spans.forEach(span => span.classList.remove("current"));
+      if (currentIndex < spans.length) {
+        spans[currentIndex].classList.add("current");
+        ensureVisible(spans[currentIndex]);
       }
-    } else {
-      setError(true)
-      setErrors(prev => prev + 1)
-      setTimeout(() => {
-        reset()
-      }, 600)
     }
-  }
 
-  const chars = TEXT.split('')
+    function ensureVisible(el) {
+      if (!el) return;
+      const containerRect = typingFrameEl.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      const offsetTop = elRect.top - containerRect.top;
+      const offsetBottom = elRect.bottom - containerRect.bottom;
 
-  return (
-    <div className={`container ${error ? 'error' : ''}`}>
-      <div className="card">
-        <h1>КАЗБАТ / Клятва</h1>
-        <p className="subtitle">Начни ввод и следуй тексту без ошибок</p>
+      if (offsetTop < 40) {
+        typingFrameEl.scrollTop += offsetTop - 50;
+      } else if (offsetBottom > -40) {
+        typingFrameEl.scrollTop += offsetBottom + 50;
+      }
+    }
 
-        <div className="text">
-          {chars.map((char, i) => {
-            let className = 'char'
-            if (i < index) className += ' correct'
-            if (i === index) className += ' current'
+    function beginIfNeeded() {
+      if (started) return;
+      started = true;
+      startTime = Date.now();
+      hintTextEl.textContent = "Печатай без ошибок. Любая ошибка сбрасывает весь прогресс.";
+      updateTimer();
+      timerId = setInterval(updateTimer, 100);
+    }
 
-            return (
-              <span key={i} className={className}>
-                {char === '\n' ? '\n' : char}
-              </span>
-            )
-          })}
-        </div>
+    function complete() {
+      finished = true;
+      if (timerId) clearInterval(timerId);
+      const total = Date.now() - startTime;
+      timeValueEl.textContent = formatTime(total);
+      finalTimeEl.textContent = formatTime(total);
+      finalErrorsEl.textContent = String(errorCount);
+      overlayEl.classList.add("show");
+    }
 
-        <Stats
-          time={time}
-          progress={(index / TEXT.length) * 100}
-          errors={errors}
-        />
+    function resetVisualState() {
+      flashEl.classList.remove("active");
+      errorBoxEl.classList.remove("show");
+      cardEl.classList.remove("shake");
+    }
 
-        <button onClick={reset}>Начать заново</button>
+    function hardReset(keepErrors = false) {
+      currentIndex = 0;
+      started = false;
+      finished = false;
+      errorLock = false;
+      if (!keepErrors) errorCount = 0;
+      startTime = 0;
+      if (timerId) clearInterval(timerId);
+      timerId = null;
+      overlayEl.classList.remove("show");
+      hintTextEl.textContent = "Нажми любую клавишу и начни печатать строго по порядку.";
+      timeValueEl.textContent = "00:00";
+      typingFrameEl.scrollTop = 0;
 
-        <input
-          ref={inputRef}
-          className="hidden-input"
-          onKeyDown={handleKey}
-          autoFocus
-        />
-      </div>
+      spans.forEach((span, i) => {
+        span.classList.remove("done", "current");
+        if (i === 0) span.classList.add("current");
+      });
 
-      {completed && (
-        <Overlay
-          time={time}
-          errors={errors}
-          onRestart={reset}
-        />
-      )}
-    </div>
-  )
-}
+      updateStats();
+      resetVisualState();
+      focusTrainer();
+    }
 
-// =========================
-// src/components/Stats.tsx
-// =========================
-export default function Stats({ time, progress, errors }: any) {
-  return (
-    <div className="stats">
-      <div>Время: {(time / 1000).toFixed(1)}с</div>
-      <div>Прогресс: {progress.toFixed(0)}%</div>
-      <div>Ошибки: {errors}</div>
-    </div>
-  )
-}
+    function triggerError() {
+      if (errorLock || finished) return;
+      errorLock = true;
+      errorCount += 1;
+      updateStats();
 
-// =========================
-// src/components/Overlay.tsx
-// =========================
-export default function Overlay({ time, errors, onRestart }: any) {
-  return (
-    <div className="overlay">
-      <div className="overlay-card">
-        <h2>Клятва завершена</h2>
-        <p>Время: {(time / 1000).toFixed(1)}с</p>
-        <p>Ошибки: {errors}</p>
-        <button onClick={onRestart}>Пройти ещё раз</button>
-      </div>
-    </div>
-  )
-}
+      flashEl.classList.add("active");
+      errorBoxEl.classList.add("show");
+      cardEl.classList.remove("shake");
+      void cardEl.offsetWidth;
+      cardEl.classList.add("shake");
 
-// =========================
-// src/styles.css
-// =========================
-body {
-  margin: 0;
-  font-family: sans-serif;
-  background: radial-gradient(circle at center, #111 0%, #050505 100%);
-  color: #e8d9a8;
-}
+      currentIndex = 0;
+      started = false;
+      if (timerId) clearInterval(timerId);
+      timerId = null;
+      timeValueEl.textContent = "00:00";
+      hintTextEl.textContent = "Печатай сначала. Нужна полная точность.";
 
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+      spans.forEach((span, i) => {
+        span.classList.remove("done", "current");
+        if (i === 0) span.classList.add("current");
+      });
 
-.card {
-  width: 800px;
-  padding: 30px;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.03);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 40px rgba(0,0,0,0.6);
-}
+      updateStats();
+      typingFrameEl.scrollTop = 0;
 
-h1 {
-  text-align: center;
-}
+      const resetDelay = 700;
+      window.setTimeout(() => {
+        resetVisualState();
+        errorLock = false;
+        focusTrainer();
+      }, resetDelay);
+    }
 
-.subtitle {
-  text-align: center;
-  opacity: 0.7;
-}
+    function handleCorrectInput() {
+      if (currentIndex >= chars.length) return;
 
-.text {
-  margin-top: 20px;
-  line-height: 1.6;
-  white-space: pre-wrap;
-}
+      spans[currentIndex].classList.remove("current");
+      spans[currentIndex].classList.add("done");
+      currentIndex += 1;
 
-.char {
-  opacity: 0.2;
-}
+      if (currentIndex >= chars.length) {
+        updateStats();
+        complete();
+        return;
+      }
 
-.char.correct {
-  opacity: 1;
-  color: #e8d9a8;
-}
+      setCurrentChar();
+      updateStats();
+    }
 
-.char.current {
-  border-bottom: 2px solid #e8d9a8;
-  animation: pulse 1s infinite;
-}
+    function normalizeKey(event) {
+      if (event.key === "Enter") return "\n";
+      if (event.key === "Tab") return null;
+      if (event.key.length !== 1) return null;
+      return event.key;
+    }
 
-@keyframes pulse {
-  0% { opacity: 0.5 }
-  50% { opacity: 1 }
-  100% { opacity: 0.5 }
-}
+    function focusTrainer() {
+      typingFrameEl.classList.add("focused");
+      hiddenInput.focus({ preventScroll: true });
+    }
 
-.stats {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
+    function blurTrainer() {
+      typingFrameEl.classList.remove("focused");
+    }
 
-button {
-  margin-top: 20px;
-  width: 100%;
-  padding: 10px;
-  background: #2a2a2a;
-  border: none;
-  color: #e8d9a8;
-  cursor: pointer;
-}
+    document.addEventListener("keydown", (event) => {
+      focusTrainer();
 
-.hidden-input {
-  position: absolute;
-  opacity: 0;
-}
+      if (finished && event.key !== "Tab") {
+        event.preventDefault();
+        return;
+      }
 
-.container.error .card {
-  animation: shake 0.4s;
-  background: rgba(255,0,0,0.1);
-}
+      if ((event.ctrlKey || event.metaKey) && ["v", "c", "x", "a"].includes(event.key.toLowerCase())) {
+        event.preventDefault();
+        return;
+      }
 
-@keyframes shake {
-  0% { transform: translateX(0) }
-  25% { transform: translateX(-5px) }
-  50% { transform: translateX(5px) }
-  75% { transform: translateX(-5px) }
-  100% { transform: translateX(0) }
-}
+      if (event.key === "Backspace" || event.key === "Delete" || event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "ArrowUp" || event.key === "ArrowDown" || event.key === "Home" || event.key === "End" || event.key === "PageUp" || event.key === "PageDown") {
+        event.preventDefault();
+        return;
+      }
 
-.overlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0,0,0,0.7);
-}
+      const typed = normalizeKey(event);
+      if (typed === null) return;
 
-.overlay-card {
-  padding: 40px;
-  background: #111;
-  border-radius: 12px;
-  text-align: center;
-}
+      event.preventDefault();
 
-// =========================
-// RUN
-// =========================
-// 1. npm install
-// 2. npm run dev
+      if (errorLock || finished) return;
+
+      beginIfNeeded();
+
+      const expected = chars[currentIndex];
+      if (typed === expected) {
+        handleCorrectInput();
+      } else {
+        triggerError();
+      }
+    });
+
+    document.addEventListener("paste", (event) => {
+      event.preventDefault();
+      if (!finished) triggerError();
+    });
+
+    document.addEventListener("drop", (event) => {
+      event.preventDefault();
+    });
+
+    hiddenInput.addEventListener("paste", (event) => {
+      event.preventDefault();
+      if (!finished) triggerError();
+    });
+
+    hiddenInput.addEventListener("input", () => {
+      hiddenInput.value = "";
+    });
+
+    typingFrameEl.addEventListener("click", focusTrainer);
+    document.body.addEventListener("click", (e) => {
+      if (!overlayEl.classList.contains("show")) {
+        if (!cardEl.contains(e.target) || typingFrameEl.contains(e.target) || e.target === restartBtn) {
+          focusTrainer();
+        }
+      }
+    });
+
+    window.addEventListener("focus", focusTrainer);
+    window.addEventListener("blur", blurTrainer);
+
+    restartBtn.addEventListener("click", () => hardReset(false));
+    retryBtn.addEventListener("click", () => hardReset(false));
+
+    renderText();
+    focusTrainer();
+  </script>
+</body>
+</html>

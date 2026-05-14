@@ -1,264 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XIII | Discord</title>
-
+  <title>Manifest</title>
   <style>
-    :root {
-      --bg-dark: #050913;
-      --bg-blue: #0b2f63;
-      --gold: #d8aa3d;
-      --gold-light: #ffe08a;
-      --blue: #0d5bd7;
-      --blue-light: #3b8cff;
-      --text: #ffffff;
-      --muted: #c7d0df;
-      --card: rgba(18, 30, 52, 0.58);
-      --border: rgba(255, 224, 138, 0.28);
-    }
-
-    * {
+    body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      width: 100%;
-      min-height: 100%;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background: var(--bg-dark);
-      overflow-x: hidden;
-    }
-
-    body {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
-      background:
-        radial-gradient(circle at 50% 35%, rgba(59, 140, 255, 0.35), transparent 34%),
-        radial-gradient(circle at 35% 70%, rgba(216, 170, 61, 0.22), transparent 30%),
-        linear-gradient(135deg, #050913 0%, #0b2345 42%, #06101f 100%);
-      position: relative;
+      background: #050505;
+      color: #ff2b2b;
+      font-family: Arial, sans-serif;
+      padding: 30px;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-      background-size: 42px 42px;
-      mask-image: radial-gradient(circle at center, black 0%, transparent 75%);
-      pointer-events: none;
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at top, rgba(255, 224, 138, 0.12), transparent 45%),
-        linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.45) 100%);
-      pointer-events: none;
-    }
-
-    .page {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .card {
-      width: min(440px, 100%);
-      min-height: 560px;
-      padding: 42px 34px 32px;
-      border-radius: 24px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      box-shadow:
-        0 28px 80px rgba(0, 0, 0, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(255, 224, 138, 0.26), transparent 34%),
-        radial-gradient(circle at 50% 42%, rgba(59, 140, 255, 0.22), transparent 42%);
-      pointer-events: none;
-    }
-
-    .card-content {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex: 1;
-    }
-
-    .logo-wrap {
-      width: 260px;
-      height: 260px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 34px;
-      filter:
-        drop-shadow(0 18px 30px rgba(0, 0, 0, 0.55))
-        drop-shadow(0 0 22px rgba(59, 140, 255, 0.22));
-    }
-
-    .logo {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      animation: floatLogo 4.5s ease-in-out infinite;
-    }
-
-    .title {
-      margin-top: auto;
-      font-size: clamp(32px, 5vw, 42px);
-      line-height: 1.1;
+    .text {
+      max-width: 900px;
+      font-size: clamp(28px, 6vw, 72px);
       font-weight: 900;
-      letter-spacing: -0.04em;
-      color: var(--text);
-      text-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.45),
-        0 0 24px rgba(59, 140, 255, 0.18);
-    }
-
-    .subtitle {
-      margin-top: 18px;
-      font-size: 17px;
-      line-height: 1.45;
-      font-weight: 600;
-      color: var(--muted);
-    }
-
-    .button {
-      margin-top: 30px;
-      min-width: 260px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 15px 26px;
-      border-radius: 999px;
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: 800;
-      background:
-        linear-gradient(135deg, var(--blue-light), var(--blue) 50%, #163f96);
-      border: 1px solid rgba(255, 224, 138, 0.28);
-      box-shadow:
-        0 12px 28px rgba(13, 91, 215, 0.36),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        filter 0.2s ease;
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.08);
-      box-shadow:
-        0 18px 34px rgba(13, 91, 215, 0.48),
-        0 0 24px rgba(216, 170, 61, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    }
-
-    .button:active {
-      transform: translateY(0);
-    }
-
-    @keyframes floatLogo {
-      0%,
-      100% {
-        transform: translateY(0) scale(1);
-      }
-
-      50% {
-        transform: translateY(-8px) scale(1.015);
-      }
-    }
-
-    @media (max-width: 520px) {
-      body {
-        padding: 18px;
-      }
-
-      .card {
-        min-height: 520px;
-        padding: 34px 24px 28px;
-        border-radius: 22px;
-      }
-
-      .logo-wrap {
-        width: 230px;
-        height: 230px;
-        margin-bottom: 28px;
-      }
-
-      .button {
-        width: 100%;
-        min-width: 0;
-      }
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+      text-shadow: 0 0 20px rgba(255, 43, 43, 0.7);
     }
   </style>
 </head>
-
 <body>
-  <main class="page">
-    <section class="card" aria-label="XIII Discord invite">
-      <div class="card-content">
-        <div class="logo-wrap">
-          <img
-            class="logo"
-            src="https://i.imgur.com/06GjvSG.png"
-            alt="XIII Logo"
-          />
-        </div>
-
-        <h1 class="title">Добро пожаловать!</h1>
-
-        <p class="subtitle">
-          Присоединяйтесь к нашему сообществу
-        </p>
-
-        <a
-          class="button"
-          href="https://discord.gg/N8YSrbbms"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Присоединиться к Discord
-        </a>
-      </div>
-    </section>
-  </main>
+  <div class="text">
+   кобра, слушай сюда. пока ты тут жало точил, я к мамке твоей зашёл без стука. она на кухне борщ мешала, я сзади подкрался. через минуту она уже не ложку сжимала, а простынь. орала так, что петухи во дворе обосрались. теперь она моя. зови папой, чешуйчатый. аглвет..
+  </div>
 </body>
 </html>
